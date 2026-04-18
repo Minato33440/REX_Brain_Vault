@@ -1,0 +1,15 @@
+# Obsidian settings (per-device, not shared)
+.obsidian/
+
+# Python virtual environment
+.venv/
+
+# VS Code settings
+.vscode/
+
+# Obsidian temporary files
+*.base
+
+# OS files
+Thumbs.db
+.DS_Store

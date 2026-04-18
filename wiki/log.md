@@ -79,18 +79,42 @@ NLM: 13ソース体制（有効5 + 旧版/参考8）
 - 追加原因: latest.md本体がSecond_Brain_Labにpush漏れ + プロジェクトナレッジ旧版残存
 
 ### 実施した改善
-1. **latest.md v4**: 読み込み検証チェックリスト（7問）を追加
-   - stage2トリガー / 最新件数 / 決済エンジン / neck定義 / docs運用 / neck_1h用途 / 情報源優先順位
-   - 地雷1の混同回数を2→3回に更新（今回の再発を記録）
-   - 引き継ぎプロンプト短縮版（ボスのコピペ量を最小化）
-   - プロジェクトナレッジ旧版混在リスクの警告追加
-2. **CLAUDE.md v4**: wrap-up STEP 7/8 強化
-   - STEP 7: latest.md本体pushの必須化を明示（2026-04-18教訓として記録）
-   - STEP 8: プロジェクトナレッジ更新チェックリスト（旧版削除 + 最新版添付）
-   - Lint-5 追加: プロジェクトナレッジ旧版残存チェック
-   - セッション開始手順STEP 1に「検証チェックリスト全7問回答」を追加
+1. **latest.md v4**: 読み込み検証チェックリスト（7問）追加・引き継ぎプロンプト短縮版
+2. **CLAUDE.md v4**: wrap-up STEP 7/8 強化・Lint-5追加
 
-### 設計思想
-- 引き継ぎプロンプトを最小限の起動コマンドに絞り、詳細はVaultに読みに行かせる
-- 「読み込み完了後に検証チェックリスト回答」で、いきなり分析に飛び込むことを構造的に防止
-- ボス → Vault → 新スレッドのフローで情報欠落が起きない仕組み
+---
+
+## [2026-04-18] REX_Brain_Vault 独立リポ化 + Second_Brain_Lab 凍結
+
+### 経緯
+- REX_Brain_Vault（Obsidian Vault）とSecond_Brain_Lab（GitHub リポ）が
+  別々のディレクトリで2重コピー管理されていた
+- Vault に書き込んでも Second_Brain_Lab 側に自動同期されず、
+  latest.md 本体のpush漏れ等の事故が発生していた
+- ボス判断: Vault を独立GitリポにしてREX_AI全体の脳として運用
+
+### 実施内容
+1. GitHub 新リポ作成: **Minato33440/REX_Brain_Vault**（ボス実施）
+2. git init + 初回push（ボス実施）
+3. **.gitignore 作成**: .obsidian / .venv / .vscode / *.base を除外
+4. **README.md 作成**: REX_AI全体の脳としてのスケーラビリティ構造を記載
+5. **raw/system_build/ 作成**: Second_Brain_Lab/docs/ の構築資料移行先
+6. **wiki/cross/ 作成**: プロジェクト横断ナレッジの骨格（index.md設置）
+7. **CLAUDE.md v5**: 全「Second_Brain_Lab」参照を「REX_Brain_Vault」に統一
+   - wrap-up STEP 7 のリポ名修正
+   - NLM追加手順のpush先修正
+   - プロジェクト基本情報テーブル更新（Second_Brain_Lab = 凍結と明記）
+   - ディレクトリ構造にcross/追加
+
+### 構造的効果
+- 書き込み先 = Git管理先（2重コピー問題の根本解消）
+- wiki/trade_system/ + wiki/cross/ + 将来の wiki/setona_hp/ 等を
+  1リポで統合管理可能
+- Second_Brain_Lab は構築テスト用リポとして役割完了・凍結
+
+### ボスへの残タスク
+- Second_Brain_Lab/docs/ から raw/system_build/ へ資料コピー（手動）
+  - LLM Wiki.md / BUILD_GUIDE.md / MCP-DESIGN-CONFIRMED.md / Trade-Schema.md
+- Second_Brain_Lab リポのREADME更新（凍結宣言・移行先記載）
+- GitHub PAT に REX_Brain_Vault リポを追加
+- git push（本エントリーの全変更を含む）
