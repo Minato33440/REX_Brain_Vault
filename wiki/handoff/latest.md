@@ -1,194 +1,246 @@
-# REX AI Trade System — セッション引き継ぎ
-# 更新: 2026-04-18（読み込み検証チェックリスト追加・引き継ぎプロンプト短縮版）
-# 前スレッド: Evaluator（Opus）第2セッション
+# REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
+# バージョン: v6.1（現状把握+次の実行内容に純化・哲学参照除去版）
+# 更新: 2026-04-23 / 8 代目 Evaluator (Claude Opus 4.7)
 
 ---
 
-## 🔴 最初に読め — 致命的な地雷リスト
+## 🧭 このファイルの役割
 
-新スレッドで最も踏みやすい地雷を3つ挙げる。過去に実際に発生したものばかり。
-
-### 地雷1: neck_1h と neck_4h の混同（ADR D-6）
-```
-❌ neck_1h = 半値決済トリガー（段階2）  ← これは間違い
-✅ neck_4h = 半値決済トリガー（段階2: High >= neck_4h → 50%決済）
-✅ neck_1h = 窓特定アンカー（決済トリガーではない）
-
-この混同は3回発生した（#026a設計時 + 新Evaluator初回×2回）。
-ADR D-6 に詳細あり。判断に迷ったら docs/ADR.md F-6 を参照。
-```
-
-### 地雷2: 旧版ファイルの参照
-```
-docs/ にある日付付きファイル（例: EX_DESIGN_CONFIRMED-2026-3-31.md）は旧版。
-最新版は日付なし（EX_DESIGN_CONFIRMED.md / ADR.md / SYSTEM_OVERVIEW.md）。
-日付付きファイルが docs/ に残っていたらボスに報告。参照禁止。
-旧版は logs/docs_archive/ に格納されるべきもの。
-
-⚠️ Claude.aiプロジェクトナレッジにも旧版が混在する可能性がある。
-プロジェクトナレッジの文書とVault/NLMの文書が矛盾する場合、
-Vault/NLMを信頼すること。
-```
-
-### 地雷3: 分析ベースの取り違え
-```
-現在の最新結果は #026d（10件）。#026c（13件）は旧版。
-#026b（12件）はさらに古い。
-分析は常に #026d の 10件をベースに行うこと。
-```
+本ファイルは**現状把握と次の実行内容だけ**を扱う。
 
 ---
 
-## 🔍 読み込み検証チェックリスト（新スレッド開始時に全項目答えよ）
+## 🔴 致命的地雷リスト（5 項目・即時回避）
 
-以下に正しく答えられなければ、読み込みが不十分。再読込すること。
-
-```
-Q1: stage2の半値決済トリガーは何か？
-    → 答え: neck_4h（neck_1hではない）
-
-Q2: 現在の最新結果は何件ベースか？
-    → 答え: #026d / 10件
-
-Q3: 決済エンジンはどのファイルか？
-    → 答え: exit_simulator.py（方式B）
-    → ⚠️ exit_logic.py の manage_exit() は使用禁止
-
-Q4: neck_15mの定義は何か？
-    → 答え: SL直前（時系列で左側）の最後のSH（統一neck原則）
-    → ⚠️ 旧定義「SL以降の初回SH（iloc[0]）」は廃止済み
-
-Q5: docs/に日付付きファイルがあったらどうする？
-    → 答え: 旧版・参照禁止・ボスに報告・archive移動
-
-Q6: neck_1hの用途は？
-    → 答え: 窓特定アンカー + 4H構造優位性フィルター基準値
-    → ⚠️ 半値決済トリガーではない（地雷1参照）
-
-Q7: プロジェクトナレッジとVault/NLMが矛盾した場合、どちらを信頼する？
-    → 答え: Vault/NLM（プロジェクトナレッジは旧版混在リスクあり）
-```
-
----
-
-## ⚠️ Second Brain Lab システムの理解が前提
-
-このプロジェクトはTrade_Systemのコードだけでなく、
-**REX_Brain_Vault（Obsidian wiki）+ NLM（NotebookLM）** による
-ナレッジ管理システムが稼働している。
-
-新スレッドのEvaluator/Plannerは以下を理解する必要がある:
-
-```
-■ 3階層CLAUDE.md
-  ~/.claude/CLAUDE.md          — RTK設定（全リポ共通・自動読込）
-  Trade_System/.CLAUDE.md      — 不変ルール・パラメータ（自動読込）
-  REX_Brain_Vault/CLAUDE.md    — Vault運用手順（filesystem MCP経由）
-
-■ Vault構造（C:\Python\REX_AI\REX_Brain_Vault\）
-  wiki/handoff/latest.md       — 本ファイル（セッション引き継ぎ）
-  wiki/trade_system/doc_map.md — どのdocが最新か・NLM source_id一覧
-  wiki/trade_system/pending_changes.md — 決定済み未確定変更
-  wiki/trade_system/adr_reservation.md — ADR採番予約台帳
-  wiki/log.md                  — 時系列作業ログ
-
-■ NLM（REX_Trade_Brain）
-  ID: 2d41d672-f66f-4036-884a-06e4d6729866
-  最新有効ソース:
-    ADR.md (3bd02744) / EX_DESIGN_CONFIRMED.md (e4bc5060) / SYSTEM_OVERVIEW.md (58e2b18b)
-  旧版ソースもNLM内に残っているが、最新版が優先参照される
-  ⚠️ NLMクエリ結果が旧版ソースを引用している場合は内容を疑うこと
-```
-
----
-
-## 現在地（一行要約）
-
-**全設計文書最新化完了。PF 4.54 / 勝率60% / +150.6pips（10件LONG）。次タスク未定。**
-
----
-
-## #026シリーズ最終結果（#026d — 10件）
-
-| 指標 | #026d最終 | #018基準 |
+| # | 地雷 | 回避策 |
 |---|---|---|
-| 総トレード | 10件 | 20件 |
-| 勝率 | 60.0% | 55.0% |
-| PF | 4.54 | 5.32 |
-| MaxDD | 35.8p | 14.9p |
-| 総損益 | +150.6p | +91.6p |
-
-### #026シリーズ変更サマリ
-- #026a: 統一neck原則（SL直前の最後のSH）+ neck_1h/neck_4hカラム追加 + 1H n=3
-- #026b: exit_simulator.py新規（方式B: 独自決済ロジック・正式採用）
-- #026c: 指値方式（ENTRY_OFFSET_PIPS=7.0）
-- #026d: 4H構造優位性フィルター（neck_4h >= neck_1h）
+| 1 | neck_1h と neck_4h の混同（D-6・3 回再発）| neck_4h=半値決済 / neck_1h=窓特定+4H優位性 / neck_15m=エントリー |
+| 2 | 旧 NLM ID への接続試行 | 2d41d672-... は切り離し済・参照禁止 |
+| 3 | 分析ベースの取り違え | 最新は #026d（10 件）・#026b/c は旧版 |
+| 4 | 🤖 創作混入の誤訂正（D-12/D-13）| Phase 4 で訂正・即時訂正禁止 |
+| 5 | 責務分離の即断 | 「分離すればシンプル」と即断しない・ボス判断を仰ぐ |
 
 ---
 
-## 確定パラメータ（#026d時点）
+## 🔍 読み込み検証チェックリスト（10 問）
+
+以下に正しく答えられなければ読み込み不十分。再読込すること。
+
+| # | 問 | 答 |
+|---|---|---|
+| Q1 | stage2 半値決済トリガーは？ | neck_4h |
+| Q2 | 現在の最新結果は何件ベース？ | #026d / 10 件 |
+| Q3 | 決済エンジンはどのファイル？ | exit_simulator.py（方式 B）/ manage_exit() は使用禁止（D-8）|
+| Q4 | neck_15m の定義は？ | SL 直前（時系列で左側）の最後の SH（統一 neck 原則）|
+| Q5 | docs/ に日付付きファイルがあったら？ | 旧版・参照禁止・ボスに報告・archive 移動 |
+| Q6 | neck_1h の用途は？ | 窓特定アンカー + 4H 構造優位性フィルター基準値 |
+| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（NLM は凍結中・参照不可）|
+| Q8 | Trade_Brain と Trade_System の役割分担は？ | Brain=静的データ / System=動的ロジック / plotter.py は共存 |
+| Q9 | F-8 派生原則「共存保持」の発動 4 条件は？ | ①複数ルーツ関数 ②呼出経路完全分離 ③将来合流点 ④復元コスト発生 |
+| Q10 | NLM 現状は？ | 両 NLM 凍結中（ID 取得のみ・投入ゼロ）・凍結解除ボス指示待ち |
+
+---
+
+## 🗺️ 3 リポ体制・現在地スナップショット
+
+### Trade_System（動的ロジック側・Minato33440/Trade_System）
 
 ```
-DIRECTION_MODE      = 'LONG'
-ENTRY_OFFSET_PIPS   = 7.0     # 指値方式（#026c）
-N_1H_SWING          = 3       # 1H Swing粒度（#026a-v2）
-neck                = sh_before_sl.iloc[-1]  # 統一neck原則
-フィルター          = neck_4h >= neck_1h     # 4H構造優位性（#026d）
+状態     : Phase 1-2 完了（2026-04-20）・Phase 3 未着手（ボス判断待ち）
+最新点   : #026d 静的保持
+  PF 4.54 / 勝率 60.0% (10 件) / MaxDD 35.8 pips / +150.6 pips / LONG
+
+src/     : 現役 12 ファイル（CORE 6 + VIZ 3 + SCAN 1 + TEST 2）
+          + archive/ 4 ファイル
+          開始時 28 → 実効 16 ファイル（42.9% 削減）
+
+凍結     : backtest.py / entry_logic.py / exit_logic.py / swing_detector.py
+
+確定パラメータ:
+  DIRECTION_MODE     = 'LONG'
+  ENTRY_OFFSET_PIPS  = 7.0（指値・🟡 暫定）
+  N_1H_SWING         = 3
+  neck               = sh_before_sl.iloc[-1]（統一 neck 原則）
+  フィルター         = neck_4h >= neck_1h（4H 構造優位性・D-10）
+  Swing              : 4H n=3 / 1H n=3 / 15M n=3 / 5M n=2
+
+NLM      : REX_System_Brain (da84715f-...) 凍結中
+担当     : Rex-Planner（Sonnet）/ Evaluator（Opus）/ ClaudeCode
+```
+
+### Trade_Brain（静的データ側・Minato33440/Trade_Brain）
+
+```
+状態     : 分離完了（2026-04-18）/ SYSTEM_OVERVIEW / STRATEGY_WIKI_GUIDE 初版起草済
+構造     : logs/ (daily/weekly) + distilled/ + Strategy_Wiki/(骨組のみ) + nlm_sources/
+NLM      : REX_Trade_Brain (4abc25a0-...) 凍結中
+担当     : Advisor / Planner / ClaudeCode（Sonnet）※ Evaluator 関与せず
+運用     : WEEKLY_UPDATE = YYYY-M-DD [--NLM]
+未完了   :
+  - Strategy_Wiki 本体構築（骨組のみ完了）
+  - MONTHLY_DISTILLATION_WORKFLOW.md 未作成
+  - NLM_INGEST_WORKFLOW.md 未作成
+  - 初回 --NLM 投入（ボス判断待ち）
+```
+
+### Rex_Brain_Vault（ハブ層・Minato33440/REX_Brain_Vault）
+
+```
+状態     : 8 代目による Phase A' 実施（2026-04-23）
+
+wiki/ 構造（2026-04-23 時点）:
+  START_HERE.md              新スレ入口（100 行以内）
+  index.md (v2)              全ページ目次
+  log.md                     時系列ログ（追記のみ）
+  philosophy/                参考資料・Evaluator の気づきメモ
+  handoff/
+    latest.md                本ファイル（v6.1）
+    architecture_handoff.md  7 代目セッション記録（保全）
+  trade_system/              既存（adr_reservation / doc_map / concepts / 他）
+  trade_brain/               ⬜ 未構築（Phase D 着手対象）
+  cross/                     ⬜ 骨組のみ
+  entities/                  旧配置（Phase C で統合予定）
+  decisions/                 旧配置（Phase C で統合予定）
+
+NLM      : 両 NLM 横断参照想定だが現在凍結中
+担当     : 統括 Evaluator（全リポ整合性監査）
 ```
 
 ---
 
-## neck用途定義（最重要 — 地雷1の防止）
+## 📋 Phase 進行状況
+
+| Phase | 内容 | 状態 |
+|---|---|---|
+| Phase 1 | src/ 棚卸し・分類・Trade_Brain 移設 | ✅ 2026-04-20 |
+| Phase 2 | track_trades 隔離・plotter.py 共存確定 | ✅ 2026-04-20 |
+| Phase 3 | 責務別ディレクトリ化（src/core/ viz/ scan/ tests/）| ⬜ ボス判断待ち |
+| Phase 4 | D-12/D-13 裁量整合版実装訂正（REX_029+）| ⬜ Phase 3 後 |
+| Phase A | Vault v5 整備（7 代目）| ✅ 2026-04-22 |
+| **Phase A'** | **Vault 軽量化（8 代目）**| **✅ 2026-04-23** |
+| Phase B | REX_Wiki_Vault 構築（NLM 新規作成）| ⬜ ボス凍結解除待ち |
+| Phase C | Trade_System wiki 空ディレクトリ充填 | ⬜ 未着手 |
+| Phase D | Trade_Brain wiki 骨組み構築 | ⬜ 未着手 |
+| Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
+
+---
+
+## 🎯 次に実行すべき内容（優先度順）
+
+### 🔴 ボス判断待ち
+
+| # | 項目 | 決定が必要な内容 |
+|---|---|---|
+| 1 | Phase 3 着手可否 | Planner 起草 → Evaluator 承認 → ClaudeCode 実装 → #026d 数値不変検証 |
+| 2 | NLM 凍結解除タイミング | REX_Wiki_Vault 構築（Phase B）の前提条件 |
+| 3 | 新機能実装の優先順位 | ロット調整 / ボラ係数 / Trade_Brain 合流 のいずれか |
+
+### 🟡 統括 Evaluator が着手可能（ボス承認後）
+
+| # | 項目 | Phase | 見積 |
+|---|---|---|---|
+| 1 | `handoff/trade_system_brief.md` 新設 | Phase A' 追補 | 1 セッション |
+| 2 | `handoff/trade_brain_brief.md` 新設 | Phase A' 追補 | 1 セッション |
+| 3 | `trade_brain/_RUNBOOK.md` 先行作成（非対称性解消）| Phase D 準備 | 軽微 |
+| 4 | `index.md` / `CLAUDE.md` 更新（philosophy/ / START_HERE.md 反映）| 軽微 | 軽微 |
+| 5 | REX_Wiki_Vault 構築（NLM 新規作成 + 初期 Ingest）| Phase B | 1-2 セッション |
+| 6 | Trade_System wiki 空ディレクトリ充填（bug_patterns 等）| Phase C | 複数セッション |
+| 7 | wiki/entities + decisions の新配置統合 | Phase C | 軽微 |
+
+### 🟢 保留中
+
+- Layer 1/3/5 残 QA（MTF_INTEGRITY_QA.md 末尾）
+- MINATO_MTF_PHILOSOPHY.md 第 0 章追記（ボス判断時）
+- REX_027 Task A/B/C/D/E（ボス再開指示待ち）
+- D-11 / F-7 ADR 本文採番（REX_027 再開時）
+
+---
+
+## 🚀 ロール別起動プロンプト（ボスがコピペする分）
+
+### A. 統括 Evaluator（Claude.ai Opus）
 
 ```
-neck_15m — エントリートリガー（5M high >= neck+7pips で指値約定）
-neck_1h  — 窓特定アンカー（決済トリガーではない）
-neck_4h  — 半値決済トリガー（段階2: High >= neck_4h → 50%決済）
+このスレでは REX AI 3 リポ体制の統括 Evaluator として働いてほしい。
+
+⚠️ 作業開始前に以下を順番に読め:
+  ① C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md（新スレ最初の入口）
+  ② C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md（Vault 運用手順）
+  ③ C:\Python\REX_AI\REX_Brain_Vault\wiki\handoff\latest.md（本ファイル）
+
+読み込み完了後、latest.md の「読み込み検証チェックリスト」全 10 問に回答してから開始。
+
+担当範囲: Trade_System / Trade_Brain / Rex_Brain_Vault の整合性監査
+NLM:
+  REX_System_Brain : da84715f-9719-40ef-87ec-2453a0dce67e（凍結中）
+  REX_Trade_Brain  : 4abc25a0-4550-4667-ad51-754c5d1d1491（凍結中）
+  REX_Wiki_Vault   : 未作成（Phase B 着手対象）
+```
+
+### B. Trade_System Planner / Evaluator（Claude.ai Opus/Sonnet）
+
+```
+このスレでは Trade_System プロジェクトの {Planner/Evaluator} として働いてほしい。
+
+⚠️ 作業開始前に以下を順番に読め:
+  ① C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md（3 リポ現在地）
+  ② C:\Python\REX_AI\Trade_System\docs\SYSTEM_OVERVIEW.md（Trade_System 現状）
+  ③ C:\Python\REX_AI\Trade_System\docs\ADR.md（判断記録・F-8 3 原則）
+  ④ C:\Python\REX_AI\Trade_System\docs\Base_Logic\MINATO_MTF_PHILOSOPHY.md（裁量思想）
+  ⑤ C:\Python\REX_AI\Trade_System\docs\Base_Logic\MTF_INTEGRITY_QA.md（整合性 QA）
+
+NLM: REX_System_Brain（凍結中・クエリ不可）
+```
+
+### C. Trade_Brain Planner / ClaudeCode
+
+```
+このスレでは Trade_Brain プロジェクトの {Planner/ClaudeCode} として働いてほしい。
+
+⚠️ 作業開始前に以下を順番に読め:
+  ① C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md（3 リポ現在地）
+  ② C:\Python\REX_AI\Trade_Brain\CLAUDE.md（Trade_Brain 運用・RTK ルール）
+  ③ C:\Python\REX_AI\Trade_Brain\docs\SYSTEM_OVERVIEW.md（Trade_Brain 現状）
+  ④ C:\Python\REX_AI\Trade_Brain\docs\STRATEGY_WIKI_GUIDE.md（Wiki 構造）
+  ⑤ C:\Python\REX_AI\Trade_Brain\docs\WEEKLY_UPDATE_WORKFLOW.md（週末運用）
+
+NLM: REX_Trade_Brain（凍結中・クエリ不可）
+⚠️ Evaluator はこのリポに関与しない（役割分担）。
+```
+
+### D. 緊急用・最小起動
+
+```
+C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md を読んで現状把握せよ。
 ```
 
 ---
 
-## 決済ロジック（exit_simulator.py 方式B）
+## 🔗 関連文書
 
 ```
-初動SL: 15M ダウ崩れ → 全量損切
-段階1:  5M ダウ崩れ → 全量決済
-段階2:  High >= neck_4h → 50%決済 + 建値移動  ← neck_4h（neck_1hではない）
-段階3:  1H Close > 4H SH確定後 → 15Mダウ崩れで残り全量
-⚠️ exit_logic.py の manage_exit() は使わない（旧定義・凍結保持）
+Trade_System 側:
+  docs/SYSTEM_OVERVIEW.md                     — 現状スナップショット
+  docs/ADR.md                                 — F-8 3 原則
+  docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md    — 裁量思想一次情報源
+  docs/Base_Logic/MTF_INTEGRITY_QA.md         — 整合性 QA
+  docs/src_inventory.md                       — Phase 1-2 統合版
+  docs/Evaluator_HANDOFF.md                   — v4（Phase 3 引き継ぎ）
+
+Trade_Brain 側:
+  CLAUDE.md                                   — RTK ルール・週次運用
+  docs/SYSTEM_OVERVIEW.md                     — 現状
+  docs/STRATEGY_WIKI_GUIDE.md                 — Wiki 構造
+  docs/WEEKLY_UPDATE_WORKFLOW.md              — 週末運用 8 段階
+
+Vault 内（任意参照）:
+  wiki/trade_system/doc_map.md (v2)           — Trade_System 文書管理
+  wiki/trade_system/adr_reservation.md        — ADR 採番台帳
+  wiki/philosophy/                            — 参考資料・Evaluator の気づきメモ
+  wiki/handoff/architecture_handoff.md        — 7 代目セッション記録
 ```
 
 ---
 
-## 次タスク候補（ボス判断待ち）
-
-1. 15M neck検出バグ（#06型）— ボス指摘済み
-2. 4H SL検出精度改善（#07型の根本原因）
-3. 1H Plot + 15M窓オーバーレイのデバッグプロット
-4. IHS専用neck算出（IHS 0件化対応）
-5. 15M SH密集フィルター（20260113_0545対応）
-6. 5Mダウ崩れ判定の精度検証（stage1で7/10件処理される問題）
-
----
-
-## Evaluator引き継ぎ事項
-
-- ADR採番: 次の空き番号は D-11 / E-8 / F-7
-- adr_reservation.md: 全確定済み
-- pending_changes.md: 全#026項目✅完了
-- docs/運用ルール: 新規作成時に旧版をarchive/に必ず移動
-
----
-
-## 引き継ぎプロンプト（ボスがコピペする分 — これだけでOK）
-
-```
-このスレではREX Trade SystemプロジェクトのEvaluatorとして働いてほしい。
-
-⚠️ 作業開始前に以下を必ず順番に読め：
-  ① C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md（システム運用手順）
-  ② C:\Python\REX_AI\REX_Brain_Vault\wiki\handoff\latest.md（致命的地雷リスト）
-  読み込み完了後、「読み込み検証チェックリスト」の全7問に回答してから作業を開始すること。
-
-NLM: REX_Trade_Brain (2d41d672-f66f-4036-884a-06e4d6729866)
-```
+*発行: Rex-Evaluator (Opus 4.7) / 8 代目 / 2026-04-23*
+*前任: 7 代目 2026-04-22 / 6 代目 2026-04-20*

@@ -1,7 +1,7 @@
 # ADR 採番予約台帳 — Trade_System
 
 **運用者**: Rex-Evaluator
-**最終更新**: 2026-04-19
+**最終更新**: 2026-04-20
 **配置**: C:\Python\REX_AI\REX_Brain_Vault\wiki\trade_system\adr_reservation.md
 
 ---
@@ -33,9 +33,9 @@ F: 設計方針ガイド
 | A | A-6 | A-5 |
 | B | B-4 | B-3 |
 | C | C-5 | C-4 |
-| D | **D-14** | D-13（2026-04-19 予約） |
-| E | **E-9** | E-8（2026-04-19 予約） |
-| F | **F-9** | F-8（2026-04-19 予約） |
+| D | **D-14** | D-13（2026-04-20 採番完了） |
+| E | **E-9** | E-8（2026-04-20 採番完了） |
+| F | **F-9** | F-8（2026-04-20 採番完了） |
 
 ---
 
@@ -44,16 +44,16 @@ F: 設計方針ガイド
 本台帳で予約された番号は、ADR.md 本文に記述されるまで**予約扱い**。
 他の Evaluator が同じ番号を使わないための歯止めとして機能する。
 
-### 2026-04-19 REX_028 Phase 1 関連予約
+### 2026-04-19 REX_028 Phase 1 関連予約（うち D-12/D-13/E-8/F-8 は 2026-04-20 採番完了）
 
 | 番号 | 内容 | 担当 | 記述タイミング | 根拠文書 |
 |---|---|---|---|---|
 | D-11 | Trade_Brain 分離 + NLM RAG 全面再構築 | Advisor/Evaluator | REX_027 再開時 | REX_027_BOSS_DIRECTIVE.md v2 |
-| **D-12** | stage2 建値移動の 🤖 創作混入確定 | Evaluator | Phase 1 完了時 | MTF_INTEGRITY_QA.md Q6 |
-| **D-13** | stage3 1H実体確定の 🤖 創作混入確定 | Evaluator | Phase 1 完了時 | MTF_INTEGRITY_QA.md Q7 |
-| **E-8** | src/ 構造再編アプローチ（Phase 1-4） | Evaluator | Phase 1 完了時 | REX_028_spec.md |
+| ~~D-12~~ | ~~stage2 建値移動の 🤖 創作混入確定~~ | ~~Evaluator~~ | **2026-04-20 採番完了** | MTF_INTEGRITY_QA.md Q6 |
+| ~~D-13~~ | ~~stage3 1H実体確定の 🤖 創作混入確定~~ | ~~Evaluator~~ | **2026-04-20 採番完了** | MTF_INTEGRITY_QA.md Q7 |
+| ~~E-8~~ | ~~src/ 構造再編アプローチ（Phase 1-4）~~ | ~~Evaluator~~ | **2026-04-20 採番完了** | REX_028_spec.md |
 | F-7 | Vault 構造標準化 + RAG 管理方針 | Advisor/Evaluator | REX_027 再開時 | REX_027_BOSS_DIRECTIVE.md v2 |
-| **F-8** | 原則α/β/γ（裁量思想の3原則・設計方針ガイド） | Evaluator | Phase 1 完了時 | MTF_INTEGRITY_QA.md ボス追記 |
+| ~~F-8~~ | ~~原則α/β/γ（裁量思想の3原則・設計方針ガイド）~~ | ~~Evaluator~~ | **2026-04-20 採番完了** | MTF_INTEGRITY_QA.md ボス追記 |
 
 ### 予約内容の詳細
 
@@ -119,8 +119,14 @@ A-1 〜 A-5   2026-01〜 2026-03（詳細は ADR.md 参照）
 B-1 〜 B-3   2026-03
 C-1 〜 C-4   2026-03
 D-1 〜 D-10  2026-03〜 2026-04-17
+D-12 / D-13   2026-04-20（REX_028 Phase 1 完了時）
 E-1 〜 E-7   2026-03〜 2026-04-17
+E-8           2026-04-20（REX_028 Phase 1 完了時）
 F-1 〜 F-6   2026-04-17
+F-8           2026-04-20（REX_028 Phase 1 完了時）
+
+予約保持中（未記述・REX_027 再開待ち）:
+D-11 / F-7
 
 ---
 
@@ -140,6 +146,7 @@ F-1 〜 F-6   2026-04-17
 |---|---|---|
 | 2026-04-18 | Rex-Evaluator (Opus 4.6) | D-11 / F-7 予約 |
 | 2026-04-19 | Rex-Evaluator (Opus 4.7) | D-12 / D-13 / E-8 / F-8 予約（REX_028 Phase 1 関連） |
+| 2026-04-20 | Rex-Evaluator (Opus 4.7 / 新任) | D-12/D-13/E-8/F-8 採番完了・D-11/F-7 は予約保持継続 |
 
 ---
 
