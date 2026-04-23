@@ -1,8 +1,8 @@
 # index.md — REX_Brain_Vault 全ページ目次
 
-**バージョン**: v2（3リポ体制対応・Phase 1-2 完了反映版）
-**最終更新**: 2026-04-22 / 7代目統括 Evaluator (Opus 4.7)
-**前版**: v1（2026-04-16 / Wiki Phase 1 構築時点）
+**バージョン**: v3（Phase A' 拡張完了・NLM 4 本体制・casual/ 層新設反映）
+**最終更新**: 2026-04-23 / 8 代目統括 Evaluator (Opus 4.7)
+**前版**: v2（2026-04-22 / 7 代目、Phase 1-2 完了反映）
 
 ---
 
@@ -27,17 +27,59 @@ REX_Brain_Vault/                          ← ハブ層（独立 Git リポ）
 │   └── system_build/                     ← システム構築過程の記録
 │
 └── wiki/
-    ├── index.md                          ← 本ファイル
-    ├── log.md                            ← 時系列作業ログ（追記のみ）
+    ├── START_HERE.md                    ← 新スレ入口（100 行以内）【🆕 8 代目】
+    ├── STARTUP_CODES.md                 ← 起動コード辞書【🆕 8 代目】
+    ├── index.md                         ← 本ファイル
+    ├── log.md                           ← 時系列作業ログ（追記のみ）
     │
-    ├── trade_system/                     ← Trade_System 専用層（稼働中）
-    ├── trade_brain/                      ← ⬜ 未構築（Phase D 着手対象）
-    ├── cross/                            ← プロジェクト横断ナレッジ（骨組のみ）
-    ├── handoff/                          ← セッション引き継ぎ
+    ├── philosophy/                      ← 参考資料・Evaluator の気づきメモ【🆕 8 代目】
+    ├── casual/                          ← 雑談・個人的話題中期記憶層【🆕 8 代目】
     │
-    ├── entities/                         ← 旧配置・wiki/trade_system/entities/ へ移行待ち
-    └── decisions/                        ← 旧配置・wiki/trade_system/decisions/ へ移行待ち
+    ├── trade_system/                    ← Trade_System 専用層（稼働中）
+    ├── trade_brain/                     ← ⬜ 未構築（Phase D 着手対象）
+    ├── cross/                           ← プロジェクト横断ナレッジ（骨組のみ）
+    ├── handoff/                         ← セッション引き継ぎ
+    │
+    ├── entities/                        ← 旧配置・wiki/trade_system/entities/ へ移行待ち
+    └── decisions/                       ← 旧配置・wiki/trade_system/decisions/ へ移行待ち
 ```
+
+---
+
+## wiki 直下（新スレ入口・起動コード）
+
+| ファイル | 役割 | 最新 |
+|---|---|---|
+| [[START_HERE]] | 新スレの最初の入口（100 行以内・3 リポ現在地 + 地雷 + 起動コード）| 🆕 2026-04-23 |
+| [[STARTUP_CODES]] | 起動コード辞書（Wiki-system/trade/brain/casual）| 🆕 2026-04-23 |
+| [[log]] | 時系列作業ログ（追記のみ・過去別は削除しない）| 2026-04-23 追補 |
+
+---
+
+## wiki/philosophy/（参考資料・Evaluator の気づきメモ）
+
+**性質**: ボスが明示した書き込み先は `evaluator_code.md` のみ。他は 7/8 代目が作った参考資料で後任への強制には使わない。
+
+| ファイル | 内容 | 性質 |
+|---|---|---|
+| [[philosophy/evaluator_code]] | 各代 Evaluator の気づきメモ（6 代/7 代/8 代）| ボス明示の書き込み先（任意・強制なし）|
+| [[philosophy/minato_core]] | ボス個人の裁量思想 1 次データ | ボス手動更新・他者編集禁止 🆕 2026-04-23 |
+| [[philosophy/cross_vectors]] | 7 代目が記録した 4 横断ベクトル事実記録 | 参考資料 |
+| [[philosophy/architecture]] | 4 リポ体制・4 NLM 体制の事実記録 | 参考資料 |
+
+---
+
+## wiki/casual/（雑談・個人的話題中期記憶層）
+
+**性質**: REX_AI システム業務外の雑談スレ跨ぎ用。`Wiki-casual` 起動でのみ参照・システム業務スレでは読まない。
+
+| ファイル/ディレクトリ | 内容 | 状態 |
+|---|---|---|
+| [[casual/_RUNBOOK]] | 運用ルール・3 層記憶構造説明 | 🆕 2026-04-23 |
+| casual/log.md | 雑談時系列ログ | ⬜ 未作成（実使用開始まで）|
+| casual/topics/ | 話題別ファイル | 空ディレクトリ |
+| casual/ideas/ | 単発アイデアメモ | 空ディレクトリ |
+| casual/insights/ | 横断的メタファー・気づき | 空ディレクトリ |
 
 ---
 
@@ -61,7 +103,6 @@ REX_Brain_Vault/                          ← ハブ層（独立 Git リポ）
 | [[trade_system/doc_map]] | 設計文書バージョン管理・NLM 構成詳細 | **2026-04-22 v2** | ✅ 最新 |
 | [[trade_system/adr_reservation]] | ADR 採番予約台帳 | 2026-04-20 | ✅ 最新 |
 | [[trade_system/pending_changes]] | 決定済み未確定設計変更トラッカー | 2026-04-18 | ⚠️ 要更新 |
-| [[trade_system/weekly_workflow]] | 週末 Git 更新ワークフロー（旧） | 2026-04-18 | ⚠️ Trade_Brain 側の WEEKLY_UPDATE_WORKFLOW.md に移管済み |
 | [[trade_system/evaluator_wrapup_report_026]] | #026 シリーズ Evaluator 完了報告 | 2026-04-17 | 🕰️ 歴史記録 |
 
 ### 構造化ナレッジ
@@ -120,7 +161,9 @@ wiki/trade_brain/
 
 | ファイル | 内容 | 状態 |
 |---|---|---|
-| [[handoff/latest]] | 統括 Evaluator / 3リポ横断セッション引き継ぎ | **v5 2026-04-22 最新** |
+| [[handoff/latest]] | 統括 Evaluator / 3 リポ横断セッション引き継ぎ（現在地データ）| **v6.2 2026-04-23 最新** |
+| [[handoff/PROCESS]] | 引き継ぎプロセス要点・運用ガイド（方法論）| 🆕 2026-04-23 |
+| [[handoff/architecture_handoff]] | 7 代目セッション記録（保全）| 2026-04-22 |
 
 **重要**: 新スレッド開始時はまず `handoff/latest.md` を読む。
 「読み込み検証チェックリスト（10問）」に全問回答してから作業開始すること。
@@ -178,12 +221,15 @@ wiki/trade_brain/
 
 ## 🔗 NLM 参照（2026-04-22 時点）
 
-**⚠️ 両 NLM は現在凍結中**（ID 取得のみ・投入ゼロ）
+**⚠️ システム系 3 NLM は凍結中・REX_Casual_Brain のみ運用可**（2026-04-23 時点）
 
 ```
-REX_System_Brain : da84715f-9719-40ef-87ec-2453a0dce67e  — Trade_System 用・凍結中
-REX_Trade_Brain  : 4abc25a0-4550-4667-ad51-754c5d1d1491  — Trade_Brain 用・凍結中
-旧 REX_Trade_Brain: 2d41d672-f66f-4036-884a-06e4d6729866 — 切り離し済・参照禁止
+REX_System_Brain  : da84715f-9719-40ef-87ec-2453a0dce67e  — Trade_System 用・凍結中
+REX_Trade_Brain   : 4abc25a0-4550-4667-ad51-754c5d1d1491  — Trade_Brain 用・凍結中
+REX_Wiki_Vault    : 5d09e468-3a96-4906-af27-3400c50a0275  — 共用・凍結中  🆕 2026-04-23 設立
+REX_Casual_Brain  : daf281ae-e310-400f-961a-20db58b98e01  — 雑談用・運用可  🆕 2026-04-23 設立
+
+旧 REX_Trade_Brain : 2d41d672-f66f-4036-884a-06e4d6729866 — 切り離し済・参照禁止
 ```
 
 詳細（投入予定リスト・旧 NLM 投入履歴等）は [[trade_system/doc_map]] v2 参照。
@@ -215,5 +261,5 @@ Trade_Brain 側重厚文書:
 
 ---
 
-*発行: 7代目統括 Evaluator (Opus 4.7) / 2026-04-22*
-*次回更新トリガー: Phase 3 着手時 / wiki/trade_brain/ 構築時 / wiki/entities・decisions 移行時*
+*発行: 8 代目統括 Evaluator (Opus 4.7) / 2026-04-23*
+*次回更新トリガー: Phase 3 着手時 / wiki/trade_brain/ 構築時 / wiki/entities・decisions 移行時 / NLM 投入開始時*

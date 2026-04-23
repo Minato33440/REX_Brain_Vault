@@ -1,8 +1,12 @@
-# 裁量思想 — 参照リンク集
+# 裁量思想 — ボス個人の 1 次データ
 
-**位置付け**: ボス裁量思想の**参考リンク集**。一次情報源は Trade_System 側。
-**本ファイルの性質**: Evaluator が参照しやすくするためのメモ。公式ドキュメントではない。
-**原本（改変禁止）**: `Trade_System/docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md` / `MTF_INTEGRITY_QA.md`
+**ファイル管理権**: ボス（湊ミナト）
+**性質**: ボス個人の裁量思想の **1 次データ**。今後ボス手動更新予定（2026-04-23 ボス指示）
+**Evaluator の扱い**: 編集禁止・参照のみ。気づきがあれば `philosophy/evaluator_code.md` に書く（本ファイルには書かない）
+**原本連携**: `Trade_System/docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md` / `MTF_INTEGRITY_QA.md`
+
+> ⚠️ 本ファイルはボスが直接編集する個人的な 1 次データ層。Evaluator・Planner・ClaudeCode は読み取り専用とし、内容を勝手に書き換えない。
+> 8 代目が縮退させた以下の内容はあくまで初期叩き台。ボスが必要に応じて自由に再構成してよい。
 
 ---
 

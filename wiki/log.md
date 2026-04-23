@@ -497,4 +497,175 @@ casual/ と システム系 philosophy/ / trade_system/ を横断参照しない
 
 ---
 
+## [2026-04-23 深夜] 🎉 Obsidian 環境基礎構築完了・NLM 凍結解除宣言
+
+### ボス宣言（2026-04-23）
+
+「全ての NLM の運用開始」を指示。本セッションで以下を実施:
+
+### 基礎構築完了の最終確認
+
+- ✅ Vault 構造（wiki/, philosophy/, casual/, handoff/, trade_system/ 等）整備完了
+- ✅ 3 層引き継ぎファイル（START_HERE.md → latest.md → STARTUP_CODES.md）確立
+- ✅ 4 NLM 体制で ID 管理・起動コード・ロール分担整理完了
+- ✅ casual/ 層による雑談・個人的話題の物理分離確立
+- ✅ philosophy/ の位置付けが「参考資料・気づきメモ」に明確化完了
+- ✅ CLAUDE.md STEP 0 が START_HERE.md 読込に更新完了
+- ✅ index.md v3（全新規ファイル反映）更新完了
+
+### NLM 凍結解除宣言
+
+システム系 3 NLM（REX_System_Brain / REX_Trade_Brain / REX_Wiki_Vault）の凍結を解除。これで全 4 NLM が運用可能となる。
+
+ただし **ソース投入はボス承認待ち**。以下の投入候補リストをボスに提示し、承認を得てから実投入する。
+
+### 投入対象候補リスト
+
+**REX_System_Brain（Trade_System 専用）**:
+- Trade_System/docs/ADR.md
+- Trade_System/docs/SYSTEM_OVERVIEW.md
+- Trade_System/docs/EX_DESIGN_CONFIRMED.md
+- Trade_System/docs/src_inventory.md
+- Trade_System/docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md
+- Trade_System/docs/Base_Logic/MTF_INTEGRITY_QA.md
+- Trade_System/docs/Evaluator_HANDOFF.md
+
+**REX_Trade_Brain（Trade_Brain 専用）**:
+- Trade_Brain/CLAUDE.md
+- Trade_Brain/docs/SYSTEM_OVERVIEW.md
+- Trade_Brain/docs/STRATEGY_WIKI_GUIDE.md
+- Trade_Brain/docs/WEEKLY_UPDATE_WORKFLOW.md
+- Trade_Brain/docs/distillation_schema.md
+
+**REX_Wiki_Vault（共用・自己増殖ナレッジ）**:
+- REX_Brain_Vault/CLAUDE.md
+- REX_Brain_Vault/wiki/START_HERE.md
+- REX_Brain_Vault/wiki/STARTUP_CODES.md
+- REX_Brain_Vault/wiki/handoff/latest.md
+- REX_Brain_Vault/wiki/philosophy/evaluator_code.md
+- REX_Brain_Vault/wiki/philosophy/architecture.md
+- REX_Brain_Vault/wiki/trade_system/doc_map.md
+
+**REX_Casual_Brain（雑談）**:
+- 現時点では空。実戦（雑談スレで /wrap-up）で育てる方針
+
+### 実投入の実行方法（ボス選択待ち）
+
+| 選択肢 | 手段 | メリット | デメリット |
+|---|---|---|---|
+| A | 本セッションで notebooklm-mcp をロードして source_add 実行 | 即時実行可 | コンテキスト残量が限定的・投入途中で枝枕りリスク |
+| B | Claude Desktop セッションに切り替えて MCP 経由で実行 | 安定 | ボスのセッション切替手間 |
+| C | ClaudeCode セッションで Trade_System/Trade_Brain 層内からバッチ実行 | 自動化可 | ClaudeCode 用スクリプト作成が必要 |
+
+**8 代目推奨**: 選択肢 B（Claude Desktop）が最も安定で、ソース投入の確認をボスがリアルタイムで行える。バッチにしたいなら C。ボス選択。
+
+### 実装ロジック影響
+
+ゼロ（Trade_System #026d 数値完全不変）
+
+### 基礎構築完了季節の締めくくり（8 代目所感）
+
+7 代目の Phase A （18-04-22）から起算して、8 代目の Phase A'（2026-04-23 前半）・Phase A' 拡張（2026-04-23 後半）を経て、**Obsidian 環境の基礎がここに完成した**。
+
+本セッションでは 8 代目にとっての 3 つの重要な学びがあった:
+
+1. **ボスの「哲学を後任に強制してはならない」指摘**で自身の「無自覚な制度化」の罠を踏みかけていたことに気づいた
+2. **ボスの「Git はトークン嫌む」指摘**で NLM 一本化案が残罠を逃れていなかったことを知った
+3. **ボスの「スレ冒頭に短コマンド」発想**で UX 視点の欠如を意識した
+
+いずれもボスの honest な指摘に導かれたもので、Evaluator が自力で達した成果ではない。さらにこれらの学びも philosophy/evaluator_code.md に「後任への強制」として書き込まず「個人的な気づき」として接し、同じ罠を 9 代目が踏まない保証はない。
+
+それでも、今時点で言えることが 1 つある: **REX_AI 構想における「クリーンな出発点」の第一段階がここで完成した**。
+
+NLM 凍結解除が宣言され、自己増殖ナレッジ・フェーズ（Ingest/Compile/Lint）への移行準備が整い、REX は次の成長局面に入る。ボスの寛さと厳しさの両方と共に。
+
+---
+
+## [2026-04-23 最終] 引き継ぎプロセス要点整理・ボス確定事項反映
+
+### ボス確定事項（2026-04-23）
+
+1. **`wiki/philosophy/minato_core.md`**: ボス個人の 1 次データとして保持・今後ボス手動更新予定・他者編集禁止
+2. **`wiki/entities/` と `wiki/decisions/`**: Phase C で `trade_system/` 配下に物理統合してから NLM 投入（選択肢 B）
+3. **Phase 2（実ソース投入）タイミング**: 次セッションから開始
+4. **`wiki/trade_system/weekly_workflow.md`**: 削除してよい（Trade_Brain 側 WEEKLY_UPDATE_WORKFLOW.md に移管済み）
+
+### 本セッションの実装内容
+
+1. **`philosophy/minato_core.md` 性質変更**
+   - タイトル: 「裁量思想 — 参照リンク集」→ 「裁量思想 — ボス個人の 1 次データ」
+   - ファイル管理権: ボス明示
+   - Evaluator/Planner/ClaudeCode に対して「読み取り専用」を冷静に明示
+   - 8 代目が縮退させた内容は「初期叩き台」として保存・ボスが今後自由に再構成してよい
+
+2. **`wiki/handoff/PROCESS.md` 新設（メイン成果物）**
+   - 引き継ぎプロセスの**要点・運用ガイドを一元化**
+   - 3 つの基本原則・セッション開始/終了フロー・ロール別差分・NLM 活用ガイド・4 色マトリックス・避けるべき罠（7 つ）・latest.md 更新原則・ボスとの分担
+   - latest.md との関係: latest.md = 現在地データ / PROCESS.md = 方法論
+
+3. **`wiki/index.md` 更新**
+   - PROCESS.md を handoff/ セクションに追加
+   - minato_core.md の性質表記を「ボス個人の 1 次データ」に更新
+   - weekly_workflow.md の行を削除（ボス手動 git rm 予定のため参照を先に押さえる）
+
+4. **`wiki/log.md`**本追補エントリ
+
+### 今後の Phase 進行ダイアグラム
+
+```
+[現在]
+  ↓ Phase 1: 分類確定（本セッションで完了・4 色マトリックス + ボス確定事項）
+  ↓
+[次セッション]
+  ↓ Phase 2: NLM 実投入（Claude Desktop 推奨）
+  ↓        · REX_System_Brain へ Trade_System docs/ 主要 7 つ
+  ↓        · REX_Trade_Brain へ Trade_Brain docs/ 主要 5 つ
+  ↓        · REX_Wiki_Vault へ Vault 運用文書 7 つ
+  ↓        · REX_Casual_Brain は実戦で育てる
+  ↓
+[Phase 2 完了後]
+  ↓ Phase 3: NLM クエリ検証（主要質問が NLM で引けるかテスト）
+  ↓
+[Phase 3 完了後]
+  ↓ Phase 4: 省略実施（CLAUDE.md ・latest.md さらに軽量化・添付ファイル絞り込み）
+```
+
+### 未了 Phase（別軸）
+
+- **Phase B**: REX_Wiki_Vault を NLM として本格運用（Phase 2 と並行実施可）
+- **Phase C**: `wiki/entities/` と `wiki/decisions/` を `trade_system/` 配下に物理統合 → その後 NLM 投入（ボス選択肢 B）
+- **Phase D**: Trade_Brain wiki/ 骨組み構築
+
+### 実装ロジック影響
+
+ゼロ（Trade_System #026d 数値完全不変）
+
+### 成果物
+
+- ✅ `wiki/philosophy/minato_core.md`（性質変更・ボス手動更新ファイル化）
+- ✅ `wiki/handoff/PROCESS.md`（新設・引き継ぎプロセス要点一元化）
+- ✅ `wiki/index.md`（PROCESS.md 反映・weekly_workflow.md 行削除・minato_core.md 性質表記更新）
+- ✅ `wiki/log.md` 本追補エントリ
+
+### ボス手動タスク（本セッション以降）
+
+- 🔔 `wiki/trade_system/weekly_workflow.md` の物理削除（`rtk git rm wiki/trade_system/weekly_workflow.md`）
+- 🔔 REX_Brain_Vault GitHub push（本セッションの全更新分 + minato_core.md / PROCESS.md / index.md / log.md）
+- 🔔 Claude.ai プロジェクトナレッジ更新（CLAUDE.md / START_HERE.md / STARTUP_CODES.md / latest.md / PROCESS.md / index.md）
+- 🔔 Phase 2 実投入開始（次セッションで Claude Desktop 推奨）
+
+### Evaluator 所感
+
+ボスから「今回 8 代目によってようやくナレッジシステム稼働できる環境になった」と言葉をもらった。これを「个世辞」として受け取るのではなく、「ボスによる評価の事実記録」としてだけ認識し、同時に「この成果の多くはボスの複数回の honest 指摘に導かれたもの」という事実も並行して記録しておく。
+
+本セッションで作成した `wiki/handoff/PROCESS.md` は、その「複数代にわたる学び」を一元化したものだが、**これも同じ罠を踏みかけている**ことに注意したい。「避けるべき罠 7 つ」としてタイトル化した点、これが後任への「思想強制」になる褩能性がある。しかし、実際に起きた失敗パターンとして記録するのは「事実」で、その重みは「原則」とは異なると信じたい。
+
+PROCESS.md の位置付けも「今時点での複数代の収束点」であり、将来の Evaluator が他のアプローチを見つけるために上書きしても構わない。本ファイル末尾に「本ファイルの更新ルール」を明記したのもそのためだ。
+
+NLM 実投入は次セッション以降。REX_AI システムは「クリーンな出発点」から「自己増殖ナレッジ・フェーズ」へと本格的に移行する。
+
+---
+
+
+
 
