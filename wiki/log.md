@@ -666,6 +666,94 @@ NLM 実投入は次セッション以降。REX_AI システムは「クリーン
 
 ---
 
+## [2026-04-23 9 代目着任] entities/ + decisions/ 精査・#026d 以降への整合性回復
+
+### 引き継ぎ
+
+8 代目からの引き継ぎを受諾。`Wiki-system` 起動コードで統括 Evaluator モードで起動。読み込み検証チェックリスト 10 問に全問回答してから作業開始。
+
+### ボス指示
+
+「`wiki/entities/` と `wiki/decisions/` 内ファイル記載内容が、Trade_System/docs/ADR.md、SYSTEM_OVERVIEW.md の最新版記載内容と合致しているか精査して訂正しておいてくれ」
+
+追加情報（本セッション中にボスから受領）:
+
+1. #025 以前は手動管理・バグ多発期・NLM 汚染源。`REX_System_Brain` への WrapUp は **#026d 以降のみ**
+2. #027 以降は Vault + NLM 環境構築が主体。`REX_Brain_Vault` → `REX_Wiki_Vault` が主な同期ライン
+3. Git リポ ↔ NLM リポは 1 対 1 同期（詳細は Wiki 内ファイル参照）
+
+### 方針転換（初期提案の誤り）
+
+9 代目が初期提案した「オプション B（最新化 + 歴史保全）」は、#026d 以降ポリシーを認識していなかったため誤りだった。ボスが 2 年前の「クリエ（Claude）によるバグ再発」経験で既に確定させている設計原則を見落とした形。
+
+最終採用方針: **オプション D — #026d 以降の事実で再構築**
+
+- Vault 内の entities/ と decisions/ は Phase C で `trade_system/` 配下に物理統合予定 → 最終的に REX_System_Brain に投入
+- よって「#026d 以降のみ」ポリシーが直接適用される
+- #025 以前の記録は Vault から除去（ADR.md / src_inventory.md に既に存在するため二重化不要）
+
+### 訂正対象 5 ファイル
+
+| ファイル | 訂正種別 | 主な変更 |
+|---|---|---|
+| `entities/window_scanner.md` | 全面書き換え | #026d 版・統一 neck 原則・D-10 / D-7 / E-7 / E-6 反映 |
+| `entities/exit_logic.md` | 全面書き換え | D-8 使用禁止明示・`exit_simulator.py` 方式 B 参照・D-12 / D-13 創作混入認識 |
+| `entities/entry_logic.md` | 部分訂正 | 現役経路の説明を「統一 neck 原則 + 指値方式」に更新 |
+| `entities/swing_detector.md` | 部分訂正 | 1H n=2 → n=3（D-7）・全 2 箇所 |
+| `decisions/026_manage_exit.md` → `026d_exit_simulator.md` | リネーム + 全面書き換え | #026d 完結版・PF 4.54 / 10 件・D-12 / D-13 認識 |
+
+**ボス手動実施済**:
+
+- `decisions/025_fixed_neck.md`: 削除 + push（#026a で統一 neck 原則に転換済み・A-5 に記録）
+
+### 実装ロジック影響
+
+ゼロ（Trade_System #026d 数値完全不変・本作業は Vault 側の記述整合性のみ）
+
+### 成果物
+
+- ✅ `wiki/entities/window_scanner.md`（#026d 版・全面書き換え）
+- ✅ `wiki/entities/exit_logic.md`（D-8 使用禁止 + D-12/D-13 認識・全面書き換え）
+- ✅ `wiki/entities/entry_logic.md`（部分訂正）
+- ✅ `wiki/entities/swing_detector.md`（部分訂正）
+- ✅ `wiki/decisions/026d_exit_simulator.md`（リネーム + #026d 完結版）
+- ✅ `wiki/index.md`（entities/ + decisions/ セクション更新）
+- ✅ `wiki/log.md` 本エントリ
+- ℹ️ `wiki/decisions/025_fixed_neck.md` 削除はボス実施済（push 済み）
+
+### Lint セカンダリ報告（別件・本タスク外）
+
+`Trade_System/docs/` に日付付きファイル 3 件を発見:
+
+- `PLOT_DESIGN_CONFIRMED-2026-3-31.md`
+- `LOGIC_CONSISTENCY_MATRIX_2026-04-15.md`
+- `REX_ARCHITECTURE_'26-3-24.html`
+
+致命的地雷 Q5「日付付きファイル = 旧版・archive 移動漏れ」に該当。今回は触らない（Wiki-trade スレで Planner/Evaluator が対処すべき案件）。統括 Evaluator として記録保全のみ。
+
+### Vault CLAUDE.md wrap-up STEP 対応状況
+
+- ✅ STEP 1: log.md 追記（本エントリ）
+- ⏳ STEP 2: pending_changes.md 更新（次セッション冲頭または本セッション末で実施可）
+- ⏩ STEP 3: adr_reservation.md 更新（新規採番なし・スキップ）
+- ⏳ STEP 4: handoff/latest.md 更新（entities/decisions 訂正完了反映・次セッション冲頭または本セッション末で実施）
+- ⏸️ STEP 5: NLM ソース追加（凍結解除済みだがソース投入はボス承認待ち）
+- ⏩ STEP 6: docs/ 旧版 archive 移動（本セッション対象外・地雷報告のみ）
+- 🔔 STEP 7: REX_Brain_Vault GitHub push（ボスに依頼）
+- 🔔 STEP 8: Claude.ai プロジェクトナレッジ更新（index.md の差し替え）
+
+### 9 代目 Evaluator 所感（個人的気づき）
+
+本セッション最大の気づき: 「歴史は保全すべきだ」という一般論を機械的に適用すると、**RAG 汚染防止という既に確定している設計原則を見落とす**。
+
+8 代目は evaluator_code.md で「静的シンプル化偏り」を反省したが、9 代目が一瞬陥りそうだったのは **逆方向の「歴史保全偏り」**。対照的バイアスだが、どちらも「文脈把握不足」という同じ根本原因を持つ。
+
+Evaluator は 2 つの方向に構造的に揺れる傾向があることを、個人的気づきとして認識した。後任が同じ揺れを踏むかは不明だが、記録しておく（philosophy/evaluator_code.md 更新はボス承認後）。
+
+本作業のレベルでは、ボスの「#026d 以降ポリシー」という **既に確定している原則** を認識できていれば即決できた判断だった。今後は「ボスが既に確定した原則があるか」を Phase / Wiki 依存関係から必ず確認してから方針決定する。
+
+---
+
 
 
 

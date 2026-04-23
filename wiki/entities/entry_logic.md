@@ -1,7 +1,7 @@
 # entry_logic.py
 
-**状態**: ✅ #018完了・**変更凍結**  
-**最終更新**: 2026-03-31
+**状態**: ✅ #018 完了・**変更凍結**  
+**最終更新**: 2026-04-20（REX_028 Phase 1-2 完了・現役利用範囲を反映）
 
 ---
 
@@ -50,7 +50,7 @@
 
 ---
 
-## エントリー条件（旧版backtest.py用）
+## エントリー条件（旧版 backtest.py 用）
 
 ```
 優位性★★★: fib_pct <= 0.55
@@ -58,4 +58,24 @@
             かつ sl_last >= support_1h
 ```
 
-> window_scanner.py では独自のネック計算（sh_vals.iloc[0]）を使用
+> ⚠️ **現役 #026d 経路**: `window_scanner.py` は本ファイルから `check_15m_range_low()` のみ呼び出し、
+> neck 計算は **統一 neck 原則** `sh_before_sl.iloc[-1]` を独自に実施（A-5 / E-7 / F-6）。
+> エントリー判定は **指値方式**（`neck_15m + ENTRY_OFFSET_PIPS=7.0`）で行われ、
+> 本ファイルの `evaluate_entry()` は現役ロジックでは使用されない（E-7）。
+
+---
+
+## 関連 ADR
+
+- **A-5** — neck 選択の後期バイアス → 統一 neck 原則への転換
+- **D-9** — WICKTOL_PIPS → ENTRY_OFFSET_PIPS 置換
+- **E-7** — 指値方式への転換（#026c 確定）
+- **F-3** — 関数の責務を単一に（`check_15m_range_low()` → パターンラベル取得のみ）
+- **F-4** — 凍結ファイル変更ポリシー
+- **F-6** — 各 TF SH/SL 目的定義
+
+## 関連文書
+
+- Trade_System/docs/ADR.md
+- Trade_System/docs/SYSTEM_OVERVIEW.md
+- Trade_System/docs/EX_DESIGN_CONFIRMED.md

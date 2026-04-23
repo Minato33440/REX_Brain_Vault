@@ -174,12 +174,13 @@ wiki/trade_brain/
 
 | ファイル | 内容 | 移行先 |
 |---|---|---|
-| [[entities/window_scanner]] | 窓ベーススキャナー（#025 完了・#026d 拡張） | → trade_system/entities/ |
-| [[entities/entry_logic]] | エントリーロジック（#018 凍結） | → trade_system/entities/ |
-| [[entities/exit_logic]] | 4段階決済ロジック（#009 確定・方式 B 迂回中） | → trade_system/entities/ |
-| [[entities/swing_detector]] | Swing 検出パラメータ一覧（1H n=3 変更確定） | → trade_system/entities/ |
+| [[entities/window_scanner]] | 窓スキャナー（#026d 拡張・統一 neck・D-10 フィルター・指値方式） | → trade_system/entities/ |
+| [[entities/entry_logic]] | エントリーロジック（#018 凍結・現役は check_15m_range_low のみ） | → trade_system/entities/ |
+| [[entities/exit_logic]] | 決済ロジック（#009 凍結・D-8 使用禁止・現役は exit_simulator.py 方式 B） | → trade_system/entities/ |
+| [[entities/swing_detector]] | Swing 検出パラメータ（#020 凍結・1H n=3 確定）| → trade_system/entities/ |
 
-**扱い**: Phase C で `wiki/trade_system/entities/` に統合予定。それまで旧配置で保全。
+**扱い**: Phase C で `wiki/trade_system/entities/` に統合予定。それまで旧配置で保全。  
+**2026-04-23 9 代目更新**: 4 ファイル全て ADR.md / SYSTEM_OVERVIEW.md 最新版（#026d / D-7 / D-8 / D-10 / D-12 / D-13 / E-6 / E-7 / F-6 / F-8）に整合済み。歴史的記録（#025 以前の内容）は除去済み（RAG 汚染防止・歴史は ADR.md / src_inventory.md に残す）。
 
 ---
 
@@ -187,10 +188,12 @@ wiki/trade_brain/
 
 | ファイル | 内容 | 移行先 |
 |---|---|---|
-| [[decisions/025_fixed_neck]] | 固定ネック原則（sh_vals.iloc[0]）の設計根拠 | → trade_system/decisions/ |
-| [[decisions/026_manage_exit]] | 決済統合の設計方針・完了条件 | → trade_system/decisions/ |
+| [[decisions/026d_exit_simulator]] | #026d 完結版（exit_simulator.py 方式 B・PF 4.54 / 10 件・D-12/D-13 創作混入認識） | → trade_system/decisions/ |
 
-**扱い**: Phase C で `wiki/trade_system/decisions/` に統合予定。それまで旧配置で保全。
+**扱い**: Phase C で `wiki/trade_system/decisions/` に統合予定。それまで旧配置で保全。  
+**2026-04-23 9 代目更新**:  
+- `025_fixed_neck.md` 削除（ボス実施済・#026a で統一 neck 原則に転換済み・ADR A-5 参照）
+- `026_manage_exit.md` → `026d_exit_simulator.md` にリネーム + #026d 完結版として全面書き換え
 
 ---
 

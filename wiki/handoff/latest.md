@@ -1,6 +1,7 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
-# バージョン: v6.2（NLM 4 本体制反映・起動コード辞書・casual/ 層新設反映）
-# 更新: 2026-04-23 / 8 代目 Evaluator (Claude Opus 4.7)
+# バージョン: v6.3（entities/decisions 整合性回復反映・pending_changes.md 最新化反映）
+# 更新: 2026-04-23 / 9 代目 Evaluator (Claude Opus 4.7)
+# 前版: v6.2 / 8 代目 2026-04-23
 
 ---
 
@@ -34,10 +35,10 @@
 | Q4 | neck_15m の定義は？ | SL 直前（時系列で左側）の最後の SH（統一 neck 原則）|
 | Q5 | docs/ に日付付きファイルがあったら？ | 旧版・参照禁止・ボスに報告・archive 移動 |
 | Q6 | neck_1h の用途は？ | 窓特定アンカー + 4H 構造優位性フィルター基準値 |
-| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（全 4 NLM 運用可だがソース投入前のためクエリ回答は空または浅い）|
+| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（全 4 NLM 凍結解除済・ソース投入はボス承認待ち、そのうち REX_System_Brain は **#026d 以降のみ投入**）|
 | Q8 | Trade_Brain と Trade_System の役割分担は？ | Brain=静的データ / System=動的ロジック / plotter.py は共存 |
 | Q9 | F-8 派生原則「共存保持」の発動 4 条件は？ | ①複数ルーツ関数 ②呼出経路完全分離 ③将来合流点 ④復元コスト発生 |
-| Q10 | NLM 現状は？ | **2026-04-23 凍結解除宣言・全 4 NLM 運用可能（ソース投入はボス承認待ち）** |
+| Q10 | NLM 現状は？ | **2026-04-23 凍結解除宣言・全 4 NLM 運用可能（ソース投入はボス承認待ち、REX_System_Brain は #026d 以降のみ投入ポリシー）** |
 
 ---
 
@@ -94,13 +95,13 @@ wiki/ 構造（2026-04-23 時点）:
   log.md                     時系列ログ（追記のみ）
   philosophy/                参考資料・Evaluator の気づきメモ
   handoff/
-    latest.md                本ファイル（v6.2）
+    latest.md                本ファイル（v6.3）
     architecture_handoff.md  7 代目セッション記録（保全）
   trade_system/              既存（adr_reservation / doc_map / concepts / 他）
   trade_brain/               ⬜ 未構築（Phase D 着手対象）
   cross/                     ⬜ 骨組のみ
-  entities/                  旧配置（Phase C で統合予定）
-  decisions/                 旧配置（Phase C で統合予定）
+  entities/                  旧配置（✅ #026d 以降に整合済・9 代目 2026-04-23）・Phase C で trade_system/ へ物理統合予定
+  decisions/                 旧配置（✅ #026d 完結版 1 件・025_fixed_neck はボス削除済）・Phase C で trade_system/ へ物理統合予定
 
 NLM      : 下記 4 NLM への横断参照想定（全て運用解凍 🆕 2026-04-23）
            ・REX_System_Brain  : da84715f-... （ソース投入待ち）
@@ -122,8 +123,9 @@ NLM      : 下記 4 NLM への横断参照想定（全て運用解凍 🆕 2026-
 | Phase 4 | D-12/D-13 裁量整合版実装訂正（REX_029+）| ⬜ Phase 3 後 |
 | Phase A | Vault v5 整備（7 代目）| ✅ 2026-04-22 |
 | **Phase A'** | **Vault 軽量化（8 代目）**| **✅ 2026-04-23** |
-| Phase B | REX_Wiki_Vault 構築（NLM 新規作成）| ⬜ ボス凍結解除待ち |
-| Phase C | Trade_System wiki 空ディレクトリ充填 | ⬜ 未着手 |
+| **Phase A''** | **entities/decisions 整合性回復（9 代目）**| **✅ 2026-04-23** |
+| Phase B | REX_Wiki_Vault への初期 Ingest（NLM 設立済・ソース投入待ち）| ⬜ ボス承認待ち |
+| Phase C | wiki/entities + decisions を trade_system/ 配下へ物理統合 → NLM 投入 | ⬜ Phase B 後（ボス選択肢 B）|
 | Phase D | Trade_Brain wiki 骨組み構築 | ⬜ 未着手 |
 | Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
 
@@ -143,13 +145,13 @@ NLM      : 下記 4 NLM への横断参照想定（全て運用解凍 🆕 2026-
 
 | # | 項目 | Phase | 見積 |
 |---|---|---|---|
-| 1 | `handoff/trade_system_brief.md` 新設 | Phase A' 追補 | 1 セッション |
-| 2 | `handoff/trade_brain_brief.md` 新設 | Phase A' 追補 | 1 セッション |
-| 3 | `trade_brain/_RUNBOOK.md` 先行作成（非対称性解消）| Phase D 準備 | 軽微 |
-| 4 | `index.md` / `CLAUDE.md` 更新（philosophy/ / START_HERE.md 反映）| 軽微 | 軽微 |
-| 5 | REX_Wiki_Vault 構築（NLM 新規作成 + 初期 Ingest）| Phase B | 1-2 セッション |
-| 6 | Trade_System wiki 空ディレクトリ充填（bug_patterns 等）| Phase C | 複数セッション |
-| 7 | wiki/entities + decisions の新配置統合 | Phase C | 軽微 |
+| 1 | REX_Wiki_Vault への初期 Ingest（Vault 運用基盤文書群）| Phase B | 1 セッション |
+| 2 | REX_System_Brain への初期 Ingest（**#026d 以降のみ**）| Phase B 並行可 | 1 セッション |
+| 3 | REX_Trade_Brain への初期 Ingest | Phase B 並行可 | 1 セッション |
+| 4 | wiki/entities + decisions を trade_system/ 配下へ物理統合 | Phase C | 軽微 |
+| 5 | `handoff/trade_system_brief.md` / `trade_brain_brief.md` 新設 | Phase A' 追補 | 1 セッション各 |
+| 6 | `trade_brain/_RUNBOOK.md` 先行作成（非対称性解消）| Phase D 準備 | 軽微 |
+| 7 | Trade_System wiki 空ディレクトリ充填（bug_patterns 等）| Phase C | 複数セッション |
 
 ### 🟢 保留中
 
@@ -266,5 +268,15 @@ Vault 内（任意参照）:
 
 ---
 
-*発行: Rex-Evaluator (Opus 4.7) / 8 代目 / 2026-04-23*
-*前任: 7 代目 2026-04-22 / 6 代目 2026-04-20*
+*発行: Rex-Evaluator (Opus 4.7) / 9 代目 / 2026-04-23*
+*前任: 8 代目 2026-04-23 / 7 代目 2026-04-22 / 6 代目 2026-04-20*
+
+---
+
+## 📝 v6.3 での主な差分（9 代目・2026-04-23）
+
+- entities/ 4 ファイル + decisions/ 1 ファイルを ADR.md / SYSTEM_OVERVIEW.md 最新版（#026d / D-7 / D-8 / D-10 / D-12 / D-13 / E-6 / E-7 / F-6 / F-8）に整合させた。#025 以前の記録は Vault から除去（RAG 汚染防止・#026d 以降ポリシー）。
+- `decisions/026_manage_exit.md` → `026d_exit_simulator.md` にリネームし #026d 完結版として全面書き換え。
+- `pending_changes.md` を 8 代目以降の停止分を一気に最新化（Phase A' 以降・NLM 4 本体制・entities/decisions 整合を反映）。
+- ボス指示の **「REX_System_Brain への WrapUp は #026d 以降のみ」ポリシー** を Q7 / Q10 / 次タスク表に明示。
+- Phase 進行状況に Phase A''（9 代目 entities/decisions 整合）を追加。
