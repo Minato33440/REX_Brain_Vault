@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/trade_system/adr_reservation.md",
+                "file": "wiki/handoff/PROCESS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "adr_reservation"
+              "title": "PROCESS"
             }
           }
         ]
@@ -182,6 +182,9 @@
   },
   "active": "f41e82ed4ea8dd8a",
   "lastOpenFiles": [
+    "wiki/trade_system/_RUNBOOK.md",
+    "wiki/trade_system/adr_reservation.md",
+    "wiki/handoff/PROCESS.md",
     "wiki/entities/window_scanner.md",
     "wiki/decisions/025_fixed_neck.md",
     "wiki/decisions/026_manage_exit.md",

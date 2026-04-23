@@ -34,10 +34,10 @@
 | Q4 | neck_15m の定義は？ | SL 直前（時系列で左側）の最後の SH（統一 neck 原則）|
 | Q5 | docs/ に日付付きファイルがあったら？ | 旧版・参照禁止・ボスに報告・archive 移動 |
 | Q6 | neck_1h の用途は？ | 窓特定アンカー + 4H 構造優位性フィルター基準値 |
-| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（システム系 NLM は凍結中・REX_Casual_Brain のみ運用可）|
+| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（全 4 NLM 運用可だがソース投入前のためクエリ回答は空または浅い）|
 | Q8 | Trade_Brain と Trade_System の役割分担は？ | Brain=静的データ / System=動的ロジック / plotter.py は共存 |
 | Q9 | F-8 派生原則「共存保持」の発動 4 条件は？ | ①複数ルーツ関数 ②呼出経路完全分離 ③将来合流点 ④復元コスト発生 |
-| Q10 | NLM 現状は？ | システム系 3 NLM（System_Brain / Trade_Brain / Wiki_Vault）凍結中・REX_Casual_Brain のみ運用可 |
+| Q10 | NLM 現状は？ | **2026-04-23 凍結解除宣言・全 4 NLM 運用可能（ソース投入はボス承認待ち）** |
 
 ---
 
@@ -102,11 +102,11 @@ wiki/ 構造（2026-04-23 時点）:
   entities/                  旧配置（Phase C で統合予定）
   decisions/                 旧配置（Phase C で統合予定）
 
-NLM      : 下記 4 NLM への横断参照想定
-           ・REX_System_Brain  : da84715f-... （凍結中）
-           ・REX_Trade_Brain   : 4abc25a0-... （凍結中）
-           ・REX_Wiki_Vault    : 5d09e468-... （設立済・凍結中 🆕 2026-04-23）
-           ・REX_Casual_Brain  : daf281ae-... （設立済・運用可 🆕 2026-04-23）
+NLM      : 下記 4 NLM への横断参照想定（全て運用解凍 🆕 2026-04-23）
+           ・REX_System_Brain  : da84715f-... （ソース投入待ち）
+           ・REX_Trade_Brain   : 4abc25a0-... （ソース投入待ち）
+           ・REX_Wiki_Vault    : 5d09e468-... （ソース投入待ち）
+           ・REX_Casual_Brain  : daf281ae-... （ソース投入待ち・実戦で育てる）
 担当     : 統括 Evaluator（全リポ整合性監査）
 ```
 

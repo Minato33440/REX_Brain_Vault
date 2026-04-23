@@ -12,7 +12,7 @@
 | **Trade_System** | Phase 1-2 完了・Phase 3 ボス判断待ち | #026d PF 4.54 / 勝率 60% / 10 件 LONG |
 | **Trade_Brain** | 分離完了・週次運用稼働中 | Strategy_Wiki 骨組のみ（Phase D 待ち）|
 | **Rex_Brain_Vault** | Phase A' 完了（8 代目 2026-04-23）| latest.md 軽量化 + philosophy/ 参考資料化 |
-| **NLM 4 本** | System/Trade/Wiki = 凍結中・Casual = 運用可 | REX_Wiki_Vault と REX_Casual_Brain が 2026-04-23 設立 |
+| **NLM 4 本** | 凍結解除宣言・全 4 NLM 運用可 | 2026-04-23 運用開始・ソース投入はボス承認待ち |
 
 ---
 
