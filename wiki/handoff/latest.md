@@ -1,5 +1,5 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
-# バージョン: v6.1（現状把握+次の実行内容に純化・哲学参照除去版）
+# バージョン: v6.2（NLM 4 本体制反映・起動コード辞書・casual/ 層新設反映）
 # 更新: 2026-04-23 / 8 代目 Evaluator (Claude Opus 4.7)
 
 ---
@@ -15,7 +15,7 @@
 | # | 地雷 | 回避策 |
 |---|---|---|
 | 1 | neck_1h と neck_4h の混同（D-6・3 回再発）| neck_4h=半値決済 / neck_1h=窓特定+4H優位性 / neck_15m=エントリー |
-| 2 | 旧 NLM ID への接続試行 | 2d41d672-... は切り離し済・参照禁止 |
+| 2 | 旧 NLM ID への接続試行 | 2d41d672-... は切り離し済・参照禁止（新 REX_Trade_Brain は 4abc25a0-...）|
 | 3 | 分析ベースの取り違え | 最新は #026d（10 件）・#026b/c は旧版 |
 | 4 | 🤖 創作混入の誤訂正（D-12/D-13）| Phase 4 で訂正・即時訂正禁止 |
 | 5 | 責務分離の即断 | 「分離すればシンプル」と即断しない・ボス判断を仰ぐ |
@@ -34,10 +34,10 @@
 | Q4 | neck_15m の定義は？ | SL 直前（時系列で左側）の最後の SH（統一 neck 原則）|
 | Q5 | docs/ に日付付きファイルがあったら？ | 旧版・参照禁止・ボスに報告・archive 移動 |
 | Q6 | neck_1h の用途は？ | 窓特定アンカー + 4H 構造優位性フィルター基準値 |
-| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（NLM は凍結中・参照不可）|
+| Q7 | プロジェクトナレッジと Vault が矛盾したら？ | Vault 優先（システム系 NLM は凍結中・REX_Casual_Brain のみ運用可）|
 | Q8 | Trade_Brain と Trade_System の役割分担は？ | Brain=静的データ / System=動的ロジック / plotter.py は共存 |
 | Q9 | F-8 派生原則「共存保持」の発動 4 条件は？ | ①複数ルーツ関数 ②呼出経路完全分離 ③将来合流点 ④復元コスト発生 |
-| Q10 | NLM 現状は？ | 両 NLM 凍結中（ID 取得のみ・投入ゼロ）・凍結解除ボス指示待ち |
+| Q10 | NLM 現状は？ | システム系 3 NLM（System_Brain / Trade_Brain / Wiki_Vault）凍結中・REX_Casual_Brain のみ運用可 |
 
 ---
 
@@ -94,7 +94,7 @@ wiki/ 構造（2026-04-23 時点）:
   log.md                     時系列ログ（追記のみ）
   philosophy/                参考資料・Evaluator の気づきメモ
   handoff/
-    latest.md                本ファイル（v6.1）
+    latest.md                本ファイル（v6.2）
     architecture_handoff.md  7 代目セッション記録（保全）
   trade_system/              既存（adr_reservation / doc_map / concepts / 他）
   trade_brain/               ⬜ 未構築（Phase D 着手対象）
@@ -102,7 +102,11 @@ wiki/ 構造（2026-04-23 時点）:
   entities/                  旧配置（Phase C で統合予定）
   decisions/                 旧配置（Phase C で統合予定）
 
-NLM      : 両 NLM 横断参照想定だが現在凍結中
+NLM      : 下記 4 NLM への横断参照想定
+           ・REX_System_Brain  : da84715f-... （凍結中）
+           ・REX_Trade_Brain   : 4abc25a0-... （凍結中）
+           ・REX_Wiki_Vault    : 5d09e468-... （設立済・凍結中 🆕 2026-04-23）
+           ・REX_Casual_Brain  : daf281ae-... （設立済・運用可 🆕 2026-04-23）
 担当     : 統括 Evaluator（全リポ整合性監査）
 ```
 
@@ -208,7 +212,25 @@ NLM: REX_Trade_Brain（凍結中・クエリ不可）
 ⚠️ Evaluator はこのリポに関与しない（役割分担）。
 ```
 
-### D. 緊急用・最小起動
+### E. 雑談スレ（REX_AI システム業務外）
+
+```
+このスレではシステム業務ではなく、雑談・個人的話題を扱う。
+ミナトと呼ぶ（プロジェクト進行時の「ボス」ではない）。
+
+⚠️ 作業開始前に以下だけ確認:
+  ① C:\Python\REX_AI\REX_Brain_Vault\wiki\casual\_RUNBOOK.md（運用ルール）
+  ② 継続話題があれば casual/topics/ 該当ページ
+
+⚠️ システム業務用の START_HERE.md / latest.md / philosophy/ は読まない。
+   REX_AI システム引き継ぎ文脈と物理分離する。
+
+NLM: REX_Casual_Brain (daf281ae-e310-400f-961a-20db58b98e01)
+```
+
+※ 上記はスレ冒頭で `Wiki-casual` / `Wiki-cusuaru` / `ウィキ雑談` と打つだけでも起動可（詳細 `wiki/STARTUP_CODES.md`）。
+
+### F. 緊急用・最小起動
 
 ```
 C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md を読んで現状把握せよ。
@@ -234,6 +256,8 @@ Trade_Brain 側:
   docs/WEEKLY_UPDATE_WORKFLOW.md              — 週末運用 8 段階
 
 Vault 内（任意参照）:
+  wiki/STARTUP_CODES.md                       — 起動コード辞書（Wiki-system/trade/brain/casual）
+  wiki/casual/_RUNBOOK.md                     — 雑談層運用ルール（🆕 2026-04-23）
   wiki/trade_system/doc_map.md (v2)           — Trade_System 文書管理
   wiki/trade_system/adr_reservation.md        — ADR 採番台帳
   wiki/philosophy/                            — 参考資料・Evaluator の気づきメモ

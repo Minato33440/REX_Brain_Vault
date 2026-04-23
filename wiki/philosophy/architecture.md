@@ -26,7 +26,7 @@
 └────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────┐
-│ NotebookLM 層（3 Notebook・個別化原則・現在凍結中）           │
+│ NotebookLM 層（4 Notebook・個別化原則）                       │
 ├────────────────────────────────────────────────────────────────┤
 │                                                                │
 │  REX_System_Brain  : da84715f-9719-40ef-87ec-2453a0dce67e      │
@@ -35,8 +35,13 @@
 │  REX_Trade_Brain   : 4abc25a0-4550-4667-ad51-754c5d1d1491      │
 │                      Trade_Brain 専用（凍結中・投入ゼロ）     │
 │                                                                │
-│  REX_Wiki_Vault 🆕 : 未作成                                    │
-│                      両プロジェクト共用（自己増殖ナレッジ）    │
+│  REX_Wiki_Vault    : 5d09e468-3a96-4906-af27-3400c50a0275      │
+│                      両プロジェクト共用（凍結中・投入ゼロ）   │
+│                      🆕 2026-04-23 設立                        │
+│                                                                │
+│  REX_Casual_Brain  : daf281ae-e310-400f-961a-20db58b98e01      │
+│                      雑談・個人的話題専用（投入タイミング任意）│
+│                      🆕 2026-04-23 設立                        │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 
@@ -57,6 +62,8 @@
 > ・REX_System_Brain：Git の Trade_System 専用
 > ・REX_Wiki_Vault：は共有知識なので Trade_System と Trade_Brain 共用
 
+REX_Casual_Brain は 2026-04-23 に 4 本目として設立。雑談・個人的話題専用（REX_AI システムと物理分離・RAG 汚染防止）。
+
 ### 構造的対応
 
 | 層 | 性質 | 役割 |
@@ -72,7 +79,8 @@
 |---|---|---|
 | REX_System_Brain | Trade_System 設計文書（ADR / EX_DESIGN / MINATO_MTF_PHILOSOPHY / MTF_INTEGRITY_QA / SYSTEM_OVERVIEW 等）| 凍結中・投入ゼロ |
 | REX_Trade_Brain | Trade_Brain 蒸留（distilled / brain_pack / 市場環境データ）| 凍結中・投入ゼロ |
-| REX_Wiki_Vault | ナレッジシステム運用情報（latest.md / log.md / philosophy/ 等）| 未作成 |
+| REX_Wiki_Vault | ナレッジシステム運用情報（latest.md / log.md / philosophy/ 等）| 設立済・凍結中・投入ゼロ |
+| REX_Casual_Brain | 雑談の熟した話題（casual/topics/ と casual/insights/）| 設立済・運用開始可 |
 
 ---
 
@@ -80,9 +88,10 @@
 
 ### 現状
 
-両 NLM とも ID 取得のみ・投入ゼロ・凍結中
+- REX_System_Brain / REX_Trade_Brain / REX_Wiki_Vault: ID 取得のみ・投入ゼロ・凍結中
+- REX_Casual_Brain: 凍結対象外（汚染リスクが低い・運用開始可）
 
-### 凍結理由
+### 凍結理由（REX_System_Brain / REX_Trade_Brain / REX_Wiki_Vault）
 
 - #026d 以前の ADM や引継ファイルは MTF ロジック誤認や創作コードの記載が多い → RAG 汚染リスク
 - #027 以降はシステム分割作業・ナレッジシステム構築が主 → クリーンな出発点
@@ -90,9 +99,10 @@
 
 ### 運用上の含意
 
-- NLM クエリは現段階では意味ある回答を返さない
+- システム業務系 NLM クエリは現段階では意味ある回答を返さない
 - 引き継ぎ・設計判断は Vault `wiki/` + リポ `docs/` を 1 次情報源とする
-- NLM 前提の作業計画は立てない
+- システム系 NLM 前提の作業計画は立てない
+- REX_Casual_Brain は投入開始してよい（雑談の熟した話題を `casual/topics/` / `casual/insights/` から投入）
 
 ---
 
@@ -113,18 +123,20 @@ C:\Python\REX_AI\
     ├── CLAUDE.md          ← Vault 運用指示
     ├── raw\               ← 元資料（イミュータブル）
     └── wiki\
-        ├── START_HERE.md  ← 新スレ入口
-        ├── index.md       ← 全ページ目次
-        ├── log.md         ← 時系列ログ
-        ├── philosophy\    ← 参考資料・Evaluator の気づきメモ
+        ├── START_HERE.md    ← 新スレ入口
+        ├── STARTUP_CODES.md ← 起動コード辞書（Wiki-system/trade/brain/casual）
+        ├── index.md         ← 全ページ目次
+        ├── log.md           ← 時系列ログ
+        ├── philosophy\      ← 参考資料・Evaluator の気づきメモ
         ├── handoff\
         │   ├── latest.md             ← 現在地ダッシュボード
         │   └── architecture_handoff.md ← 7 代目セッション記録
-        ├── trade_system\  ← Trade_System 専用層
-        ├── trade_brain\   ← ⬜ 未構築
-        ├── cross\         ← 骨組のみ
-        ├── entities\      ← 旧配置
-        └── decisions\     ← 旧配置
+        ├── trade_system\    ← Trade_System 専用層
+        ├── trade_brain\     ← ⬜ 未構築
+        ├── casual\          ← 雑談・個人的話題中期記憶層（🆕 2026-04-23）
+        ├── cross\           ← 骨組のみ
+        ├── entities\        ← 旧配置
+        └── decisions\       ← 旧配置
 ```
 
 ---

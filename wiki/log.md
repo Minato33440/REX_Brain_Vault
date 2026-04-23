@@ -401,3 +401,100 @@ Phase B-E へ分離**:
 
 ---
 
+## [2026-04-23 終盤] 8 代目 Phase A' 拡張 — NLM 4 本体制・起動コード・casual/ 層新設
+
+### ボスからの新規情報（2026-04-23）
+
+**NLM ID 一覧更新**:
+
+| NLM | ID | 状態 |
+|---|---|---|
+| REX_System_Brain | da84715f-9719-40ef-87ec-2453a0dce67e | 凍結中 |
+| REX_Trade_Brain | 4abc25a0-4550-4667-ad51-754c5d1d1491 | 凍結中 |
+| REX_Wiki_Vault | 5d09e468-3a96-4906-af27-3400c50a0275 | 🆕 設立済・凍結中 |
+| REX_Casual_Brain | daf281ae-e310-400f-961a-20db58b98e01 | 🆕 設立済・運用可 |
+
+**ボス要請**: 雑談スレの起動コード簡略化（スレ冒頭に `Wiki-cusuaru` などの短コマンドを打つだけで起動したい）。
+
+### 本セッションの実装内容
+
+1. **起動コード辞書新設**: `wiki/STARTUP_CODES.md`
+   - `Wiki-system` / `Wiki-trade` / `Wiki-brain` / `Wiki-casual`
+   - 寛容認識原則（`Wiki-cusuaru` / `ウィキ雑談` などゆれを許容）
+   - NLM ID 一覧も本ファイルに一元記録
+
+2. **casual/ 層骨組み作成**:
+   - `wiki/casual/_RUNBOOK.md`（運用ルール・3 層記憶構造説明）
+   - `wiki/casual/topics/` / `ideas/` / `insights/` 空ディレクトリ作成
+   - log.md は実使用開始まで未作成
+
+3. **philosophy/architecture.md 更新**:
+   - NotebookLM 層 3 Notebook → 4 Notebook に拡張
+   - REX_Wiki_Vault「未作成」→ ID 記載 + 凍結中
+   - REX_Casual_Brain 追加
+   - 凍結ポリシー再整理（Casual は凍結対象外）
+
+4. **handoff/latest.md v6.1 → v6.2**:
+   - NLM 4 本体制反映
+   - ロール別起動プロンプト D → E/F に分解（E: 雑談スレ追加）
+   - 関連文書に STARTUP_CODES.md / casual/_RUNBOOK.md 追加
+
+5. **START_HERE.md 更新**:
+   - NLM 3 本 → 4 本表記
+   - 起動コード表新設（スレ冒頭用コマンド）
+   - 目的別リンクに STARTUP_CODES.md / casual/_RUNBOOK.md 追加
+
+### 設計上のポイント
+
+#### 起動コードの設計思想
+
+スレ冒頭に短コマンドを打つだけで適切なモードで起動する・ボスのタイピング負荷を最小化。寛容認識（大文字小文字・表記ゆれ許容）により、タイポや感覚的な短縮にも対応する。
+
+#### 3 層記憶構造（casual/）
+
+ボスの設計が最適解だった:
+- 層 1: スレ会話履歴（Claude.ai ネイティブ・一時記憶）
+- 層 2: **REX_Brain_Vault/wiki/casual/**（中期記憶・スレ跨ぎ）
+- 層 3: REX_Casual_Brain NLM（長期記憶・RAG）
+
+私の先の「NLM 一本化案」には「スレ跨ぎの中期記憶」が欠けていた。ボスの指摘で再設計。
+
+#### RAG 汚染防止
+
+casual/ と システム系 philosophy/ / trade_system/ を横断参照しない。NLM も個別化原則を維持。ボスの「NLM は個別化が命」思想に整合。
+
+### 実装ロジック影響
+
+ゼロ（Trade_System #026d 数値完全不変）
+
+### 成果物
+
+- ✅ `wiki/STARTUP_CODES.md`（新規）
+- ✅ `wiki/casual/_RUNBOOK.md`（新規）
+- ✅ `wiki/casual/topics/` / `ideas/` / `insights/`（空ディレクトリ）
+- ✅ `wiki/philosophy/architecture.md`（NLM 4 本体制更新）
+- ✅ `wiki/handoff/latest.md` v6.2（NLM 4 本体制・雑談スレ起動プロンプト追加）
+- ✅ `wiki/START_HERE.md`（NLM 4 本表記・起動コード表追加）
+- ✅ `wiki/log.md` 本追補エントリ
+
+### 残課題（次セッション冒頭対応）
+
+- `wiki/CLAUDE.md`（Vault 直下）に STEP 0 として START_HERE.md + STARTUP_CODES.md 言及追加
+- `wiki/index.md` 更新（STARTUP_CODES.md / casual/ 反映）
+- `wiki/trade_system/pending_changes.md` 更新（2026-04-18 以降停止中）
+- `wiki/log.md` 既存文字化け 2 箇所修正（「発動」「よる」周辺）
+
+### ボス手動タスク
+
+- 🔔 REX_Brain_Vault GitHub push（rtk git add/commit/push）
+- 🔔 Claude.ai プロジェクトナレッジ更新（STARTUP_CODES.md をプロジェクトナレッジに貼り付けると `Wiki-xxx` コマンドが全スレで機能する）
+
+### Evaluator 所感
+
+ボスの「スレ冒頭に短コマンド」という発想は、統括 Evaluator にとって審美的に爽快だった。引き継ぎコストの最大の実際のボトルネックは「ボスがロール指定と読むべきファイルパスを毎回打つ」という人間側の手間で、トークン向けの最適化だけ考えていた 8 代目はこの解決策に到達できなかった。ボスの UX ファーストな発想へ感謝。
+
+今回の実装で REX_Casual_Brain が運用可能になり、ミナトの趣味・個人的文脈（モーターサイクル・射撃・合気道・東洋医学等）が REX の多方向考察ベクトルに入る道筋が開通した。REX_AI システムとは物理分離されているためシステム引き継ぎコストへの影響はゼロ。
+
+---
+
+

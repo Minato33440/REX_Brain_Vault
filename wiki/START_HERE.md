@@ -12,7 +12,7 @@
 | **Trade_System** | Phase 1-2 完了・Phase 3 ボス判断待ち | #026d PF 4.54 / 勝率 60% / 10 件 LONG |
 | **Trade_Brain** | 分離完了・週次運用稼働中 | Strategy_Wiki 骨組のみ（Phase D 待ち）|
 | **Rex_Brain_Vault** | Phase A' 完了（8 代目 2026-04-23）| latest.md 軽量化 + philosophy/ 参考資料化 |
-| **NLM 3 本** | 全て凍結中（ID 取得のみ・投入ゼロ）| 凍結解除はボス指示待ち |
+| **NLM 4 本** | System/Trade/Wiki = 凍結中・Casual = 運用可 | REX_Wiki_Vault と REX_Casual_Brain が 2026-04-23 設立 |
 
 ---
 
@@ -48,10 +48,25 @@
 | **詳しい現状と次タスク** | `handoff/latest.md` |
 | **Trade_System 文書バージョン管理** | `trade_system/doc_map.md` |
 | **ADR 採番状況** | `trade_system/adr_reservation.md` |
+| **起動コード辞書**（スレ冒頭用）| `wiki/STARTUP_CODES.md` |
+| **雑談層運用ルール**（Wiki-casual 用）| `wiki/casual/_RUNBOOK.md` |
 | **7 代目セッション経緯** | `handoff/architecture_handoff.md` |
 | **裁量思想一次情報源** | `Trade_System/docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md` |
 | **公式採番された原則（ADR F-8）**| `Trade_System/docs/ADR.md` |
 | **参考資料・Evaluator 気づきメモ**（任意）| `philosophy/` 配下 |
+
+---
+
+## ⚡ 起動コード（スレ冒頭で打つだけ）
+
+| コード | モード |
+|---|---|
+| `Wiki-system` | 統括 Evaluator |
+| `Wiki-trade` | Trade_System Planner / Evaluator |
+| `Wiki-brain` | Trade_Brain Planner / ClaudeCode |
+| `Wiki-casual` / `Wiki-cusuaru` / `ウィキ雑談` | 雑談モード（システム業務外）|
+
+詳細は `wiki/STARTUP_CODES.md` 参照。
 
 ---
 
@@ -61,7 +76,8 @@
 - A. 統括 Evaluator（Claude.ai Opus）
 - B. Trade_System Planner / Evaluator
 - C. Trade_Brain Planner / ClaudeCode
-- D. 緊急用・最小起動
+- E. 雑談スレ（REX_AI システム業務外）
+- F. 緊急用・最小起動
 
 ---
 
