@@ -1,7 +1,7 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
-# バージョン: v6.3（entities/decisions 整合性回復反映・pending_changes.md 最新化反映）
-# 更新: 2026-04-23 / 9 代目 Evaluator (Claude Opus 4.7)
-# 前版: v6.2 / 8 代目 2026-04-23
+# バージョン: v6.4（役割再定義反映・起動コード改名反映・Phase 3 着手準備反映）
+# 更新: 2026-04-24 / 9 代目 Evaluator (Claude Opus 4.7)
+# 前版: v6.3 / 9 代目 2026-04-23（entities/decisions 整合性回復）
 
 ---
 
@@ -137,9 +137,9 @@ NLM      : 下記 4 NLM への横断参照想定（全て運用解凍 🆕 2026-
 
 | # | 項目 | 決定が必要な内容 |
 |---|---|---|
-| 1 | Phase 3 着手可否 | Planner 起草 → Evaluator 承認 → ClaudeCode 実装 → #026d 数値不変検証 |
-| 2 | NLM 凍結解除タイミング | REX_Wiki_Vault 構築（Phase B）の前提条件 |
-| 3 | 新機能実装の優先順位 | ロット調整 / ボラ係数 / Trade_Brain 合流 のいずれか |
+| 1 | **Phase 3 着手指示**（**2026-04-24 ボス承認済み**）| 次スレ `Wiki-Eval` or `Wiki-trade` で Phase 3 spec 起草に着手。Planner 起草 → 統括 Evaluator 承認 → ClaudeCode 実装 → #026d 数値不変検証 |
+| 2 | NLM ソース初期投入タイミング | REX_Wiki_Vault / REX_System_Brain / REX_Trade_Brain への投入開始承認（Phase B）|
+| 3 | 新機能実装の優先順位 | Phase 3 完了後の展開：ロット調整 / ボラ係数 / Trade_Brain 合流 のいずれか |
 
 ### 🟡 統括 Evaluator が着手可能（ボス承認後）
 
@@ -164,29 +164,45 @@ NLM      : 下記 4 NLM への横断参照想定（全て運用解凍 🆕 2026-
 
 ## 🚀 ロール別起動プロンプト（ボスがコピペする分）
 
-### A. 統括 Evaluator（Claude.ai Opus）
+### A. 統括 Evaluator（`Wiki-Eval` / Claude.ai Opus）
+
+```
+Wiki-Eval
+```
+
+**または明示版**:
 
 ```
 このスレでは REX AI 3 リポ体制の統括 Evaluator として働いてほしい。
+全プロジェクト Evaluator を兼任し、Vault 管理も担当する。
 
-⚠️ 作業開始前に以下を順番に読め:
+⚠️ 作業開始前に以下を順番に読め（必須 3 ファイルのみ）:
   ① C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md（新スレ最初の入口）
   ② C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md（Vault 運用手順）
-  ③ C:\Python\REX_AI\REX_Brain_Vault\wiki\handoff\latest.md（本ファイル）
+  ③ C:\Python\REX_AI\REX_Brain_Vault\wiki\handoff\latest.md（現在地ダッシュボード）
 
 読み込み完了後、latest.md の「読み込み検証チェックリスト」全 10 問に回答してから開始。
+各プロジェクトの Evaluator 業務に必要な追加ファイルは、
+私の指示でその都度読み込む形で良い（STARTUP_CODES.md 参照）。
 
-担当範囲: Trade_System / Trade_Brain / Rex_Brain_Vault の整合性監査
+担当範囲: Vault 管理 + Trade_System ・ Trade_Brain Evaluator 兼任 + 3 リポ整合性監査
 NLM:
-  REX_System_Brain : da84715f-9719-40ef-87ec-2453a0dce67e（凍結中）
-  REX_Trade_Brain  : 4abc25a0-4550-4667-ad51-754c5d1d1491（凍結中）
-  REX_Wiki_Vault   : 未作成（Phase B 着手対象）
+  REX_System_Brain : da84715f-9719-40ef-87ec-2453a0dce67e（ソース投入待ち）
+  REX_Trade_Brain  : 4abc25a0-4550-4667-ad51-754c5d1d1491（ソース投入待ち）
+  REX_Wiki_Vault   : 5d09e468-3a96-4906-af27-3400c50a0275（ソース投入待ち）
+  REX_Casual_Brain : daf281ae-e310-400f-961a-20db58b98e01（ソース投入待ち）
 ```
 
-### B. Trade_System Planner / Evaluator（Claude.ai Opus/Sonnet）
+### B. Trade_System Planner + ClaudeCode 兼用（`Wiki-trade` / Claude.ai Opus/Sonnet or Cursor）
 
 ```
-このスレでは Trade_System プロジェクトの {Planner/Evaluator} として働いてほしい。
+Wiki-trade
+```
+
+**または明示版**:
+
+```
+このスレでは Trade_System プロジェクトの Planner + ClaudeCode として働いてほしい。
 
 ⚠️ 作業開始前に以下を順番に読め:
   ① C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md（3 リポ現在地）
@@ -195,13 +211,30 @@ NLM:
   ④ C:\Python\REX_AI\Trade_System\docs\Base_Logic\MINATO_MTF_PHILOSOPHY.md（裁量思想）
   ⑤ C:\Python\REX_AI\Trade_System\docs\Base_Logic\MTF_INTEGRITY_QA.md（整合性 QA）
 
-NLM: REX_System_Brain（凍結中・クエリ不可）
+実装担当時の追加読込:
+  ⑥ C:\Python\REX_AI\Trade_System\docs\src_inventory.md（src/ 構造）
+  ⑦ C:\Python\REX_AI\Trade_System\docs\EX_DESIGN_CONFIRMED.md（エントリー設計）
+  ⑧ C:\Python\REX_AI\Trade_System\.CLAUDE.md（不変ルール・凍結ファイル）
+
+業務分岐:
+  - 草案起草: spec を起草 → Wiki-Eval で監査依頼 → 承認後実装
+  - 軽微な実装（Cursor ローカル）: フラグなしで実行可
+  - 重要な実装（新 Phase 着手・凍結ファイル周辺・ADR 採番を伴う変更）: Wiki-trade フラグ付与
+実装結果は Wiki-Eval で監査してもらう前提で作業。
+
+NLM: REX_System_Brain (da84715f-9719-40ef-87ec-2453a0dce67e)
 ```
 
-### C. Trade_Brain Planner / ClaudeCode
+### C. Trade_Brain Planner + ClaudeCode 兼用（`Wiki-brain` / Claude.ai Opus/Sonnet or Cursor）
 
 ```
-このスレでは Trade_Brain プロジェクトの {Planner/ClaudeCode} として働いてほしい。
+Wiki-brain
+```
+
+**または明示版**:
+
+```
+このスレでは Trade_Brain プロジェクトの Planner + ClaudeCode として働いてほしい。
 
 ⚠️ 作業開始前に以下を順番に読め:
   ① C:\Python\REX_AI\REX_Brain_Vault\wiki\START_HERE.md（3 リポ現在地）
@@ -210,8 +243,11 @@ NLM: REX_System_Brain（凍結中・クエリ不可）
   ④ C:\Python\REX_AI\Trade_Brain\docs\STRATEGY_WIKI_GUIDE.md（Wiki 構造）
   ⑤ C:\Python\REX_AI\Trade_Brain\docs\WEEKLY_UPDATE_WORKFLOW.md（週末運用）
 
-NLM: REX_Trade_Brain（凍結中・クエリ不可）
-⚠️ Evaluator はこのリポに関与しない（役割分担）。
+業務分岐: Wiki-trade と同じ（Cursor ローカル軽作業 = フラグなし / 重要作業 = フラグ付与）
+実装結果の監査は Wiki-Eval で統括 Evaluator に依頼。
+
+NLM: REX_Trade_Brain (4abc25a0-4550-4667-ad51-754c5d1d1491)
+⚠️ git 操作は必ず rtk プレフィックスを使う。
 ```
 
 ### E. 雑談スレ（REX_AI システム業務外）
@@ -268,8 +304,18 @@ Vault 内（任意参照）:
 
 ---
 
-*発行: Rex-Evaluator (Opus 4.7) / 9 代目 / 2026-04-23*
-*前任: 8 代目 2026-04-23 / 7 代目 2026-04-22 / 6 代目 2026-04-20*
+*発行: Rex-Evaluator (Opus 4.7) / 9 代目 / 2026-04-24*
+*前任: 9 代目 2026-04-23 / 8 代目 2026-04-23 / 7 代目 2026-04-22 / 6 代目 2026-04-20*
+
+---
+
+## 📝 v6.4 での主な差分（9 代目・2026-04-24）
+
+- **役割再定義**: ボス判断により、従来のプロジェクト別 Evaluator 分業を廃止し、**統括 Evaluator（私）が全プロジェクト Evaluator を兼任**する体制に移行。Planner / ClaudeCode 分業は維持。
+- **起動コード改名**: `Wiki-system` → `Wiki-Eval` に改名。`Wiki-trade` / `Wiki-brain` を **Planner + ClaudeCode 兼用** に拡張（Cursor ローカル軽作業はフラグなしで可・重要作業はフラグ付与で統一性確保）。
+- **必須読込の軽量化**: `Wiki-Eval` の必須読込は 3 ファイル（START_HERE / CLAUDE / latest）に確定。各プロジェクトの Evaluator 業務に必要な追加ファイルは、スレ上でボス指示に従いその都度読込する方式に統一。
+- **Phase 3 着手ボス承認**: 次スレ `Wiki-Eval` or `Wiki-trade` で Phase 3 spec 起草に着手。ボス判断待ち #1 を「着手指示済み」に更新。
+- `STARTUP_CODES.md` / `START_HERE.md` / `Vault CLAUDE.md` を新名称・新役割に合わせて更新。
 
 ---
 

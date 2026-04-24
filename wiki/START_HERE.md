@@ -61,10 +61,12 @@
 
 | コード | モード |
 |---|---|
-| `Wiki-system` | 統括 Evaluator |
-| `Wiki-trade` | Trade_System Planner / Evaluator |
-| `Wiki-brain` | Trade_Brain Planner / ClaudeCode |
+| `Wiki-Eval` | 統括 Evaluator（全プロジェクト Evaluator 兼任 + Vault 管理）|
+| `Wiki-trade` | Trade_System Planner + ClaudeCode 兼用 |
+| `Wiki-brain` | Trade_Brain Planner + ClaudeCode 兼用 |
 | `Wiki-casual` / `Wiki-cusuaru` / `ウィキ雑談` | 雑談モード（システム業務外）|
+
+**2026-04-24 役割再定義**: 従来の `Wiki-system` を `Wiki-Eval` に改名。統括 Evaluator が全プロジェクト Evaluator を兼任する体制に移行。`Wiki-trade` / `Wiki-brain` は Planner + ClaudeCode 兼用に拡張（Cursor ローカル軽作業はフラグなしで可）。
 
 詳細は `wiki/STARTUP_CODES.md` 参照。
 
