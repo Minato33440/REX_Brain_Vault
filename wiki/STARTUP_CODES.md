@@ -31,7 +31,7 @@
 
 ---
 
-## 🛰️ NotebookLM ID 一覧（2026-04-23 更新）
+## 🛰️ NotebookLM ID 一覧（2026-04-24 更新）
 
 ```
 REX_System_Brain  : da84715f-9719-40ef-87ec-2453a0dce67e
@@ -39,8 +39,6 @@ REX_Trade_Brain   : 4abc25a0-4550-4667-ad51-754c5d1d1491
 REX_Wiki_Vault    : 5d09e468-3a96-4906-af27-3400c50a0275
 REX_Casual_Brain  : daf281ae-e310-400f-961a-20db58b98e01
 ```
-
-⚠️ 切り離し済（参照禁止）: 旧 REX_Trade_Brain `2d41d672-f66f-4036-884a-06e4d6729866`
 
 ---
 
