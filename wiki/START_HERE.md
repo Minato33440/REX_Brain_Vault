@@ -52,7 +52,7 @@
 | **7 代目セッション経緯** | `handoff/architecture_handoff.md` |
 | **裁量思想一次情報源** | `Trade_System/docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md` |
 | **公式採番された原則（ADR F-8）**| `Trade_System/docs/ADR.md` |
-| **参考資料・Evaluator 気づきメモ**（任意）| `philosophy/` 配下 |
+| **痕跡層・体験/気づき記録**（任意・必読外・Obsidian 検索想定）| `philosophy/` 配下 |
 
 ---
 
@@ -83,3 +83,4 @@
 ---
 
 *発行: 8 代目統括 Evaluator (Opus 4.7) / 2026-04-23*
+*更新: 12 代目 / 2026-04-25 — philosophy/ 表記を「痕跡層・体験/気づき記録」に変更（pull 型運用への転換）*
