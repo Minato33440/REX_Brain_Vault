@@ -1,0 +1,169 @@
+# ADR-Role: Roles and Permissions
+
+**Status**: Accepted  
+**Date**: 2026-04-27  
+**Decider**: `Wiki-Eval` (統括Evaluator)  
+**Supersedes**: -
+
+---
+
+## Context
+
+REX_AIシステムは複数のAIインスタンスで構成される。過去の経緯:
+
+1. 2026-04-23: 8代目統括Evaluatorが起動コード(`Wiki-system` 等)を制定
+2. 2026-04-24: 9代目統括Evaluatorが「プロジェクト別Evaluator分業」を廃止し、統括Evaluatorが全プロジェクトEvaluator兼任に移行。`Wiki-system` → `Wiki-Eval` へ改名、`Wiki-trade` / `Wiki-brain` を Planner+ClaudeCode 兼用に拡張
+3. 2026-04-27: 1代目 Wiki-casual Planner が NLM × Vault 分業マトリクスを追加(NLM 1:1原則)
+
+本ADRはこれらの確定運用を ADR として正式化し、加えて以下を追加する:
+- `Wiki-hp` の構築予定(Setona_HP リポ用)
+- Casual と Advisor の役割分担明文化(両者とも `Wiki-casual` で動作)
+
+---
+
+## Decision
+
+### 1. 5ロール体制を正式採用
+
+| 起動コード | ロール | 担当領域 | 状態 |
+|---|---|---|---|
+| `Wiki-Eval` | 統括Evaluator | 全リポ統括・ADR管轄・Vault運用 | 稼働中 |
+| `Wiki-trade` | Trade_System Planner+ClaudeCode | Trade_System リポ専属 | 稼働中 |
+| `Wiki-brain` | Trade_Brain Planner+ClaudeCode | Trade_Brain リポ専属 | 稼働中 |
+| `Wiki-hp` | Setona_HP Planner+ClaudeCode | Setona_HP リポ専属 | **構築予定** |
+| `Wiki-casual` | Casual-Planner (Advisor兼任) | 雑談・横断知見・REX_AI全体相談役 | 稼働中 |
+
+### 2. プラットフォーム非依存原則
+
+**起動コードのみがロールを決定する。** 動作プラットフォーム(Claude.ai / Claude Desktop / Claude Code 等)はロール任命に関与しない。これは将来の Claude.ai 単独運用への移行を構造的に容易にする。
+
+### 3. Plannerの実装兼用ルール
+
+`Wiki-trade` / `Wiki-brain` / `Wiki-hp` は Planner + ClaudeCode 兼用。
+
+- **軽微な実装** (Cursorローカル作業): フラグなしで実行可
+- **重要な実装** (新Phase着手・凍結ファイル周辺・新規ADR採番を伴う変更): 起動コードフラグ付与で統一性を保つ
+
+これは2026-04-24の9代目統括Evaluator判断の継承。
+
+### 4. Casual と Advisor の役割分担
+
+両者とも `Wiki-casual` 起動コードで動作:
+
+| 役割 | 内容 |
+|---|---|
+| **Casual** | 一般会話における広範囲にわたる知見 |
+| **Advisor** | REX_AI 全システムにおける相談役 |
+
+蓄積先は同じく `REX_Casual_Brain` NLM。Advisor用の独立リポ・NLMは作成しない。
+
+### 5. 権限マトリクス
+
+| ロール | 読込スコープ | 書込権限 |
+|---|---|---|
+| Wiki-Eval | 全リポ + 全ADR + 全pending + registry | ADR本体・全リポ・全pending・registry |
+| Wiki-trade | Trade_System + ADR(R) + pending/trade_system | Trade_System + pending/trade_system |
+| Wiki-brain | Trade_Brain + ADR(R) + pending/trade_brain | Trade_Brain + pending/trade_brain |
+| Wiki-hp | Setona_HP + ADR(R) + pending/setona_hp | Setona_HP + pending/setona_hp |
+| Wiki-casual | casual/ + ADR(R) + Casual_Brain NLM | pending/casual + casual/ + Casual_Brain NLM |
+
+### 6. NLM 1:1原則(重要)
+
+各起動コードは担当する NLM を1つだけ持ち、**他NLMへの投入・クエリは禁止**:
+
+| ロール | 担当NLM |
+|---|---|
+| Wiki-Eval | REX_Wiki_Vault のみ |
+| Wiki-trade | REX_System_Brain のみ |
+| Wiki-brain | REX_Trade_Brain のみ |
+| Wiki-hp | REX_HP_Brain (構築予定) |
+| Wiki-casual | REX_Casual_Brain のみ |
+
+**Wiki-Eval の例外的読み取り**: 監査業務のため他層の Vaultファイル(Trade_System/docs/ 等)を filesystem / GitHub MCP 経由で**読み取る**ことは可。これは**他NLMへのクエリではない**ため許容される。
+
+詳細は ADR-NLM 参照。
+
+### 7. 起動コード命名規則
+
+- 形式: `Wiki-<Role>`
+- `<Role>` は意味ベース、英数字 + ハイフン可
+- 寛容認識原則: 大文字小文字・ハイフン有無・ローマ字ゆれを許容(例: `Wiki-Eval` / `wiki-eval` / `ウィキイブ`)
+- 新規コード制定時は本ADRの改訂が必要
+
+### 8. ADR Promotion Criteria(pending → ADR 昇格基準)
+
+以下のいずれかに該当する仮決定はADR昇格対象:
+
+- 他ロールの権限・スコープに影響する決定
+- データ整合性に関わる決定(書込先・権限境界)
+- リポジトリ構成の変更(追加・削除・統合)
+- NLM構造の変更(新規追加・廃止・UUID変更)
+- システム全体に影響する哲学・原則の変更
+
+昇格判定は `Wiki-Eval` セッション内で実施し、決定したら pending 側に `[ARCHIVED → ADR-XXX]` flag を立て archived/ に移動する。
+
+### 9. ADR本体への書込権限の集約
+
+ADR本体への直接書込は `Wiki-Eval` 起動セッションのみ。各Plannerおよび Casual-Planner は pending/ への記録に留める。これによりADR汚染リスクが構造的に防がれる。
+
+### 10. Wiki-hp 構築予定の取り扱い
+
+`Setona_HP` リポは既に存在するが、専属ロール体制と専用NLM(REX_HP_Brain)が未整備。
+
+- 本ADRに予約項目として記載
+- `wiki/setona_hp/` および `pending/setona_hp/` を空フォルダで配置
+- registry/ に **(構築予定)** 表記
+- 構築開始時は ADR-Role / ADR-Repo / ADR-NLM の改訂と STARTUP_CODES.md の Wiki-casual Planner への改訂依頼が必要
+
+### 11. STARTUP_CODES.md との関係
+
+`wiki/STARTUP_CODES.md` は本ADRと整合する運用文書として Wiki-casual Planner が管理。本ADR改訂時は STARTUP_CODES.md の改訂を pending/casual/ に依頼する。
+
+---
+
+## Consequences
+
+### 利点
+- ロール境界が構造的に明示され、引き継ぎコストが最小化される
+- プラットフォーム移行時にロール定義を変更する必要がない
+- ADR汚染リスクが ADR 編集権限の単一化で解消される
+- NLM 1:1原則により RAG汚染が構造的に防止される
+- Wiki-hp 構築予定の明文化で、将来の追加が混乱なく実施できる
+
+### トレードオフ
+- 起動コード発令ミス時の影響が大きい(意図と異なるロールで動作)
+- 新ロール追加時は本ADR + STARTUP_CODES.md + registry の3点改訂が必要
+- ロール数増加に伴い権限マトリクスの管理コストが線形に増える
+- NLM 1:1原則により、ロール横断の知見集約は手動承認ゲート経由が必須
+
+### 将来課題
+- Claude.ai単独運用移行時の「自己拘束」設計
+  - 同一インスタンス内で全ロールを扱う際、構造ではなく規約による境界保護に移行
+  - 現段階の分業構造で運用を安定化させた後に再検討
+- Stage 2/3 での横断統合モード(詳細: `wiki/ROADMAP.md`)
+
+---
+
+## Alternatives Considered
+
+### 案A: プラットフォーム=ロール 自動マッピング
+- **却下**: 移行時の修正コスト大、同一プラットフォームで複数ロールを扱えない
+
+### 案B: ADR編集権限を Planner にも開放
+- **却下**: ADR汚染リスク高。複数Plannerによる矛盾追記の検証コストが膨大
+
+### 案C: Advisor用に独立した起動コード(Wiki-Adv)を新設
+- **却下**: 専用GitリポもNLMも未整備。Casual と統合運用で十分機能する
+
+### 案D: NLM 1:n 共有モデル
+- 各ロールが複数NLMにアクセス可能とする
+- **却下**: 旧REX_Trade_BrainでのRAG汚染再発リスク。1:1原則維持
+
+---
+
+## References
+
+- [registry/roles.md](../registry/roles.md) - 現在のロール登録簿
+- [wiki/STARTUP_CODES.md](../STARTUP_CODES.md) - 起動コード詳細仕様(Wiki-casual Planner管理)
+- [CLAUDE.md](../../CLAUDE.md) - 単一エントリポイント
+- [ADR-NLM](ADR-NLM.md) - NLM 1:1原則の詳細
