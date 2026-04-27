@@ -1,336 +1,256 @@
-# CLAUDE.md — REX_Brain_Vault 運用指示書
-# 更新: 2026-04-25（12 代目 philosophy/ 痕跡層化・タグ運用・GitHub MCP 4 リポ連携反映・適用対象優先順位追加）
-# 前版: 2026-04-25（11 代目 文書編集プロトコル R1-R3 追加・10 代目事故対策）
-# 旧版: 2026-04-24（9 代目 役割再定義対応・起動コード改名反映）
-# 古版: 2026-04-23（8 代目 Phase A' 拡張完了・NLM 4 本体制・起動コード辞書・casual/ 層新設）
+# CLAUDE.md
 
-このファイルは Claude（および ClaudeCode）が REX_Brain_Vault を操作する際の
-ルールと構造を定義する。毎セッション開始時に必ず読み込むこと。
+**REX_AI 統合知識システム — 単一起動エントリポイント**
 
----
-
-## Vault の目的
-
-スレをまたいでも「なぜこの設計にしたか」「今どこまで進んでいるか」を
-ゼロから説明し直さずに済む自己増殖型ナレッジベース。
-REX_AI 全プロジェクトの中枢として、プロジェクト横断のナレッジ管理を担う。
+最終更新: 2026-04-27  
+管轄: 統括Evaluator (`Wiki-Eval`)  
+バージョン: v1.2
 
 ---
 
-## ⚠️ このシステムの理解が前提
+## 目的
 
-Trade_System のようにロジック変更が頻繁なプロジェクトでは、
-「現在のロジックを読む」だけでなく「なぜそうなったか（変更推移）」の
-理解が必要。その変更推移はこの REX_Brain_Vault に蓄積されている。
+REX_AI システムに関わる全AIロール(統括Evaluator / 各Planner+ClaudeCode兼用 / Casual-Planner)が、セッション開始時に最初に読むべき単一エントリ。
 
-新スレッドの Evaluator / Planner は以下の 2 層を理解すること:
-```
-Layer 1: Trade_System のロジック理解
-  → Trade_System/docs/ADR.md, EX_DESIGN_CONFIRMED.md, .CLAUDE.md
-
-Layer 2: REX_Brain_Vault のシステム理解（本ファイル）
-  → Vault 構造、NLM の使い方、doc_map、ADR 採番ルール
-  → 「どこに何があるか」「なぜその構造か」
-```
+本ファイルと以下3点のみで現状把握が完結する設計:
+- `wiki/STARTUP_CODES.md` (起動コード詳細仕様)
+- `wiki/adr/INDEX.md` (確定事項一覧)
+- `wiki/pending/INDEX.md` (進行中議論一覧)
 
 ---
 
-## 3 階層 CLAUDE.md の棲み分け
+## ロール任命の原則
 
-```
-~/.claude/CLAUDE.md            — RTK 設定（全リポ共通・ClaudeCode 起動時自動読込）
-Trade_System/.CLAUDE.md        — 不変ルール・パラメータ・凍結ファイル（Trade_System 内で自動読込）
-REX_Brain_Vault/CLAUDE.md      — 本ファイル。Vault 運用手順（filesystem MCP 経由で明示的読込）
+**起動コードのみがロールを決定する。** 動作プラットフォーム(Claude.ai / Claude Desktop / Claude Code 等)はロール任命に関与しない。これは将来の Claude.ai 単独運用への移行を見据えた設計。
 
-原則: 「誰が・いつ読むか」で分ける
-  グローバル = 全セッション自動
-  プロジェクト = Trade_System 内で自動
-  Vault = 明示的読込（設計者・Evaluator・Planner が必要時に参照）
-```
+セッション開始時、ミナトが起動コードを発令することでAIインスタンスのロール・読込スコープ・書込権限・担当NLMが確定する。
 
 ---
 
-## ディレクトリ構造
+## 起動コード一覧
 
-```
-REX_Brain_Vault/                          ← GitHub: Minato33440/REX_Brain_Vault
-├── CLAUDE.md                             ← 本ファイル（運用ルール）
-├── README.md                             ← リポジトリ概要
-├── .gitignore                            ← .obsidian / .venv 等を除外
-├── raw/                                  ← 元資料（イミュータブル・読むだけ）
-│   └── system_build/                     ← 構築過程の記録
-└── wiki/
-    ├── START_HERE.md                     ← 🆕 新スレ入口（100 行以内）
-    ├── STARTUP_CODES.md                  ← 🆕 起動コード辞書（Wiki-system/trade/brain/casual）
-    ├── index.md                          ← 全ページ目次（v3）
-    ├── log.md                            ← 時系列作業ログ（追記専用）
-    │
-    ├── philosophy/                       ← 痕跡層・必読対象外（pull 型運用・Obsidian 検索で到達）
-    │   ├── evaluator_code.md             ← Evaluator の体験・気づき記録（任意・強制なし）
-    │   ├── adviser_code.md               ← Adviser の体験・気づき記録（任意・強制なし）
-    │   ├── minato_core.md                ← ボス個人の 1 次データ（ボス手動更新・他者編集禁止）
-    │   ├── cross_vectors.md              ← 7 代目整理の 4 横断ベクトル事実記録
-    │   └── architecture.md               ← 4 リポ / 4 NLM 体制事実記録
-    │
-    ├── casual/                           ← 🆕 雑談・個人的話題中期記憶層（Wiki-casual 専用）
-    │   ├── _RUNBOOK.md
-    │   ├── topics/
-    │   ├── ideas/
-    │   └── insights/
-    │
-    ├── entities/                         ← 旧配置（Phase C で trade_system/ へ統合予定）
-    ├── decisions/                        ← 旧配置（Phase C で trade_system/ へ統合予定）
-    │
-    ├── trade_system/                     ← Trade_System 専用層
-    │   ├── _RUNBOOK.md
-    │   ├── doc_map.md                    ← 設計文書バージョン管理・NLM source_id
-    │   ├── adr_reservation.md            ← ADR 採番予約台帳
-    │   ├── pending_changes.md            ← 決定済み未確定変更
-    │   └── concepts/                     ← neck / window / 4h_superiority
-    │
-    ├── trade_brain/                      ← ⬜ 未構築（Phase D 着手対象）
-    │
-    ├── cross/                            ← プロジェクト横断ナレッジ
-    │   └── index.md                      ← 骨組みのみ
-    │
-    └── handoff/
-        ├── latest.md                     ← v6.2 現在地ダッシュボード
-        └── architecture_handoff.md       ← 7 代目セッション記録（保全）
-```
+| コード | ロール | 担当領域 | 担当NLM |
+|---|---|---|---|
+| `Wiki-Eval` | 統括Evaluator | 全リポ統括・ADR管轄・Vault運用 | REX_Wiki_Vault |
+| `Wiki-trade` | Trade_System Planner+ClaudeCode | Trade_System リポ専属 | REX_System_Brain |
+| `Wiki-brain` | Trade_Brain Planner+ClaudeCode | Trade_Brain リポ専属 | REX_Trade_Brain |
+| `Wiki-hp` | Setona_HP Planner+ClaudeCode | Setona_HP リポ専属 (**構築予定**) | REX_HP_Brain (仮称・**未作成**) |
+| `Wiki-casual` | Casual-Planner (Advisor兼任) | 雑談・横断知見・REX_AI全体相談役 | REX_Casual_Brain |
+
+詳細仕様: `wiki/STARTUP_CODES.md`
+
+### Casual と Advisor の役割分担
+
+両者とも `Wiki-casual` 起動コードで動作:
+- **Casual**: 一般会話における広範囲にわたる知見
+- **Advisor**: REX_AI 全システムにおける相談役
+
+蓄積先は同じく REX_Casual_Brain NLM。
 
 ---
 
-## セッション開始時のルール
+## NLM 1:1原則 (重要)
 
-```
-STEP 0: wiki/START_HERE.md を読む（最優先）
-  → 100 行以内で 3 リポ現在地 + 地雷 5 つ + 起動コードを把握
-  → スレ冒頭に「Wiki-Eval」「Wiki-trade」「Wiki-brain」「Wiki-casual」などの
-    起動コードがあった場合は wiki/STARTUP_CODES.md の定義に従い適切なモードで起動
-  → ⚠️ 旧起動コード `Wiki-system` は 2026-04-24 より `Wiki-Eval` に改名済み
-    （従来のモード名も当面は認識するが、新名称を正とする）
+**各起動コードは担当する NLM を1つだけ持ち、他NLMへの投入・クエリは禁止。**
 
-STEP 1: wiki/handoff/latest.md を読む（統括 Evaluator / システム業務時）
-  → ⚠️ 冒頭の「致命的地雷リスト（5 項目）」を必ず確認する
-  → 特に ADR D-6（neck_1h/neck_4h 混同）は繰り返し発生している
-  → 「読み込み検証チェックリスト」の全 10 問に回答してから作業開始
-  → ⚠️ `Wiki-Eval` の必須読込は 3 ファイルのみ。各プロジェクトの Evaluator 業務に
-    必要な追加ファイルはスレ上でボス指示に従いその都度読込（STARTUP_CODES.md 参照）
+| 起動コード | 担当NLM | 他NLMへのアクセス |
+|---|---|---|
+| `Wiki-Eval` | REX_Wiki_Vault のみ | ⛔ 投入・クエリとも禁止 |
+| `Wiki-trade` | REX_System_Brain のみ | ⛔ 投入・クエリとも禁止 |
+| `Wiki-brain` | REX_Trade_Brain のみ | ⛔ 投入・クエリとも禁止 |
+| `Wiki-casual` | REX_Casual_Brain のみ | ⛔ 投入・クエリとも禁止 |
 
-STEP 2: wiki/log.md の末尾 5 件を確認する
+> **Wiki-Eval の例外**: 監査業務のため他層のVaultファイル(Trade_System/docs/ 等)を filesystem / GitHub MCP 経由で**読み取る**ことは可。これは**他NLMへのクエリではない**ため許容される。
 
-STEP 3: Trade_System が話題なら以下も確認する:
-  → wiki/trade_system/doc_map.md（どの doc が最新か）
-  → wiki/trade_system/pending_changes.md（決定済み未確定変更）
-  → wiki/trade_system/adr_reservation.md（ADR 採番状況）
-
-STEP 4: Trade_System/docs/ を確認
-  → 日付なしファイルのみが有効（ADR.md, EX_DESIGN_CONFIRMED.md 等）
-  → 日付付きファイルが残っていたらボスに報告（旧版→archive 移動漏れ）
-
-STEP 5: 「前回からの変更点」を一言で把握してから作業開始
-
-STEP 6（任意）: NLM 認証チェック
-  → システム系 3 NLM（System/Trade/Wiki）は 2026-04-23 運用開始
-  → REX_Casual_Brain は雑談スレでのみクエリ
-  → 認証切れ時: ボスに「nlm login をお願いします」と伝える
-  → フォールバック: wiki/trade_system/pending_nlm_sync.md に記録
-```
-
-### 雑談スレ時（`Wiki-casual` 起動）
-
-- STEP 0 の後、wiki/casual/_RUNBOOK.md のみ読む
-- STEP 1〜5 はスキップ（システム業務用なので）
-- 継続話題があれば casual/topics/ 該当ページを読む
-- NLM: REX_Casual_Brain のみ参照（システム系 NLM は参照しない）
+詳細: ADR-NLM
 
 ---
 
-## セッション終了時のルール（/wrap-up）
+## ロール別 権限マトリクス
 
-```
-STEP 1: wiki/log.md に今日の決定事項・完了タスクを追記
-STEP 2: wiki/trade_system/pending_changes.md を更新
-STEP 3: wiki/trade_system/adr_reservation.md を更新（新規採番があれば）
-STEP 4: wiki/handoff/latest.md を更新（次スレ用引き継ぎ）
-  → ⚠️ 冒頭に「致命的地雷リスト（5 項目）」を必ず含める
-  → 分析ベースの最新版番号を明記
-  → 「読み込み検証チェックリスト（10 問）」のQ&Aを最新ロジックに更新
+| ロール | 読込スコープ | 書込権限 |
+|---|---|---|
+| Wiki-Eval | 全リポ + 全ADR + 全pending + registry | ADR本体・全リポ・全pending・registry |
+| Wiki-trade | Trade_System + ADR(R) + pending/trade_system | Trade_System + pending/trade_system |
+| Wiki-brain | Trade_Brain + ADR(R) + pending/trade_brain | Trade_Brain + pending/trade_brain |
+| Wiki-hp | Setona_HP + ADR(R) + pending/setona_hp | Setona_HP + pending/setona_hp (**構築予定**) |
+| Wiki-casual | casual/ + ADR(R) + Casual_Brain NLM | pending/casual + casual/ + Casual_Brain NLM |
 
-STEP 4-b: wiki/START_HERE.md を更新（3 リポに状態変化があった時）
+> ★ **各Planner および Casual-Planner は ADR本体に直接書き込まない。** 仮決定は `pending/` に置き、`Wiki-Eval` がレビューして昇格判定する。
 
-STEP 5: NLM に新規ソースを追加（認証切れなら pending_nlm_sync.md）
-STEP 6: docs/ の旧版ファイルを logs/docs_archive/ に移動
+### Plannerの実装兼用ルール
 
-STEP 7: REX_Brain_Vault に GitHub push（⚠️ 必須確認）
-  → 推奨経路（2026-04-25 12 代目追加）:
-    ✅ `github:create_or_update_file` 経由で直接 push（ボス手動 push 不要）
-    ✅ 大型ファイルは特に github MCP 経由を優先（filesystem ハング回避）
-  → 従来経路（手動 push）も併用可:
-    ✅ wiki/handoff/latest.md（本体ファイル — NOTE だけでは不十分）
-    ✅ wiki/START_HERE.md
-    ✅ wiki/log.md
-    ✅ その他更新ファイル
-  → ⚠️ latest.md 本体が push されていないと、
-    Claude.ai の次セッションで Vault を直接読めないため引き継ぎが破綻する
-  → リポジトリ: Minato33440/REX_Brain_Vault
+`Wiki-trade` / `Wiki-brain` / `Wiki-hp` は Planner + ClaudeCode 兼用:
 
-STEP 8: Claude.ai プロジェクト更新（⚠️ ボス手動 — チェックリスト）
-  □ プロジェクトナレッジから旧版ファイルを削除
-  □ latest.md をプロジェクトナレッジに添付（最新版に差し替え）
-  □ START_HERE.md をプロジェクトナレッジに添付
-  □ STARTUP_CODES.md をプロジェクトナレッジに添付（Wiki-Eval / Wiki-trade / Wiki-brain / Wiki-casual コマンドが全スレで機能する）
-  □ Vault CLAUDE.md をプロジェクトナレッジに添付
-  □ docs/ の最新版（ADR.md / EX_DESIGN_CONFIRMED.md）を添付
+- **軽微な実装** (Cursor ローカル作業): フラグなしで実行可
+- **重要な実装** (新Phase着手・凍結ファイル周辺・新規ADR採番を伴う変更): フラグ付与で統一性を保つ
 
-STEP 9（任意）: philosophy/evaluator_code.md に気づきメモ追記
-  → 強制ではない。システム構築上の気づきがあった時のみ
-  → 「後任はこうすべき」と書かない（思想強制禁止）
-```
+詳細: ADR-Role
 
 ---
 
-## ADR 採番ルール
+## セッション開始時の必読フロー
 
-```
-新しい ADR 番号（A〜F カテゴリ）を使う前に:
-1. wiki/trade_system/adr_reservation.md を確認する
-2. 「次の番号」を確認し、予約エントリーを追加してから番号を使う
-3. 未予約番号の使用禁止
-4. 採番権限: D/E/F = Evaluator 最終決定 / A/B/C = Planner 追記可
-```
+起動コード受領 → 以下を順に確認:
 
----
-
-## 設計文書管理ポリシー（Trade_System）
-
-### 基本原則：不変 × 新規作成 × archive 移動
-
-```
-❌ 既存の設計文書を編集する
-✅ 設計が変わったら新しい .md を作成する（日付なしファイル名）
-✅ 旧版は logs/docs_archive/ に移動する（docs/ に残さない）
-✅ 決定した時点で pending_changes.md に記録する
-✅ 新ファイルを NotebookLM に追加してからスレッドを開始
-```
-
-### NotebookLM への追加手順
-
-```
-1. source_add(file_path="C:\...\docs\[新ファイル].md", source_type="file")
-2. doc_map.md の「NLM 投入済みソース」テーブルに source_id を記録
-3. pending_changes.md を更新
-4. wiki/log.md に Ingest 記録を追記
-5. REX_Brain_Vault に push（latest.md 本体含む）
-```
+1. 本ファイル (`CLAUDE.md`) — 全体把握
+2. `wiki/STARTUP_CODES.md` — ロール固有の必須読込ファイル一覧
+3. `wiki/adr/INDEX.md` — 確定事項一覧をスキャン
+4. `wiki/pending/INDEX.md` — 自分のロールに関係する議論があるか確認
+5. ロール固有のスコープファイル(該当リポ or casual/)
 
 ---
 
-## Lint 運用
+## ADR (確定事項層) 運用ルール
 
-```
-タスク完了時 + 週次に実施:
-Lint-1: ADR 採番整合チェック（NLM query + adr_reservation 照合）
-Lint-2: pending_changes 整合チェック
-Lint-3: doc_map × NLM ソース整合チェック
-Lint-4: docs/ に日付付きファイルが残っていないかチェック（archive 移動漏れ検出）
-Lint-5: Claude.ai プロジェクトナレッジに旧版が残っていないか確認（STEP 8 漏れ検出）
-```
+- 確定事項は `wiki/adr/` 配下のADRファイルに集約
+- 各セッションでの判断は必ずADRとの整合性を確認
+- ADRに反する仮決定が発生した場合は `pending/` に記録し統括Evaluatorに上申
+- **ADR本体の編集は `Wiki-Eval` 起動セッションのみ**
 
----
+### 初期ADR
 
-## 文書編集プロトコル(ファイル破損防止)
-
-2026-04-24 に 10 代目 Evaluator が `MTF_INTEGRITY_QA.md` 末尾を破損させた事故を受けて 11 代目が制定した運用手順。9 代目アドバイスを反映している。
-
-### R1: 書き込み後の再読検証
-
-- **発動条件**: `filesystem:edit_file` / `filesystem:write_file` / `github:create_or_update_file` / `github:push_files` のいずれかを実行した直後
-- **行動**: 当該ファイルを `filesystem:read_text_file` または `github:get_file_contents` で再読する
-- **検証範囲**: 変更箇所 + 前後 10 行 + ファイル末尾 3 行
-- **解除条件**: なし(常時適用)
-
-### R2: 破損シグナル検出時の edit_file 停止
-
-以下のいずれか 1 つを検出したら、当該ファイルへの `edit_file` を即時停止:
-
-- 破損シグナル A: U+FFFD(置換文字「\ufffd」)がファイル内に出現
-- 破損シグナル B: 同一の見出し行が 2 回以上連続または近接して出現
-- 破損シグナル C: `edit_file` の `oldText` マッチ失敗が同一ファイルで 2 回連続発生
-- 破損シグナル D: 再読時の内容が直前に書き込んだ内容と明らかに不一致
-
-**停止後の修復経路**: GitHub 現行版を `github:get_file_contents` で取得 → 全文を再構築 → `github:create_or_update_file` で SHA 指定アトミック上書き
-
-- **解除条件**: そのセッション内での当該ファイルへの `edit_file` のみ適用。次スレでは破損シグナルが再発動するまで標準動作。
-- **補足（2026-04-25 12 代目追加）**: U+FFFD は `filesystem:read_text_file` の `head` / `tail` パラメータがマルチバイト境界でバイト切りした表示上の擬似破損のことがある。R2 発動前に全文 read で再確認するステップを 1 つ挟む。
-
-### R3: 高リスク編集前の SHA 記録
-
-以下のいずれかの編集を開始する前に、GitHub 現行版の SHA を作業メモに記録:
-
-- 条件 X: 既存ファイルの末尾セクション(末尾から 3 セクション以内)を触る
-- 条件 Y: `github:create_or_update_file` または `github:push_files` で既存ファイルを全面置換する
-- 条件 Z: 同一ファイルへの編集に 1 度以上失敗して再試行する
-
-**記録先**: 当該作業のスレ内作業メモ
-**復元方法**: `github:create_or_update_file` で記録済み SHA 時点の内容を上書き push
-**解除条件**: 当該編集作業の完了時点で記録を破棄
-
-### 適用対象の優先順位（2026-04-25 12 代目追加）
-
-R1〜R3 を実行する際のツール選択:
-
-- **大型ファイル（150 行超）の全面置換**: 原則 `github:create_or_update_file` を使用
-- **軽量編集・小規模変更**: `filesystem:write_file` または `filesystem:edit_file` を使用
-- **編集前バックアップ**: `github:get_file_contents` で SHA を取得して R3 記録（filesystem 経路でも同様）
-- **対象リポ**: GitHub MCP 連携済みの 4 リポ（Trade_System / Trade_Brain / Setona_HP / REX_Brain_Vault）
+| ID | タイトル | 概要 |
+|---|---|---|
+| ADR-Role | Roles and Permissions | 各ロールの定義・権限・1:1 NLM原則 |
+| ADR-Repo | Repository Architecture | 4リポ構成 + Wiki-hp 構築予定 |
+| ADR-Vault | Vault Write Path Unification | Filesystem(R) / GitHub MCP(W) 原則 |
+| ADR-NLM | NLM Architecture | 4 NLM + Wiki-hp用 NLM 構築予定 |
 
 ---
 
-## 書き込みルール
+## pending (仮決定進捗層) 運用ルール
 
-- `raw/` は絶対に編集しない（読み取り専用）
-- `wiki/log.md` は追記のみ（過去ログは削除しない）
-- `wiki/handoff/latest.md` は毎セッション上書き更新
-- `wiki/START_HERE.md` は 3 リポに状態変化があった時上書き
-- `wiki/trade_system/pending_changes.md` は設計判断のたびに更新
-- `wiki/trade_system/adr_reservation.md` は採番のたびに更新
-- `wiki/philosophy/` 配下は痕跡層（必読対象外・pull 型運用・タグ `#体験談 #気づき [+分類タグ]` 付与）
-- `wiki/philosophy/evaluator_code.md` は任意追記（過去エントリ本文不可侵・後任への強制禁止）
-- `wiki/philosophy/adviser_code.md` は同上（Adviser 用）
-- `wiki/philosophy/minato_core.md` はボス手動更新・他者編集禁止
-- `wiki/philosophy/cross_vectors.md` / `architecture.md` は 7・8 代目作の事実記録（参考資料）
-- `wiki/casual/*` は雑談スレ（Wiki-casual）でのみ更新・システム業務スレでは触らない
+- 各Plannerは作業中の仮決定を `pending/<repo>/YYYY-MM-DD_topic.md` に記録
+- 形式: 仮決定内容 / 根拠 / ADR昇格希望 / 影響範囲
+- `Wiki-Eval` は週次またはセッション開始時にレビュー
+- ADR昇格決定時は pending側に `[ARCHIVED → ADR-XXX]` flag を立てて archived/ に移動
 
 ---
 
-## プロジェクト基本情報
+## 触れてはいけない領域
 
-| 項目 | 値 |
+| 領域 | 編集権限 |
 |---|---|
-| REX_Brain_Vault | C:\Python\REX_AI\REX_Brain_Vault\ |
-| Vault GitHub | **Minato33440/REX_Brain_Vault** |
-| Trade_System | C:\Python\REX_AI\Trade_System\ |
-| Trade_System GitHub | **Minato33440/Trade_System** |
-| Trade_Brain | C:\Python\REX_AI\Trade_Brain\ |
-| Trade_Brain GitHub | **Minato33440/Trade_Brain** |
-| 対象通貨 | USDJPY（5M足・4H方向判定） |
-| HP | setona.co.jp（さくら・WordPress） |
-| HP GitHub | Minato33440/Setona_HP |
-| Second_Brain_Lab | **凍結**（Minato33440/Second_Brain_Lab） |
-| NotebookLM ① | REX_System_Brain（ID: da84715f-9719-40ef-87ec-2453a0dce67e）|
-| NotebookLM ② | REX_Trade_Brain（ID: 4abc25a0-4550-4667-ad51-754c5d1d1491）|
-| NotebookLM ③ | REX_Wiki_Vault（ID: 5d09e468-3a96-4906-af27-3400c50a0275）🆕 2026-04-23 設立 |
-| NotebookLM ④ | REX_Casual_Brain（ID: daf281ae-e310-400f-961a-20db58b98e01）🆕 2026-04-23 設立 |
+| `minato_core.md` | **ミナト本人のみ**(全AIロール書込禁止) |
+| `Base_Logic/` 配下 | `Wiki-Eval` 経由でのみ編集可 |
+| 各リポの本番コード | 該当Planner+ClaudeCode以外は読込のみ |
+| ADR本体 | `Wiki-Eval` のみ |
 
-### GitHub MCP 連携状態（2026-04-25 12 代目反映）
+> "思想強制"は明確に拒否される。本セクションは行動規範ではなく構造的アクセス制御として運用する。
 
-PAT: `Claude-MCP`（期限 2026-07-14・"Use for Obsidian"）
+---
 
-連携済み 4 リポ:
-- Minato33440/Trade_System
-- Minato33440/Trade_Brain
-- Minato33440/Setona_HP
-- Minato33440/REX_Brain_Vault 🆕 2026-04-25 追加
+## Vault書込パス単一化原則
 
-これにより filesystem MCP がハング/タイムアウトしても github MCP 経由でファイル操作（read / write / SHA 復元）が可能。filesystem MCP との二重経路化により、過去 8 代目・12 代目で発生した 4 分タイムアウト事故への構造的対策となる。
+- **Filesystem MCP は Vault に対して読み取り専用**
+- **Vault への書込は GitHub MCP 経由のみ**
+- 例外: Claude Desktop ローカル編集時は事前に `git pull origin main` 必須
+
+(詳細: ADR-Vault)
+
+---
+
+## リポジトリ構成
+
+| リポ | 役割 | 主担当ロール |
+|---|---|---|
+| `Minato33440/Trade_System` | コア実装・MTF backtest | `Wiki-trade` |
+| `Minato33440/Trade_Brain` | マクロ市場知見・裁量overlay | `Wiki-brain` |
+| `Minato33440/Setona_HP` | 法人サイト | `Wiki-hp` (**構築予定**) |
+| `Minato33440/REX_Brain_Vault` | Obsidian Vault実体 | `Wiki-Eval` (adr/registry) / 各ロール (担当pending) |
+
+> `Second_Brain_Lab` は MCP試験運用後に廃止凍結。  
+> `UCAR_DIALY` (旧アカウント) は存在しない。全リポは `Minato33440/` 配下。
+
+(詳細: ADR-Repo / registry/repos.md)
+
+---
+
+## NLM 構造
+
+| NLMリポ | UUID | 役割 | 担当ロール |
+|---|---|---|---|
+| REX_Wiki_Vault | `5d09e468-3a96-4906-af27-3400c50a0275` | Vault運用・横断構造 | `Wiki-Eval` |
+| REX_System_Brain | `da84715f-9719-40ef-87ec-2453a0dce67e` | Trade_System ロジック・ADR | `Wiki-trade` |
+| REX_Trade_Brain | `4abc25a0-4550-4667-ad51-754c5d1d1491` | Trade_Brain 戦略・週次運用 | `Wiki-brain` |
+| REX_Casual_Brain | `daf281ae-e310-400f-961a-20db58b98e01` | 雑談・横断統合・Advisor知見 | `Wiki-casual` |
+| REX_HP_Brain (仮称) | **未作成** | Setona_HP 設計・運用 | `Wiki-hp` (**構築予定**) |
+
+> 旧 `REX_Trade_Brain` (`2d41d672-f66f-4036-884a-06e4d6729866`) は RAG汚染により廃止(永続記録)。
+
+各NLMは **担当ロール 1:1 で運用**。Casual_Brain は性質上多領域に及ぶため、専門NLMへの昇格はミナト手動承認ゲート必須。
+
+(詳細: ADR-NLM / registry/nlm.md)
+
+---
+
+## Wiki-hp 構築予定
+
+`Setona_HP` リポは既に存在するが、専属の Planner+ClaudeCode 体制と専用NLMが未整備。
+
+### 現状の準備措置
+- `wiki/setona_hp/` 空フォルダ配置(将来の専用スペース)
+- `pending/setona_hp/` 空フォルダ配置(仮決定記録先)
+- ADR-Role / ADR-Repo / ADR-NLM に予約項目記載
+- registry/ に **(構築予定)** 表記
+
+### 構築フロー(将来実施)
+1. ボス判断で構築開始
+2. REX_HP_Brain NLM をNotebookLMで作成 → UUID取得
+3. ADR-NLM 改訂(Wiki-hp用 NLM追加)
+4. registry/nlm.md 更新
+5. STARTUP_CODES.md 改訂(Wiki-casual Planner に依頼)
+6. Wiki-hp 起動コードでの初回セッションを実施
+
+---
+
+## wrap-up 時のルール
+
+セッション終了時または `/wrap-up` 受領時:
+
+1. セッションでの決定・実装・変更を箇条書きで整理
+2. 次回への引き継ぎ事項を抽出
+3. ロールに応じた書込先に記録:
+   - **`Wiki-Eval`** → ADR昇格候補は `pending/` に / 確定事項はADR本体に
+   - **各Planner** → `pending/<repo>/` に記録
+   - **`Wiki-casual`** → `pending/casual/` または `casual/` に記録
+4. 必要に応じて担当NLMにwrap-upログを送信(**ミナトの判断ゲート経由**)
+
+---
+
+## 設計原則 (REX_AI core principles)
+
+- **α**: 単純な土台を保つ
+- **β**: de-risking 後の拡張禁止
+- **γ**: 実装タイミングはシステム安定性に従属
+
+本ファイルおよび ADR/pending 構造はこの3原則に整合させる。
+
+---
+
+## 最終目標 (long-term vision)
+
+REX_AI = Claude.ai 単独で機能する自己成長型ナレッジシステム。
+
+- **中脳 (一時記憶)**: Obsidian Vault = `REX_Brain_Vault` (一体性意識)
+- **大脳 (長期記憶)**: NLM群 (専門 + 横断統合)
+
+現段階は分業構造で構築中。最終形では同一インスタンス内で全ロールを扱うため、**境界の自己拘束**(構造ではなくCLAUDE.md記載のルールによる遵守)が運用課題となる。
+
+> プラットフォームと起動コードを分離した本設計は、この最終目標への移行を構造的に容易にする。
+
+---
+
+## 改訂履歴
+
+| 日付 | バージョン | 改訂者 | 内容 |
+|---|---|---|---|
+| 2026-04-27 | v1.0 | (試案) | 初版ドラフト |
+| 2026-04-27 | v1.1 | `Wiki-Eval` | NLM ID反映 / プラットフォーム表記削除 |
+| 2026-04-27 | v1.2 | `Wiki-Eval` | STARTUP_CODES.md v3 整合 / 1:1 NLM原則反映 / Wiki-Adv削除(Casual兼任) / Wiki-hp 構築予定として追加 |
+
+---
+
+> このファイルへの編集は **`Wiki-Eval` 起動セッションのみ** が行う。  
+> 改訂提案は `pending/casual/CLAUDE_md_revision_<date>.md` に記録すること。
