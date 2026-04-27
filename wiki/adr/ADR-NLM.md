@@ -2,8 +2,8 @@
 
 **Status**: Accepted  
 **Date**: 2026-04-27  
-**Decider**: `Wiki-Eval`  
-**Depends on**: ADR-Role
+**Decider**: `13代目統括Evaluator (Opus 4.7)`  
+**Depends on**: ADR-NLM
 
 ---
 
