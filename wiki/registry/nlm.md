@@ -2,7 +2,7 @@
 
 REX_AI システムが管理する NotebookLM ノートブックの登録簿(現在の状態)。
 
-最終更新: 2026-04-27  
+最終更新: 2026-04-28  
 管轄: `Wiki-Eval`
 
 > 本ファイルは「現在の登録状態」を記録する。決定の理由・経緯・1:1原則の詳細は [adr/ADR-NLM.md](../adr/ADR-NLM.md) を参照。
@@ -16,7 +16,9 @@ REX_AI システムが管理する NotebookLM ノートブックの登録簿(現
 | REX_Wiki_Vault | `5d09e468-3a96-4906-af27-3400c50a0275` | Vault運用 | wiki/直下・横断構造・運用ルール | `Wiki-Eval` |
 | REX_System_Brain | `da84715f-9719-40ef-87ec-2453a0dce67e` | 専門 | Trade_System ロジック・ADR・spec | `Wiki-trade` |
 | REX_Trade_Brain | `4abc25a0-4550-4667-ad51-754c5d1d1491` | 専門 | Trade_Brain 戦略・週次運用 | `Wiki-brain` |
-| REX_Casual_Brain | `daf281ae-e310-400f-961a-20db58b98e01` | 統合 | 雑談・横断統合・Advisor知見 | `Wiki-casual` |
+| **REX_Personal_Brain** | `daf281ae-e310-400f-961a-20db58b98e01` | 統合 | **ボスの全人的な人格・思想・起源情報の統合 + 雑談・横断統合・Advisor知見** | `Wiki-Personal` |
+
+> **REX_Personal_Brain 改名 Note**: 2026-04-28 に旧 `REX_Casual_Brain` から表示名変更。**UUID は不変**（`daf281ae-e310-400f-961a-20db58b98e01`）。NotebookLM Web UI でノートブック表示名を変更するボス手動操作のみ（Step 5）。`notebooklm-mcp-cli` 設定の更新は不要（UUID 参照で動作）。詳細は [adr/ADR-NLM.md](../adr/ADR-NLM.md) v2 参照。
 
 ---
 
@@ -38,6 +40,8 @@ REX_AI システムが管理する NotebookLM ノートブックの登録簿(現
 
 > 廃止NLMのUUIDは混乱再発防止のため永続記録する。
 
+> **REX_Casual_Brain は廃止記録に含めない**: REX_Casual_Brain → REX_Personal_Brain は **改名であり廃止ではない**。同一 UUID（`daf281ae-...`）のノートブックの表示名変更のみ。データ・履歴・投入内容はすべて継承される。詳細は [adr/ADR-NLM.md](../adr/ADR-NLM.md) v2 §7 参照。
+
 ---
 
 ## 1:1 原則(再掲)
@@ -50,7 +54,7 @@ REX_AI システムが管理する NotebookLM ノートブックの登録簿(現
 | `Wiki-trade` | REX_System_Brain のみ | ⛔ 投入・クエリとも禁止 |
 | `Wiki-brain` | REX_Trade_Brain のみ | ⛔ 投入・クエリとも禁止 |
 | `Wiki-hp` | REX_HP_Brain (構築予定) | ⛔ 投入・クエリとも禁止 |
-| `Wiki-casual` | REX_Casual_Brain のみ | ⛔ 投入・クエリとも禁止 |
+| **`Wiki-Personal`** | **REX_Personal_Brain のみ** | ⛔ 投入・クエリとも禁止 |
 
 > **Wiki-Eval の例外**: 監査業務のため他層のVaultファイルを filesystem / GitHub MCP 経由で**読み取る**ことは可。これは他NLMへのクエリではない。
 
@@ -63,7 +67,7 @@ REX_AI システムが管理する NotebookLM ノートブックの登録簿(現
 | REX_Wiki_Vault | (未記録) | - | - |
 | REX_System_Brain | (未記録) | - | - |
 | REX_Trade_Brain | (未記録) | - | - |
-| REX_Casual_Brain | (未記録) | - | - |
+| **REX_Personal_Brain** | (未記録) | - | - |
 | REX_HP_Brain | 未開始(構築予定) | - | - |
 
 > ClaudeCode は最終injectionから5週間経過で警告生成(自動実行はしない)。
@@ -73,12 +77,20 @@ REX_AI システムが管理する NotebookLM ノートブックの登録簿(現
 ## 知見昇格ルール(再掲)
 
 ```
-Casual_Brain (横断記憶 / Wiki-casual 担当)
+Personal_Brain (横断記憶 + 人格付与情報 / Wiki-Personal 担当)
    ↓ ★ミナト手動承認ゲート(必須)
 専門NLM (該当領域 / 該当Planner担当)
 ```
 
-詳細: [adr/ADR-NLM.md](../adr/ADR-NLM.md) "Casual → 専門NLM の知見昇格ルール"
+詳細: [adr/ADR-NLM.md](../adr/ADR-NLM.md) "Personal → 専門NLM の知見昇格ルール"
+
+---
+
+## 思想強制リスクの構造的解消（v2 注記）
+
+ボスの Origin 情報は **Wiki-Personal 起動時のメンタルマネージメント・価値観文脈においてのみ** Rex が参照する。Trade 判断・実装業務での参照は禁止（NLM 1:1 原則と起動コード物理分離により構造的に保証）。
+
+詳細: [adr/ADR-Role.md](../adr/ADR-Role.md) v2 §13 / [adr/ADR-NLM.md](../adr/ADR-NLM.md) v2 §5
 
 ---
 
@@ -88,5 +100,6 @@ Casual_Brain (横断記憶 / Wiki-casual 担当)
 - **更新タイミング**:
   - NLM新規追加時(ADR-NLM に基づく承認後)
   - NLM廃止時(ADR-NLM に基づく承認後)
+  - **NLM 表示名変更時（ADR-NLM 改訂と同時・本 v2 が初例）**
   - injection実施後(最終injection日 列の更新)
 - **更新方法**: GitHub MCP 経由のみ (ADR-Vault 遵守)
