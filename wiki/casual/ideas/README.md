@@ -1,30 +1,10 @@
-# ideas/ — 単発アイデアメモ層
+# [MOVED]
 
-**役割**: 雑談で出た **その瞬間の発想** を残す場所。
-**性質**: 単発・追記なし（後から見返して topics/ や insights/ に発展させる素材）。
-**NLM**: ⛔ 投入しない（未熟・ノイズ多い）。
+**このファイルは移動しました（2026-04-28・15 代目 Wiki-Eval）**
 
----
+- 旧パス: `wiki/casual/ideas/README.md`
+- **新パス**: [`wiki/personal/invent/README.md`](../../personal/invent/README.md)
+- ディレクトリ名変更: `ideas/` → `invent/`（pending 起票・サブ層 5 層構造）
+- 移動 commit: 同 commit 内
 
-## 命名規則
-
-```
-YYYY-MM-DD_[短いタイトル].md
-例: 2026-04-27_treatment_AI_intake.md
-```
-
-日付付き。同じ日に複数あるなら連番（_01 / _02）。
-
----
-
-## どうなったら topics/ に昇格？
-
-- 同じテーマで 3 回以上書きたくなった
-- 継続話題として育てる価値があると感じた
-- ボスが「これは深掘りしたい」と判断した
-
-→ topics/[テーマ].md に統合・このファイルは削除（または insights/ に昇格）。
-
----
-
-*親: `wiki/casual/_RUNBOOK.md`*
+旧パスへの追加更新は禁止。

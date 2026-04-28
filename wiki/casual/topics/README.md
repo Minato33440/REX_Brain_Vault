@@ -1,31 +1,10 @@
-# topics/ — 話題別の知識蓄積層
+# [MOVED]
 
-**役割**: 雑談で出た話題を **テーマ別に育てる** 場所。
-**性質**: 上書き型（追記しながら 1 ファイルが育つ）。
-**NLM**: ✅ 投入可（熟した話題のみ）。
+**このファイルは移動しました（2026-04-28・15 代目 Wiki-Eval）**
 
----
+- 旧パス: `wiki/casual/topics/README.md`
+- **新パス**: [`wiki/personal/usual/README.md`](../../personal/usual/README.md)
+- ディレクトリ名変更: `topics/` → `usual/`（pending 起票・サブ層 5 層構造）
+- 移動 commit: 同 commit 内
 
-## 命名規則
-
-```
-[話題名].md       例: shooting.md / aikido.md / motorcycle.md
-```
-
-シンプルに。日付は付けない（話題は時間を超えて育てるため）。
-
----
-
-## ideas/ や insights/ との違い
-
-| 配置先 | 性質 | 寿命 |
-|---|---|---|
-| **topics/** | 話題別の継続蓄積（育つ） | 長い |
-| ideas/ | 単発の発想メモ（その時点） | 短い |
-| insights/ | 横断的なメタファー・気づき | 中〜長 |
-
-→ 同じ話題で何度も触れるなら topics/、思いつきなら ideas/、領域横断の気づきなら insights/。
-
----
-
-*親: `wiki/casual/_RUNBOOK.md`*
+旧パスへの追加更新は禁止。

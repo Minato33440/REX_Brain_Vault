@@ -1,27 +1,10 @@
-# insights/ — 横断メタファー・気づき層
+# [MOVED]
 
-**役割**: 領域を超えた **構造的気づき** を蓄積する場所。
-**性質**: 凝縮型（短く・濃く）。
-**NLM**: ✅ 投入可（熟した気づきは長期記憶へ）。
+**このファイルは移動しました（2026-04-28・15 代目 Wiki-Eval）**
 
----
+- 旧パス: `wiki/casual/insights/README.md`
+- **新パス**: [`wiki/personal/insights/README.md`](../../personal/insights/README.md)
+- ディレクトリ名: `insights/` はそのまま維持（5 層構造のクロスカット層）
+- 移動 commit: 同 commit 内
 
-## 命名規則
-
-```
-[テーマ].md
-例: aikido_to_trade.md / shugyo_to_AI.md / wuxing_to_portfolio.md
-```
-
-テーマ名（領域 A → 領域 B または 領域 A_to_領域 B）。
-
----
-
-## ideas/ との違い
-
-ideas/ は「思いつき」、insights/ は **「構造化された気づき」**。
-→ ideas/ で生まれた発想が領域横断の意味を持つようになったら insights/ へ昇格。
-
----
-
-*親: `wiki/casual/_RUNBOOK.md`*
+旧パスへの追加更新は禁止。
