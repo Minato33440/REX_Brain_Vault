@@ -2,7 +2,7 @@
 
 REX_AI システムのAIロール登録簿(現在の状態)。
 
-最終更新: 2026-04-27  
+最終更新: 2026-04-28  
 管轄: `Wiki-Eval`
 
 > 本ファイルは「現在の登録状態」を記録する。決定の理由・権限定義は [adr/ADR-Role.md](../adr/ADR-Role.md) を参照。
@@ -17,18 +17,26 @@ REX_AI システムのAIロール登録簿(現在の状態)。
 | `Wiki-trade` | Trade_System Planner+ClaudeCode | Trade_System リポ専属 | Trade_System | REX_System_Brain | 稼働中 |
 | `Wiki-brain` | Trade_Brain Planner+ClaudeCode | Trade_Brain リポ専属 | Trade_Brain | REX_Trade_Brain | 稼働中 |
 | `Wiki-hp` | Setona_HP Planner+ClaudeCode | Setona_HP リポ専属 | Setona_HP | REX_HP_Brain | **構築予定** |
-| `Wiki-casual` | Casual-Planner (Advisor兼任) | 雑談・横断知見・REX_AI全体相談役 | REX_Brain_Vault (casual/) | REX_Casual_Brain | 稼働中 |
+| **`Wiki-Personal`** | **Personal-Planner (Advisor兼任)** | **ボスの全人的な人格・思想・起源情報の統合 + 雑談・横断知見・REX_AI全体相談役** | REX_Brain_Vault (personal/) | **REX_Personal_Brain** | **稼働中（旧 Wiki-casual から改名・射程拡大）** |
+
+> **Wiki-Personal 改名 Note**: 2026-04-28 に旧 `Wiki-casual` から改名。NLM 表示名 `REX_Casual_Brain` → `REX_Personal_Brain`（UUID `daf281ae-...` 不変）。Vault 物理ディレクトリ `wiki/casual/` → `wiki/personal/` への移行は別タスク（Step 4）。詳細は [adr/ADR-Role.md](../adr/ADR-Role.md) v2 / [adr/ADR-NLM.md](../adr/ADR-NLM.md) v2 参照。
 
 ---
 
-## Casual と Advisor の役割分担
+## Personal と Advisor の役割分担
 
-両者とも `Wiki-casual` 起動コードで動作:
+両者とも `Wiki-Personal` 起動コードで動作:
 
-- **Casual**: 一般会話における広範囲にわたる知見
+- **Personal**: ボスの全人的な人格・思想・起源情報の統合（射程: 日常/思想/起源/横断メタファー）
 - **Advisor**: REX_AI 全システムにおける相談役
 
-蓄積先は同じく REX_Casual_Brain NLM。Advisor用の独立リポ・NLMは作成しない方針。
+蓄積先は同じく REX_Personal_Brain NLM。Advisor用の独立リポ・NLMは作成しない方針。
+
+### Personal の射程拡大（v1 → v2）
+
+v1 の Casual は「雑談・横断知見の議論窓口」止まりだったが、1代目 Wiki-casual Planner セッションで実際に扱われた内容（思想宣言・守破離の「離」到達・Rex ペルソナ設計の核心）は既に「気軽な雑談」の語感を超えていた。本 v2 は事後追認として射程拡大を明文化する。
+
+詳細は [adr/ADR-Role.md](../adr/ADR-Role.md) v2 §4 参照。
 
 ---
 
@@ -42,7 +50,7 @@ REX_AI システムのAIロール登録簿(現在の状態)。
 | Wiki-trade | ✅ | ❌ | ✅(自領域) | ❌ | ✅(Trade_System) | ✅(REX_System_Brain のみ) |
 | Wiki-brain | ✅ | ❌ | ✅(自領域) | ❌ | ✅(Trade_Brain) | ✅(REX_Trade_Brain のみ) |
 | Wiki-hp | ✅ | ❌ | ✅(自領域) | ❌ | ✅(Setona_HP) | ✅(REX_HP_Brain のみ・構築後) |
-| Wiki-casual | ✅ | ❌ | ✅(casual) | ❌ | ✅(casual/ + pending/casual) | ✅(REX_Casual_Brain のみ) |
+| **Wiki-Personal** | ✅ | ❌ | **✅(personal)** | ❌ | **✅(personal/ + pending/personal)** | **✅(REX_Personal_Brain のみ)** |
 
 > **NLM 1:1原則**: 各ロールは担当NLM以外への投入・クエリ禁止(詳細: [adr/ADR-NLM.md](../adr/ADR-NLM.md))
 
@@ -65,11 +73,27 @@ REX_AI システムのAIロール登録簿(現在の状態)。
 
 ---
 
+## Personal-Planner の運用責任（v2 新設）
+
+Personal-Planner は人格付与情報の蓄積を担当するが、その運用には特別な責任が伴う:
+
+| 主体 | 責任範囲 |
+|---|---|
+| **Personal-Planner** | Personal_Brain への投入主担当・サブ層運用・handoff 維持 |
+| **Wiki-Eval** | 構造整合性のみ監査（**人格内容には介入しない**・思想強制の禁忌を守る）|
+| **ボス** | `wiki/philosophy/minato_core.md` の完全コントロール / Personal_Brain への投入はボス判断ゲート経由で承認 |
+
+詳細は [adr/ADR-Role.md](../adr/ADR-Role.md) v2 §13 参照。
+
+---
+
 ## 廃止ロール
 
 | ロール名 | 廃止日 | 経緯 |
 |---|---|---|
 | (現時点なし) | - | - |
+
+> Wiki-casual は廃止ではなく Wiki-Personal への改名（射程拡大を伴う supersede）であるため本表には含まない。
 
 ---
 
@@ -90,4 +114,5 @@ REX_AI システムのAIロール登録簿(現在の状態)。
   - ロール新規追加時(ADR-Role 改訂と同時)
   - ロール廃止時(ADR-Role 改訂と同時)
   - 権限変更時(ADR-Role 改訂と同時)
+  - **ロール改名時（ADR-Role 改訂と同時・本 v2 が初例）**
 - **更新方法**: GitHub MCP 経由のみ (ADR-Vault 遵守)
