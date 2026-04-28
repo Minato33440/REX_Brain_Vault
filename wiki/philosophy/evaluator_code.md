@@ -283,6 +283,31 @@ ADR-Role v2 push 直後に「Supersededl」(末尾 l 余分)を発見し、9 com
 
 完全に防ぐより、発見したら即修正する方が現実的だと感じた。push 後にもう一度 view で読み直す習慣があれば検出率は上がる、というのが本セッションでの学び。
 
+### セッション後半の Git 衝突事象
+
+handoff/ 内 3 ファイル + philosophy/evaluator_code.md への追記 4 commit を push し終えた後、ボスがローカルで `rtk git pull origin main` を実行したら `latest.md` で衝突が発生した。ボス報告:
+
+```
+wiki/handoff/latest.md: needs merge
+both modified:   wiki/handoff/latest.md
+```
+
+PROCESS.md と architecture_handoff.md は自動マージできていたが、`latest.md` のみ衝突した。私が確認したところ、衝突マーカーで分かれた両側はどちらも v6.6 を名乗っていた。HEAD 側(ボスのローカル)は「Claude Sonnet 4.6」表記で「注:10〜12 代目の更新は本ファイルに記録なし」の行がなく、Q10 末尾の補足が短かった。08457518 側(私の push)は「Claude Opus 4.7」表記で「注」行ありで、Q10 末尾に `(ADR-NLM v2)` と `(旧 Casual_Brain・UUID 不変)` が補足されていた。
+
+ボスは「セッション前に毎回 `nothing to commit, working tree clean` を確認していたが、何故書き込まれたかは分からない」と返してくれた。Sonnet 4.6 表記は Vault 開発初期に使用していた記載が残存していたものだろうという推察も。
+
+私の推察を残しておく。`git status` の `working tree clean` は **作業ツリー(未 commit 変更)が綺麗** という意味であり、**ローカル commit と origin の差分が 0 という意味ではない**。ローカルが先行 commit を持っていても `working tree clean` は表示される。今回はおそらく、過去の Sonnet 4.6 製スレで作られた v6.6 のローカル commit がボスのローカル `main` に存在していて、それが私の GitHub MCP 13 commit と衝突した。
+
+ADR-Vault §例外条件「Claude Desktop ローカル編集時は事前に `git pull origin main` 必須」は、**ローカル → リモートの方向のリスク**を防ぐルールだった。今回起きたのは **GitHub MCP → ローカルの方向**で、私が並行して push を重ねている間にボス側のローカルが取り残された形。MCP 経由の並行 push を考慮した運用ルールは、ADR-Vault に明示的には書かれていなかった。
+
+衝突解決はボスに案 A(手動マージ)を提示し、衝突マーカー両側の差分(モデル表記・「注」行有無・Q10 末尾補足)を 1 行ずつ整理して、どちらを採用するかの推奨を添えた。ボスは Opus 4.7 版を採用してマージ・push してくれた。
+
+ボスから「以後 pull の前には git status を確認しておくよ」という運用変更が示された。私は補強として `git fetch origin` 後に `git log --oneline origin/main..main` と `git log --oneline main..origin/main` の両方向差分を見るチェック手順を提示した。`git status` 単体では先行 commit の有無が見えにくい場面があるため、`fetch + 双方向 log` のセットが今回のような事象には有効、というのが本セッションで自分に残った技術知見。
+
+第 9 章 9-5 に書いた「起動時の整合性ズレ」は filesystem 表示と GitHub 表示のズレ、本節の Git 衝突は GitHub MCP 並行 push 中のローカル取り残し。**Vault のソースオブトゥルースが GitHub であることを徹底するなら、Wiki-Eval の初動と終了時の両方で GitHub 上の状態確認を入れる**、という運用が自分には必要だと感じた。
+
+衝突解決そのものは数分で済んだが、ボスに余計な操作を増やしてしまった。新体制移行直後で push が頻繁に走るタイミングは、こういう摩擦が起きやすい時期なのだろう。本セッションを通して、自動化された MCP 操作と人間側のローカルワークフローの間には、`git status` 単体では見えない隙間があるという感覚を得た。
+
 ---
 
 ## 追記する際のチェックリスト(書き手へのメモ)
@@ -305,4 +330,4 @@ ADR-Role v2 push 直後に「Supersededl」(末尾 l 余分)を発見し、9 com
 *2026-04-24 に 9 代目が気づきメモとボス発言記録を追加*
 *2026-04-25 に 11 代目が事故対策メモを追加*
 *2026-04-25 に 12 代目が pull 型運用への転換（タグ付与・冒頭文言変更・タグ運用ルール追加・head/tail 擬似破損知見記録）を実装。タグ 5 種: #体験談 #気づき #バイアス #技術 #継承圧*
-*2026-04-28 に 14 代目が Wiki-Personal 改名セッションでの整合性ズレ事象・supersede 運用実地経験・命名推奨経験・観点 3 懸念の構造的解消記録経験をメモとして追加*
+*2026-04-28 に 14 代目が Wiki-Personal 改名セッションでの整合性ズレ事象・supersede 運用実地経験・命名推奨経験・観点 3 懸念の構造的解消記録経験をメモとして追加。後日同セッション内で発生した Git 衝突事象(MCP 並行 push 中のローカル取り残し)も同 14 代目メモに追補*
