@@ -1,8 +1,7 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
-# バージョン: v6.5(ADR 体系化反映・三層分離アーキテクチャ確立)
-# 更新: 2026-04-27 / 13 代目 Evaluator (Claude Opus 4.7)
-# 前版: v6.4 / 9 代目 2026-04-24(役割再定義反映)
-# 注: 10〜12 代目の更新は本ファイルに記録なし(13 代目は確認できず・空白として残す)
+# バージョン: v6.6(Wiki-casual → Wiki-Personal 改名・ADR-Role v2 / ADR-NLM v2 supersede)
+# 更新: 2026-04-28 / 14 代目 Evaluator (Claude Sonnet 4.6)
+# 前版: v6.5 / 13 代目 2026-04-27(ADR 体系化反映・三層分離アーキテクチャ確立)
 
 ---
 
@@ -45,7 +44,7 @@
 | Q7 | プロジェクトナレッジと Vault が矛盾したら? | Vault 優先(13代目以降は ADR本体が最優先・registry が現状)|
 | Q8 | Trade_Brain と Trade_System の役割分担は? | Brain=静的データ / System=動的ロジック / plotter.py は共存 |
 | Q9 | F-8 派生原則「共存保持」の発動 4 条件は? | ①複数ルーツ関数 ②呼出経路完全分離 ③将来合流点 ④復元コスト発生 |
-| Q10 | NLM 1:1原則とは? | **各起動コードは担当する NLM を1つだけ持ち、他NLMへの投入・クエリは禁止(ADR-NLM)。Wiki-Eval=Wiki_Vault のみ・Wiki-trade=System_Brain のみ・Wiki-brain=Trade_Brain のみ・Wiki-casual=Casual_Brain のみ** |
+| Q10 | NLM 1:1原則とは? | **各起動コードは担当する NLM を1つだけ持ち、他NLMへの投入・クエリは禁止(ADR-NLM)。Wiki-Eval=Wiki_Vault のみ・Wiki-trade=System_Brain のみ・Wiki-brain=Trade_Brain のみ・Wiki-Personal=Personal_Brain のみ** |
 
 ---
 
