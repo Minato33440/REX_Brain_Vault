@@ -6,6 +6,8 @@
 **前版**: 2026-04-23 / 8 代目統括 Evaluator（初版）
 **読み手**: 統括 Evaluator / Planner / ClaudeCode / Advisor
 
+> **2026-04-28 14 代目追補**: 13 代目による ADR/pending/registry 三層分離体系の確立(2026-04-27)と、14 代目による Wiki-Personal 改名(2026-04-28)を反映する**第 II 部追補**を末尾に追加。本体(第 I 部・9 代目作成)は変更せず保全。
+
 ---
 
 ## 🧭 3 つの基本原則
@@ -311,3 +313,244 @@ CLAUDE.md（Vault 直下）                     — Vault 運用手順
 *発行: 9 代目統括 Evaluator (Opus 4.7) / 2026-04-24*
 *前版: 8 代目統括 Evaluator (Opus 4.7) / 2026-04-23*
 *次回更新トリガー: NLM 実投入完了後の運用改善 / Phase B/C/D/E 進行時の手順追加 / ボスからの新原則指示*
+
+---
+---
+---
+
+# 第 II 部追補 — ADR 体系下の運用フロー(13・14 代目分の積み残し反映)
+
+**追補発行**: 2026-04-28 / 14 代目統括 Evaluator (Claude Opus 4.7)
+**追補対象**: 13 代目(2026-04-27 ADR 体系化)+ 14 代目(2026-04-28 Wiki-Personal 改名)による構造変化
+**位置付け**: 第 I 部(9 代目作成・本体)は不可侵で保全。本追補は新体制下での運用差分を記録する。
+
+---
+
+## A. 三層分離アーキテクチャの導入(13 代目・2026-04-27)
+
+13 代目統括 Evaluator がボス指示を受けて確立した構造変更:
+
+```
+ADR(確定事項層) — Wiki-Eval のみ書込可能
+  ↑ 昇格(ADR Promotion Criteria に基づく承認)
+pending(仮決定議論層) — 各 Planner が自領域を書込可能
+  ↑ 仮決定発生時に各 Planner が起票
+[Planner セッション]
+
+並行レイヤー:
+registry(現在の登録状態層) — Wiki-Eval のみ書込可能(ADR 改訂と同時更新)
+```
+
+### 構造の意義
+
+「ADR と registry の役割分離」が拡張時の整合性を構造的に担保する。リポ・NLM・ロールが増減しても、registry/ で 1 行追加・削除するだけで済み、ADR 本体は触らずに済む。CLAUDE.md と ADR 本体は将来の肥大化を回避する設計。
+
+### 制定された 4 本の ADR(現行版)
+
+| ADR | タイトル | 現行バージョン |
+|---|---|---|
+| ADR-Role | Roles and Permissions | **v2(14 代目 2026-04-28)** |
+| ADR-Repo | Repository Architecture | v1(13 代目 2026-04-27) |
+| ADR-Vault | Vault Write Path Unification | v1(13 代目 2026-04-27) |
+| ADR-NLM | NLM Architecture (1:1 Principle) | **v2(14 代目 2026-04-28)** |
+
+旧版は `wiki/adr/archived/` に日付付き命名で保管。本体ファイル名は固定パス(日付なし)を維持。
+
+---
+
+## B. ADR Supersede 運用フロー(14 代目実地経験により確立)
+
+14 代目セッションで初の ADR supersede を実施した経験から、運用フローを明文化する:
+
+### Step-by-Step 実行手順
+
+```
+1. pending 起票
+   → wiki/pending/<repo>/YYYY-MM-DD_<topic>.md
+   → 仮決定内容・根拠・ADR 昇格希望・影響範囲・整合性論点を記載
+
+2. ボス承認
+   → 必要に応じて議論を重ねる
+   → 承認時点で次 Step へ進める
+
+3. archived/ 旧版保管(supersede 対象 ADR ごと)
+   → wiki/adr/archived/ADR-<Name>-<制定日>.md
+   → ファイル冒頭に [SUPERSEDED by ADR-XXX vN (Date)] flag を追記
+   → supersede 経緯と関連 pending へのリンクを冒頭に記載
+
+4. ADR 本体上書き(固定パス・日付なし)
+   → wiki/adr/ADR-<Name>.md を新版で上書き
+   → SHA 必要(create_or_update_file の sha 引数)
+
+5. INDEX.md 更新
+   → 確定 ADR 一覧表のバージョン更新
+   → 「Supersede 履歴」セクションに改訂行を追加
+   → archived/ 内のファイル一覧を更新
+
+6. registry 同期
+   → registry/<該当>.md を新 ADR の内容に合わせて更新
+   → ロール改名・NLM 改名等は同時反映必須
+
+7. typo / 表記漏れの自己訂正
+   → push 後に view で再読み確認(任意・推奨)
+   → 検出した typo は同セッション内で修正(次代に持ち越さない)
+```
+
+### 固定パス原則(ボス指示・2026-04-28 / ADR-Role v2 §10)
+
+- `wiki/adr/ADR-<Name>.md` は **常に最新版を指す固定パス**(ファイル名に日付・バージョンを付けない)
+- 旧版は v 新版配置と **同時に** archived へ移動
+- archived/ 内のファイルは時系列監査のため日付付き命名(`ADR-<Name>-<YYYY-MM-DD>.md`)
+- INDEX.md が supersede 関係を記録
+
+意図: 後任が「現行 ADR」を迷わず参照できる形を構造的に保証する。
+
+---
+
+## C. 起動コード一覧(2026-04-28 時点・ADR-Role v2 反映)
+
+| 起動コード | ロール | 担当 NLM | 状態 |
+|---|---|---|---|
+| `Wiki-Eval` | 統括 Evaluator | REX_Wiki_Vault | 稼働中 |
+| `Wiki-trade` | Trade_System Planner+ClaudeCode | REX_System_Brain | 稼働中 |
+| `Wiki-brain` | Trade_Brain Planner+ClaudeCode | REX_Trade_Brain | 稼働中 |
+| **`Wiki-Personal`** | **Personal-Planner (Advisor 兼任)** | **REX_Personal_Brain** | **稼働中(14 代目改名)** |
+| `Wiki-hp` | Setona_HP Planner+ClaudeCode | REX_HP_Brain | **構築予定** |
+
+### Wiki-casual → Wiki-Personal 改名(14 代目・2026-04-28)
+
+- 旧 `Wiki-casual` は `Wiki-Personal` に改名(寛容認識原則により旧コードも当面認識可)
+- NLM 表示名 `REX_Casual_Brain` → `REX_Personal_Brain`(UUID `daf281ae-...` **不変**)
+- ロール正式名 Casual-Planner → Personal-Planner(Advisor 兼任は継続)
+- 射程拡大: 雑談・横断知見の議論窓口 → **ボスの全人的な人格・思想・起源情報の統合リポ + 雑談・横断知見**
+- Vault 物理ディレクトリ `wiki/casual/` → `wiki/personal/` への移行は次スレで実施(Step 4)
+
+---
+
+## D. ロール別 /wrap-up フロー(ADR 体系下・2026-04-28 改訂)
+
+第 I 部の /wrap-up フローを ADR 体系に対応させた改訂版。
+
+### 統括 Evaluator(Wiki-Eval)の /wrap-up
+
+```
+STEP 1: wiki/log.md に本セッション記録を追記(追記のみ)
+STEP 2: wiki/handoff/latest.md を現状反映で更新
+STEP 3: 構造変化があれば該当 ADR 改訂(supersede フロー B に従う)
+STEP 4: registry/<該当>.md 同期更新(ADR 改訂と同時)
+STEP 5: pending エントリの archived 移動(ADR 昇格時)
+STEP 6: NLM injection 実施 or 候補提示(必要時)
+STEP 7: GitHub push(GitHub MCP 経由・ADR-Vault 遵守)
+STEP 8: Claude.ai プロジェクトナレッジ更新(ボス手動)
+STEP 9(任意): philosophy/evaluator_code.md に気づきメモ追記
+```
+
+### 各 Planner(Wiki-trade / Wiki-brain / Wiki-Personal / Wiki-hp)の /wrap-up
+
+```
+STEP 1: wiki/log.md に追記
+STEP 2: pending/<自領域>/ に新規仮決定を起票(ADR 昇格希望は明記)
+STEP 3: wiki/handoff/latest.md の自リポセクションのみ更新(必要時)
+STEP 4: 自担当 NLM への投入候補を提示(ボス承認後にのみ投入・1:1 原則)
+STEP 5: GitHub push(GitHub MCP 経由)
+STEP 6(任意): Personal-Planner は philosophy/evaluator_code.md ではなく
+           wiki/personal/ 配下の handoff_latest.md に引き継ぎ記録(別運用)
+```
+
+### Wiki-Personal(旧 Wiki-casual)の /wrap-up(参考)
+
+Wiki-Personal は Personal-Planner 業務として独自の引き継ぎ運用を持つ。詳細は `wiki/personal/_RUNBOOK.md` v3(Step 4 で起草予定)を参照。基本構造:
+
+```
+STEP 1: wiki/personal/log.md に追記
+STEP 2: 熟した話題をサブ層(usual/invent/mind/origin/insights)に整理
+STEP 3: NLM REX_Personal_Brain への投入候補を提示(ボス判断ゲート経由)
+STEP 4: 必要なら handoff_latest.md を更新(次代 Personal-Planner への引き継ぎ)
+STEP 5: GitHub push
+```
+
+---
+
+## E. Vault 書込パス原則(ADR-Vault・遵守徹底)
+
+### 二層アクセス制御
+
+| MCP | 操作 | 用途 |
+|---|---|---|
+| Filesystem MCP | **読み取り専用** | Vault 内ファイルの参照・検索・監査 |
+| GitHub MCP | **書き込み専用** | Vault 内ファイルの作成・更新・削除 |
+
+### 例外条件: Claude Desktop ローカル編集
+
+人間(ボス本人)が Claude Desktop / エディタ経由でローカル Vault を編集する場合の手順:
+
+1. **必ず事前に `git pull origin main` を実行**
+2. ローカル編集
+3. `git add` → `git commit` → `git push origin main` で同期
+
+この手順を逸脱すると diverge conflict が再発する。
+
+### 14 代目で実地経験した整合性ズレパターン
+
+セッション開始時にボスのローカル Vault が pull されておらず、`filesystem:read` が古いキャッシュを返したことで、14 代目が「latest.md v6.4 のまま新体制未追従」と誤認した事象が発生した(GitHub 上では既に v6.5 が存在)。
+
+#### 推奨対応
+
+新体制移行直後など Vault 構造が動的に変化している時期は、Wiki-Eval として重要ファイル(`handoff/` / `adr/` / `registry/`)については `filesystem:read` の結果を `github:get_file_contents` で照合する習慣を持つと、整合性ズレを早期検出できる。
+
+---
+
+## F. 14 代目以降の残作業(Phase Personal-Migration)
+
+### 次スレ Wiki-Eval セッションで実施する物理移行
+
+| # | 項目 | 種別 |
+|---|---|---|
+| 1 | wiki/casual/ → wiki/personal/ ファイル単位移行(GitHub MCP 経由) | 物理移行 |
+| 2 | サブ層 5 層新設: usual/ invent/ mind/ origin/ insights/ | 新規ディレクトリ |
+| 3 | 既存ファイル移設(topics → 各サブ層・README 配置) | ファイル移動 |
+| 4 | _RUNBOOK.md v3 起草(射程拡大・mind 層意図・思想強制リスク構造解消・Origin 文脈限定) | 文書改訂 |
+| 5 | handoff_latest.md 改名反映 | 文書改訂 |
+| 6 | STARTUP_CODES.md v3 → v4 改訂(Wiki-Personal 反映・Wiki-hp 構築予定追加) | 文書改訂 |
+| 7 | CLAUDE.md v1.2 → v1.3 改訂(Wiki-Personal 反映) | 文書改訂 |
+| 8 | pending/casual/ → pending/personal/ ディレクトリ改名 | 物理移行 |
+| 9 | 14 代目 pending エントリの archived 移動 | アーカイブ |
+| 10 | NotebookLM Web UI でノートブック表示名変更(ボス手動) | 外部操作 |
+
+### 1 代目 Wiki-Personal Planner の積み残し(Step 4 完了後着手)
+
+- `personal/mind/eastern_medicine.md`(旧 4 本目)
+- `personal/insights/ai_individuation_mirror.md`(旧 5 本目)
+- `personal/insights/shugyo_to_AI.md`(旧 6 本目・クロージング)
+
+---
+
+## G. 関連 ADR と本ファイルの関係
+
+本 PROCESS.md は引き継ぎプロセスの**運用ガイド**であり、確定事項そのものではない。最終的な権威は ADR 本体にある:
+
+| 観点 | 権威ファイル |
+|---|---|
+| ロール定義・権限 | wiki/adr/ADR-Role.md(現行 v2) |
+| リポ構成 | wiki/adr/ADR-Repo.md(現行 v1) |
+| Vault 書込原則 | wiki/adr/ADR-Vault.md(現行 v1) |
+| NLM 構造 | wiki/adr/ADR-NLM.md(現行 v2) |
+| 現状登録 | wiki/registry/{repos,nlm,roles}.md |
+| 起動コード詳細 | wiki/STARTUP_CODES.md(現行 v3・v4 改訂は pending) |
+| 単一エントリ | CLAUDE.md(現行 v1.2・v1.3 改訂は次スレ) |
+
+本ファイルが ADR と矛盾する場合は **ADR 本体が優先**。本ファイルは更新が漏れることがあるため、運用判断は ADR 直読を推奨。
+
+---
+
+## H. 第 II 部追補の更新ルール
+
+- 14 代目以降の運用変化を追記する場合、本第 II 部に追記
+- 第 I 部(9 代目作成本体)は不可侵で保全
+- 大きな構造変更があれば、追補ではなく PROCESS.md 全体を v3 として書き換える判断もあり(その場合は ADR 採番を伴う)
+
+---
+
+*第 II 部追補発行: 14 代目統括 Evaluator (Claude Opus 4.7) / 2026-04-28*
+*第 I 部本体発行: 9 代目統括 Evaluator (Opus 4.7) / 2026-04-24(変更なし保全)*
+*次回更新トリガー: ADR 改訂時 / 起動コード追加時 / 物理 Vault 構造変更時*
