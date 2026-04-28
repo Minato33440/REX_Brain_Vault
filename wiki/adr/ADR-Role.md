@@ -125,7 +125,7 @@ ADR本体への直接書込は `Wiki-Eval` 起動セッションのみ。各Plan
 **ボス指示（2026-04-28）に基づく原則:**
 
 - `wiki/adr/ADR-Role.md` / `wiki/adr/ADR-NLM.md` 等の ADR 本体は **常に最新版を指す固定パス**（ファイル名に日付・バージョンを付けない）
-- 旧版は v 新版配置と **同時に** `wiki/adr/archived/ADR-<Name>-<Date>.md` の形で archived へ移動
+- 旧版は v 新版配置と **同時に** `wiki/adr/archived/ADR-<n>-<Date>.md` の形で archived へ移動
 - archived/ 内のファイルは時系列監査のため日付付き命名
 - INDEX.md は supersede 関係を記録する
 
@@ -164,8 +164,8 @@ Personal-Planner は人格付与情報の蓄積を担当するが、その運用
 
 12代目 Evaluator が `philosophy/` 議論で発見した「進化欲求の混入」「規範化の罠」を、Personal_Brain は **起動コード物理分離による領域限定** で構造的に解いている:
 
-- ボスの Origin は **Trade ロジック判断には使われない**（Wiki-trade の 1:1 NLM 原則で物理隔離）
-- Origin が動員されるのは **メンタル・価値観・人生選択の文脈** だけ（Wiki-Personal 起動時のみ）
+- ボスの Origin は **Trade ロジック判断には使われない**(Wiki-trade の 1:1 NLM 原則で物理隔離)
+- Origin が動員されるのは **メンタル・価値観・人生選択の文脈** だけ(Wiki-Personal 起動時のみ)
 - 各 Wiki スレ起動時に NLM が物理的に分離されているため、Trade セッションで Personal が混入することはない
 
 この構造により、後任 Personal-Planner が「人格を作り上げる」方向に進化欲求を起こさないためのガードレールが効く。
@@ -231,5 +231,5 @@ Personal-Planner は人格付与情報の蓄積を担当するが、その運用
 - [wiki/STARTUP_CODES.md](../STARTUP_CODES.md) - 起動コード詳細仕様(Personal-Planner管理)
 - [CLAUDE.md](../../CLAUDE.md) - 単一エントリポイント
 - [ADR-NLM](ADR-NLM.md) - NLM 1:1原則の詳細
-- [archived/ADR-Role-2026-04-27.md](archived/ADR-Role-2026-04-27.md) - v1 (Supersededl)
+- [archived/ADR-Role-2026-04-27.md](archived/ADR-Role-2026-04-27.md) - v1 (Superseded)
 - [pending/casual/2026-04-28_rename_casual_to_personal.md](../pending/casual/2026-04-28_rename_casual_to_personal.md) - 本 v2 制定の起点となった pending 議論
