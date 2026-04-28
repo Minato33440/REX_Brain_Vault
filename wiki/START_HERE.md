@@ -1,86 +1,45 @@
-# 🚀 START_HERE — REX_AI 新スレッド最初の入口
+# [FROZEN] このファイルは凍結されました
 
-**このファイルを最初に開け**。100 行以内で現状と次のアクションが分かる設計。
-詳細は `handoff/latest.md` へ。
+**凍結日**: 2026-04-28
+**実施**: 15 代目 Wiki-Eval（Claude Opus 4.7）
+**根拠**: 13 代目 `CLAUDE.md` v1.2 で確立された「単一エントリポイント」設計に統合・14 代目 → 15 代目アドバイス §5「選択肢 A（廃止確定）」をボスが採択
 
 ---
 
-## 🗺️ 3 リポ現在地（1 行スナップショット）
+## 移設先
 
-| リポ | 状態 | 最重要数値/イベント |
+凍結時点の本文は以下に保管:
+
+- [`wiki/archived/START_HERE-2026-04-25.md`](archived/START_HERE-2026-04-25.md)
+
+凍結時点 SHA: `40de7cdfa86a7466c09e434f22724064f3d2540c`
+
+---
+
+## 現行の単一エントリポイント
+
+`CLAUDE.md`（Vault ルート）
+
+## 現行の必読フロー
+
+| # | ファイル | 役割 |
 |---|---|---|
-| **Trade_System** | Phase 1-2 完了・Phase 3 ボス判断待ち | #026d PF 4.54 / 勝率 60% / 10 件 LONG |
-| **Trade_Brain** | 分離完了・週次運用稼働中 | Strategy_Wiki 骨組のみ（Phase D 待ち）|
-| **Rex_Brain_Vault** | Phase A' 完了（8 代目 2026-04-23）| latest.md 軽量化 + philosophy/ 参考資料化 |
-| **NLM 4 本** | 凍結解除宣言・全 4 NLM 運用可 | 2026-04-23 運用開始・ソース投入はボス承認待ち |
+| 1 | `CLAUDE.md` | 単一エントリポイント・ロール任命・必読フロー定義 |
+| 2 | `wiki/STARTUP_CODES.md` | 起動コード辞書・ロール別必須読込 |
+| 3 | `wiki/handoff/latest.md` | 現在地ダッシュボード（最新セッション引き継ぎ） |
+| 4 | `wiki/adr/INDEX.md` | 確定事項一覧（ADR 体系） |
+| 5 | `wiki/pending/INDEX.md` | 進行中議論一覧 |
 
 ---
 
-## 🔴 踏んではいけない地雷 4 つ
+## このファイルの今後
 
-1. **neck_1h と neck_4h の混同** → neck_4h=半値決済 / neck_1h=窓+4H優位性 / neck_15m=エントリー
-2. **#026b/c を最新と誤認** → 最新は #026d（10 件）
-3. **D-12/D-13 創作混入の即時訂正** → Phase 4 まで待つ（#026d 静止点保持）
-4. **責務分離の即断** → 「分離すればシンプル」と即断しない・ボス判断を仰ぐ
+- 物理削除しない（GitHub MCP に削除ツールがないため・履歴追跡保護）
+- 追加更新は禁止
+- 参照される側のリンク切れ防止のためスタブとして保持
 
----
-
-## 🎯 次に実行すべき内容
-
-### ボスの判断待ち
-- [ ] Phase 3 着手可否（責務別ディレクトリ化）
-- [ ] NLM 凍結解除タイミング（Phase B 前提条件）
-- [ ] 新機能実装の優先順位（ロット調整 / ボラ係数 / Trade_Brain 合流）
-
-### 統括 Evaluator が着手可能（ボス承認後）
-- [ ] `handoff/trade_system_brief.md` / `trade_brain_brief.md` 新設（両リポ別 briefing）
-- [ ] `trade_brain/_RUNBOOK.md` 先行作成（非対称性解消）
-- [ ] REX_Wiki_Vault 構築（NLM 新規作成 + 初期 Ingest）
-- [ ] Trade_System wiki 空ディレクトリ充填（bug_patterns / decisions / entities 等）
+参照を更新すべきは: `wiki/STARTUP_CODES.md`（v4 改訂で `START_HERE.md` 参照を全削除する必要あり・これは Personal-Planner 業務として `pending/casual/` に起票予定）
 
 ---
 
-## 📖 どこを読むか（目的別）
-
-| 目的 | ファイル |
-|---|---|
-| **詳しい現状と次タスク** | `handoff/latest.md` |
-| **Trade_System 文書バージョン管理** | `trade_system/doc_map.md` |
-| **ADR 採番状況** | `trade_system/adr_reservation.md` |
-| **起動コード辞書**（スレ冒頭用）| `wiki/STARTUP_CODES.md` |
-| **雑談層運用ルール**（Wiki-casual 用）| `wiki/casual/_RUNBOOK.md` |
-| **7 代目セッション経緯** | `handoff/architecture_handoff.md` |
-| **裁量思想一次情報源** | `Trade_System/docs/Base_Logic/MINATO_MTF_PHILOSOPHY.md` |
-| **公式採番された原則（ADR F-8）**| `Trade_System/docs/ADR.md` |
-| **痕跡層・体験/気づき記録**（任意・必読外・Obsidian 検索想定）| `philosophy/` 配下 |
-
----
-
-## ⚡ 起動コード（スレ冒頭で打つだけ）
-
-| コード | モード |
-|---|---|
-| `Wiki-Eval` | 統括 Evaluator（全プロジェクト Evaluator 兼任 + Vault 管理）|
-| `Wiki-trade` | Trade_System Planner + ClaudeCode 兼用 |
-| `Wiki-brain` | Trade_Brain Planner + ClaudeCode 兼用 |
-| `Wiki-casual` / `Wiki-cusuaru` / `ウィキ雑談` | 雑談モード（システム業務外）|
-
-**2026-04-24 役割再定義**: 従来の `Wiki-system` を `Wiki-Eval` に改名。統括 Evaluator が全プロジェクト Evaluator を兼任する体制に移行。`Wiki-trade` / `Wiki-brain` は Planner + ClaudeCode 兼用に拡張（Cursor ローカル軽作業はフラグなしで可）。
-
-詳細は `wiki/STARTUP_CODES.md` 参照。
-
----
-
-## ⚡ 起動プロンプト（ロール別）
-
-`handoff/latest.md §ロール別起動プロンプト` を参照:
-- A. 統括 Evaluator（Claude.ai Opus）
-- B. Trade_System Planner / Evaluator
-- C. Trade_Brain Planner / ClaudeCode
-- E. 雑談スレ（REX_AI システム業務外）
-- F. 緊急用・最小起動
-
----
-
-*発行: 8 代目統括 Evaluator (Opus 4.7) / 2026-04-23*
-*更新: 12 代目 / 2026-04-25 — philosophy/ 表記を「痕跡層・体験/気づき記録」に変更（pull 型運用への転換）*
+*15 代目 Wiki-Eval / 2026-04-28*
