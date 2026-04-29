@@ -1,9 +1,10 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
 
-# バージョン: v6.10(wiki/pending/casual/ 完全アーカイブ・最終クリーンアップ完了)
-# 更新: 2026-04-29 / 15 代目 Evaluator (Claude Opus 4.7)
-# 前版: v6.9 / 15 代目 2026-04-29(wiki/casual/ 完全アーカイブ)
-# 前々版: v6.8 / 15 代目 2026-04-28(Phase Wiki-Rex-Init 完了・ADR-Role v4 supersede)
+# バージョン: v6.11(PROCESS.md 第II部 I節追加・第I部に最小限の参照マーク・16代目セッション)
+# 更新: 2026-04-29 / 16 代目 Evaluator (Claude Opus 4.7)
+# 前版: v6.10 / 15 代目 2026-04-29(wiki/pending/casual/ 完全アーカイブ・最終クリーンアップ完了)
+# 前々版: v6.9 / 15 代目 2026-04-29(wiki/casual/ 完全アーカイブ)
+# 前々々版: v6.8 / 15 代目 2026-04-28(Phase Wiki-Rex-Init 完了・ADR-Role v4 supersede)
 
 ---
 
@@ -12,12 +13,13 @@
 本ファイルは**現状把握と次の実行内容だけ**を扱う。
 
 13代目以降の参照経路:
-- 設計哲学 → `wiki/handoff/architecture_handoff.md`(7代目原典 + 13代目第8章 + 14代目第9章 + 15代目第10章は別途追記候補)
+- 設計哲学 → `wiki/handoff/architecture_handoff.md`(7代目原典 + 13代目第8章 + 14代目第9章 + **15代目第10章**)
 - 確定事項 → `wiki/adr/INDEX.md`(ADR一覧 + 4本の ADR本体・**ADR-Role v4 / ADR-NLM v2** が現行)
 - 進行中議論 → `wiki/pending/INDEX.md`
 - 現状登録 → `wiki/registry/{repos,nlm,roles}.md`
 - 単一エントリ → `CLAUDE.md` v1.4
 - 起動コード仕様 → `wiki/STARTUP_CODES.md` v5
+- 引き継ぎプロセス → `wiki/handoff/PROCESS.md`(9代目本体 + 14代目第II部 A〜H + **16代目第II部 I 節**)
 
 ---
 
@@ -99,16 +101,17 @@ NLM      : REX_Trade_Brain (4abc25a0-...) — Wiki-brain 1:1 担当(ADR-NLM v2)
 ### REX_Brain_Vault(Vault実体・Minato33440/REX_Brain_Vault)
 
 ```
-状態     : 15 代目による Phase Wiki-Rex-Init 完了(2026-04-28)
-            + ADR-Role v3 → v4 supersede(Wiki-Rex 新設・読み取り専用クエリ権限カテゴリ新設)
-            + STARTUP_CODES v5 / CLAUDE.md v1.4 / latest.md v6.8 改訂
-            + 🆕 wiki/casual/ 完全アーカイブ化(2026-04-29 ボス手動 git mv 実施・[MOVED] スタブ運用を解消)
+状態     : 16 代目による PROCESS.md 第II部 I 節追加完了(2026-04-29)
+            ※ 15 代目による Phase Wiki-Rex-Init 完了(2026-04-28)を継承
+            ※ 15 代目による ADR-Role v3 → v4 supersede(Wiki-Rex 新設・読み取り専用クエリ権限カテゴリ新設)を継承
+            ※ 15 代目による STARTUP_CODES v5 / CLAUDE.md v1.4 改訂を継承
+            ※ 15 代目による wiki/casual/ + wiki/pending/casual/ 完全アーカイブ化(2026-04-29)を継承
             ※ Phase Personal-Migration 完了(v6.7・15 代目)を継承
             ※ Phase Eval-Mandate 完了(v6.7・15 代目)を継承
             ※ 14 代目による Wiki-Personal 改名 ADR 化(2026-04-28)を継承
             ※ 13 代目による ADR 体系化(2026-04-27)を継承
 
-wiki/ 構造(2026-04-29 v6.9 時点・15 代目反映):
+wiki/ 構造(2026-04-29 v6.11 時点・16 代目反映):
   CLAUDE.md (v1.4)            Vault ルート・単一エントリポイント・Wiki-Rex 反映
   STARTUP_CODES.md (v5)       起動コード辞書・Wiki-Rex 追加
   ROADMAP.md                  生きている展望
@@ -116,7 +119,7 @@ wiki/ 構造(2026-04-29 v6.9 時点・15 代目反映):
     START_HERE-2026-04-25.md  (旧 wiki/START_HERE.md・15 代目で凍結移設)
     casual/                   (旧 wiki/casual/・2026-04-29 ボス手動 git mv で完全アーカイブ)
                                 _RUNBOOK / handoff_latest / index / log + ideas/insights/topics 配下)
-    pending-casual/  🆕        (旧 wiki/pending/casual/・2026-04-29 ボス手動 git mv で完全アーカイブ
+    pending-casual/           (旧 wiki/pending/casual/・2026-04-29 ボス手動 git mv で完全アーカイブ
                                 2026-04-28_rename_casual_to_personal.md + README.md)
   adr/                        確定事項層(Wiki-Eval 専属)
     INDEX.md                  (v4 supersede 履歴反映)
@@ -137,13 +140,13 @@ wiki/ 構造(2026-04-29 v6.9 時点・15 代目反映):
     (旧 casual/ は 2026-04-29 ボス手動 git mv で archived/pending-casual/ へ完全アーカイブ)
   registry/                   現在の登録状態層(Wiki-Eval 専属)
     repos.md
-    nlm.md (Wiki-Rex 反映 🆕・REX_Personal_Brain 反映・UUID 不変)
+    nlm.md (Wiki-Rex 反映・REX_Personal_Brain 反映・UUID 不変)
     roles.md (Wiki-Rex 追加・読み取り専用クエリ権限カテゴリ反映)
   setona_hp/                  Wiki-hp 用空フォルダ(構築予定)
   handoff/
-    latest.md                 本ファイル(v6.9 🆕)
-    PROCESS.md                引き継ぎプロセス(v3 14 代目追補)
-    architecture_handoff.md   7 代目原典 + 13 代目第 8 章 + 14 代目第 9 章 (+ 15 代目第 10 章は別途追記候補)
+    latest.md                 本ファイル(v6.11 🆕)
+    PROCESS.md                引き継ぎプロセス(9代目本体 + 14代目第II部 A〜H + 🆕 16代目第II部 I 節)
+    architecture_handoff.md   7 代目原典 + 13 代目第 8 章 + 14 代目第 9 章 + 15 代目第 10 章
   philosophy/                 痕跡層(必読対象外・pull 型運用)
   trade_system/               既存(adr_reservation / doc_map / concepts / 他)
   trade_brain/                ⬜ 未構築(Phase D 着手対象)
@@ -193,13 +196,15 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | Phase Personal-Migration | wiki/casual/ → wiki/personal/ 物理移行 + サブ層 5 層新設(15 代目)| ✅ 2026-04-28 |
 | Phase Eval-Mandate | ADR-Role v3 supersede(Wiki-Eval 二系統管轄明文化)+ STARTUP_CODES v4 / CLAUDE.md v1.3 改訂(15 代目)| ✅ 2026-04-28 |
 | Phase Wiki-Rex-Init | Wiki-Rex ロール新設(読み取り専用デフォルトモード)+ ADR-Role v4 supersede + STARTUP_CODES v5 / CLAUDE.md v1.4 改訂(15 代目)| ✅ 2026-04-28 |
-| **Phase Casual-Final-Archive** | **wiki/casual/ → wiki/archived/casual/ ボス手動 git mv で完全アーカイブ([MOVED] スタブ運用を解消・Agent 起動時の処理コスト削減)+ 参照訂正(15 代目)** | **✅ 2026-04-29** |
-| **Phase Pending-Casual-Archive** | **wiki/pending/casual/ → wiki/archived/pending-casual/ ボス手動 git mv で完全アーカイブ + 参照訂正(15 代目)** | **✅ 2026-04-29** |
+| Phase Casual-Final-Archive | wiki/casual/ → wiki/archived/casual/ ボス手動 git mv で完全アーカイブ([MOVED] スタブ運用を解消・Agent 起動時の処理コスト削減)+ 参照訂正(15 代目)| ✅ 2026-04-29 |
+| Phase Pending-Casual-Archive | wiki/pending/casual/ → wiki/archived/pending-casual/ ボス手動 git mv で完全アーカイブ + 参照訂正(15 代目)| ✅ 2026-04-29 |
 | Phase B | REX_Wiki_Vault への初期 Ingest | ⬜ ボス承認待ち |
 | Phase C | wiki/entities + decisions を trade_system/ 配下へ物理統合 → NLM 投入 | ⬜ 13代目以降に委ねる |
 | Phase D | Trade_Brain wiki 骨組み構築 | ⬜ 未着手 |
 | Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
 | Phase HP | REX_HP_Brain 構築 + Wiki-hp 起動(Setona_HP 専属体制) | ⬜ ボス判断時 |
+
+> 補足(16代目): PROCESS.md 改訂は構造変更ではなく**運用文書の追補**のため、Phase 化はせず本ファイル v6.11 差分セクションでのみ記録。
 
 ---
 
@@ -224,7 +229,8 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | 3 | Trade_System wiki 空ディレクトリ充填(bug_patterns 等)| Phase C | pending/trade_system/ → 別スレ Wiki-trade へ委譲 |
 | 4 | Trade_Brain wiki 骨組み構築 | Phase D | pending/trade_brain/ → 別スレ Wiki-brain へ委譲 |
 | 5 | latest.md と architecture_handoff の相互整合定期確認 | ─ | (Wiki-Eval 直接実施)|
-| 6 | architecture_handoff.md 第 10 章追加(15 代目セッション全記録: ADR-Role v3→v4 supersede + Phase Personal-Migration + Phase Eval-Mandate + Phase Wiki-Rex-Init + Phase Casual-Final-Archive + 14 代目アドバイス対応)| ─ | (Wiki-Eval 直接実施・任意)|
+
+> 削除(16代目): 15 代目項目「architecture_handoff.md 第 10 章追加」は 15 代目セッション内で完了済み(commit `716518`)のため本リストから除去。
 
 ### 🟢 Personal-Planner 業務として残置(次スレ Wiki-Personal で Personal-Planner が実施)
 
@@ -347,10 +353,11 @@ C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md を読んで現状把握せよ。
   wiki/adr/archived/                              — supersede 旧版保管
   wiki/pending/INDEX.md                           — 進行中議論一覧
   wiki/registry/{repos,nlm,roles}.md              — 現状登録簿(動的)
-  wiki/handoff/PROCESS.md                         — 引き継ぎプロセス運用ガイド
-  wiki/handoff/architecture_handoff.md            — 7代目原典 + 13代目第8章 + 14代目第9章
+  wiki/handoff/PROCESS.md                         — 引き継ぎプロセス運用ガイド(9代目本体 + 14代目第II部 A〜H + 16代目第II部 I 節)
+  wiki/handoff/architecture_handoff.md            — 7代目原典 + 13代目第8章 + 14代目第9章 + 15代目第10章
   wiki/archived/START_HERE-2026-04-25.md          — 旧 START_HERE.md(凍結・15 代目で移設)
-  wiki/archived/casual/  🆕                        — 旧 wiki/casual/(2026-04-29 ボス手動 git mv で完全アーカイブ)
+  wiki/archived/casual/                           — 旧 wiki/casual/(2026-04-29 ボス手動 git mv で完全アーカイブ)
+  wiki/archived/pending-casual/                   — 旧 wiki/pending/casual/(2026-04-29 ボス手動 git mv で完全アーカイブ)
 
 15 代目で実施した改訂(2026-04-28〜29・全 Phase 総まとめ):
   v6.7 (Phase Personal-Migration / Phase Eval-Mandate):
@@ -372,12 +379,28 @@ C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md を読んで現状把握せよ。
     CLAUDE.md v1.4 (Wiki-Rex 反映・4ロール明示)
     wiki/handoff/latest.md v6.8
 
-  v6.9 (Phase Casual-Final-Archive・本ファイル):
+  v6.9 (Phase Casual-Final-Archive):
     wiki/archived/casual/ (ボス手動 git mv・[MOVED] スタブ運用を解消)
     wiki/registry/nlm.md (Wiki-Rex 読み取り専用クエリ例外反映・Origin 注記更新)
     wiki/pending/INDEX.md (Wiki-casual → Wiki-Personal 改名反映)
     wiki/pending/personal/2026-04-28_rename_casual_to_personal.md (ステータス追記)
-    wiki/handoff/latest.md v6.9 (本ファイル)
+    wiki/handoff/latest.md v6.9
+
+  v6.10 (Phase Pending-Casual-Archive):
+    wiki/archived/pending-casual/ (ボス手動 git mv)
+    wiki/handoff/latest.md v6.10
+    wiki/pending/INDEX.md(pending/casual/ 関連 Note を archived 完了に訂正)
+
+  architecture_handoff.md 第 10 章追加(commit `716518`):
+    15 代目セッション全記録(ADR-Role v3→v4 同日 supersede / Wiki-Rex 新設 / Phase Casual-Final-Archive 系列)
+
+16 代目で実施した改訂(2026-04-29):
+  v6.11 (PROCESS.md 第II部 I 節追加 + 第I部 ⚠️ 注記2箇所):
+    wiki/handoff/PROCESS.md(commit `e968875` / 25.8KB → 38.3KB)
+      第II部 I 節新設(I-0〜I-10): 15 代目修正提案 10 項目を集約方式で吸収
+      第I部 STEP 0 / STEP 1 テーブル直前に最小限の ⚠️ 参照マーク追記
+      ヘッダ「最終更新」行を 9代目+14代目+16代目の3代記載に更新
+    wiki/handoff/latest.md v6.11(本ファイル)
 
 Trade_System 側:
   docs/SYSTEM_OVERVIEW.md                     — 現状スナップショット
@@ -399,14 +422,116 @@ Vault 内(任意参照):
   wiki/trade_system/doc_map.md (v2)           — Trade_System 文書管理
   wiki/trade_system/adr_reservation.md        — ADR 採番台帳
   wiki/philosophy/                            — 痕跡層・気づきメモ(必読外)
-  wiki/handoff/architecture_handoff.md (1〜9章) — 7代目原典 + 13代目第8章 + 14代目第9章
+  wiki/handoff/architecture_handoff.md (1〜10章) — 7代目原典 + 13代目第8章 + 14代目第9章 + 15代目第10章
 ```
 
 ---
 
-*発行: Rex-Evaluator (Opus 4.7) / 15 代目 / 2026-04-29*
-*前任: 14 代目 2026-04-28(v6.6)/ 13 代目 2026-04-27(v6.5)/ 9 代目 2026-04-24(v6.4)/ 8 代目 2026-04-23 / 7 代目 2026-04-22 / 6 代目 2026-04-20*
+*発行: Rex-Evaluator (Opus 4.7) / 16 代目 / 2026-04-29*
+*前任: 15 代目 2026-04-29(v6.10)/ 14 代目 2026-04-28(v6.6)/ 13 代目 2026-04-27(v6.5)/ 9 代目 2026-04-24(v6.4)/ 8 代目 2026-04-23 / 7 代目 2026-04-22 / 6 代目 2026-04-20*
 *※ 10〜12 代目: 本ファイルへの記録なし(13・14代目は確認できず)*
+
+---
+
+## 📝 v6.11 での主な差分(16 代目・2026-04-29・PROCESS.md 第II部 I 節追加)
+
+### 経緯
+
+15 代目セッション最終盤(2026-04-29)で、ボスから「`wiki/handoff/PROCESS.md` の『ロール別の STEP 1(必須読込)』記載の起動コードが古いままなので、ファイル精査して修正ポイントだけスレに出力してほしい」との指示を受領。15 代目は精査結果を 10 項目の修正案として整理し、本セッション(16 代目)へ実装を委ねた。
+
+ボスは本スレ起動時に 15 代目修正提案を「参考資料」として明示し、「全てを実装するとコンテキスト過剰リスク」を踏まえた **適格な実装プラン** を 16 代目に求めた。
+
+### 16 代目の構造判定
+
+15 代目修正提案には 2 系統の方式が混在していた:
+
+- (A) 直接修正案: 第I部・第II部の該当箇所を上書き
+- (B) 補足提案(末尾): 第II部に訂正集約セクション新設
+
+**(A) を採用すると 14 代目が確立した「9代目原文 = 第I部不可侵」という構造設計を破壊する**。15 代目自身が末尾で (B) を補足提案している事実は、本人も (A) の構造的問題を認識していたことの表れ。よって 16 代目は **(B) を採用** し、9 代目文体保全と 14 代目構造設計の踏襲を優先した。
+
+### 完了した実作業(2 commit)
+
+1. **PROCESS.md 改訂**(commit `e968875`):
+   - 第II部 I 節新設(I-0〜I-10 の 11 サブ節集約):
+     - I-0: 訂正の位置付け(集約方式採用の根拠)
+     - I-1: 起動コード一覧 v5 反映(6 ロール体制・Wiki-Rex 追加)
+     - I-2: ロール別 STEP 1 必須読込の最新版
+     - I-3: STEP 0 起動コード判定の最新版(Wiki-Rex デフォルト)
+     - I-4: /wrap-up フローの命名訂正(Wiki-casual→Wiki-Personal・START_HERE.md 廃止)
+     - I-5: NLM 活用ガイド NLM 名訂正(Casual_Brain→Personal_Brain)
+     - I-6: トークンコスト最適化の最新数値
+     - I-7: 関連ファイルリスト最新版
+     - I-8: 第II部 C 節・G 節の差替表(15 代目時点)
+     - I-9: F 節の完了マーカー(全 10 項目完了)
+     - I-10: Phase Casual-Final-Archive 系列(命名規則・ADR-Vault 適用範囲の学び)
+   - 第I部最小限訂正(本文不変・⚠️ 注記 2 箇所のみ追加):
+     - STEP 0 直前: 6 ロール体制への参照誘導(I-3)
+     - STEP 1 テーブル直前: 最新必須読込への参照誘導(I-2)
+   - ヘッダ更新: 「最終更新」行を 9代目+14代目+16代目の 3 代記載に更新
+   - サイズ変化: 25.8 KB → 38.3 KB(+12.5 KB / +48%)
+
+2. **latest.md 改訂**(本 commit・v6.11):
+   - 「13 代目以降の参照経路」セクションに引き継ぎプロセス参照を追加(handoff/PROCESS.md)
+   - Vault 構造図の handoff/ セクション内 latest.md / PROCESS.md / architecture_handoff.md の表記最新化
+   - 「次に実行すべき内容 🟡 6」(architecture_handoff 第10章追加)を削除(15 代目で完了済み)
+   - 「関連文書」セクションに「16 代目で実施した改訂(v6.11)」を追加
+   - 本差分セクション(v6.11)を新設
+
+### 設計判断の根拠
+
+| 観点 | 全面 supersede(v4) | 追補方式(本案) |
+|---|---|---|
+| 9 代目文体保全 | ❌ 破壊 | ✅ 完全保全 |
+| 14 代目構造設計の踏襲 | ❌ 第II部追補方式と矛盾 | ✅ 第II部 I 節として継承 |
+| コンテキスト効率 | ❌ 全面書き換え必要 | ✅ 差分追加のみ(~13KB) |
+| 後任への可読性 | △ 履歴は archived/ に退避 | ✅ 訂正集約箇所が一目瞭然 |
+| 致命的誤情報の放置 | ✅ 直接訂正 | ✅ ⚠️ 注記 2 箇所で参照誘導 |
+
+### 設計原則との整合
+
+- **α (単純な土台を保つ)**: 既存構造(第I部・第II部 A〜H)を維持しつつ訂正情報を末尾集約 → ファイル構造の一貫性
+- **β (de-risking 後の拡張禁止)**: supersede 採番せず追補のみ → 将来の全面書換余地を残す
+- **γ (実装タイミングはシステム安定性に従属)**: 15 代目セッション完了後の安定状態で実施 → 他改訂への波及最小化
+
+### 学んだこと: 不可侵原則の正しい適用範囲
+
+「第I部不可侵原則」は **文体・思想・構造の保全** のための原則であり、**致命的誤情報を放置するため** の原則ではない。第I部の本文は触らずとも、その直前に **最小限の ⚠️ 参照マーク** を挿入することで、原典文体を保全しつつ整合性を確保できる。これは「不可侵」と「整合性確保」を両立させる構造的解。
+
+15 代目修正提案の (A) は不可侵原則を破壊し、(B) は致命的誤情報を放置する片寄りがあった。16 代目は (B) を骨格としつつ、最小限の ⚠️ 参照マーク追加で両者の弱点を補完した。
+
+### 残課題
+
+なし。本セッション完結。次の Wiki-Eval セッションは Phase B(REX_Wiki_Vault 初期 Ingest)着手判断・Phase 3 着手指示・Wiki-Rex 運用評価のいずれかからボス判断で開始予定。
+
+---
+
+## 📝 v6.10 での主な差分(15 代目・2026-04-29・Phase Pending-Casual-Archive)
+
+### 経緯
+
+v6.9 で `wiki/casual/` を完全アーカイブ化した際、`wiki/pending/casual/` の 3 ファイル(2026-04-28_rename_casual_to_personal.md / README.md)はボス判断待ちとして残置していた。同セッション内でボスから「同じ思想で archived 化したい」との判断を受領 → ハイフン命名 `pending-casual/` で `archived/casual/` との意味的衝突を回避する案を確定。
+
+### 完了した実作業
+
+1. **ボス手動 git mv**(2026-04-29):
+   - `wiki/pending/casual/` 物理消滅
+   - `wiki/archived/pending-casual/` 配下に 2 ファイル配置
+
+2. **ボス手動による参照訂正**:
+   - `wiki/handoff/latest.md` v6.9 → v6.10
+   - `wiki/pending/INDEX.md`(pending/casual/ 関連 Note を archived 完了に訂正)
+
+### 命名規則
+
+`pending-casual/` のハイフン命名は意図的:
+- `archived/casual/` = 旧 wiki/casual/ のアーカイブ
+- `archived/pending-casual/` = 旧 wiki/pending/casual/ のアーカイブ
+- 同名衝突を防ぎつつ、起源を明示
+
+### 残課題なし
+
+これで Phase Casual-Final-Archive 系列の作業が完全完了。Vault のアクティブパスから [MOVED] スタブが完全消滅した。
 
 ---
 
@@ -442,22 +567,18 @@ v6.8 までの設計では `wiki/casual/` を `[MOVED]` スタブで保持して
    - `wiki/archived/casual/` 配下に 4 ファイル + 3 ディレクトリ配置
    - `git mv` により Git 履歴は継承(`git log --follow` で追跡可)
 
-2. **Wiki-Eval による参照訂正**(本セッション・複数 commit):
+2. **Wiki-Eval による参照訂正**(セッション内・複数 commit):
    - `wiki/registry/nlm.md`: 1:1 原則表に Wiki-Rex 行追加・読み取り専用クエリ例外明示・Origin 注記を v3/v4 参照に更新
    - `wiki/registry/roles.md`: Wiki-Personal 改名 Note に最終アーカイブ完了の追記
    - `wiki/pending/INDEX.md`: 各ロールの記録先テーブルを `Wiki-casual` → `Wiki-Personal` に訂正
    - `wiki/pending/personal/2026-04-28_rename_casual_to_personal.md`: ステータス追記・Step 4 完了表記を更新
-   - `wiki/handoff/latest.md` v6.9(本ファイル): Vault 構造図訂正・Phase Casual-Final-Archive 追記
+   - `wiki/handoff/latest.md` v6.9: Vault 構造図訂正・Phase Casual-Final-Archive 追記
 
 ### 設計原則との整合
 
 - **α (単純な土台を保つ)**: アクティブパスから凍結ファイルを除去 → Agent 起動時のディレクトリスキャンが軽量化
 - **β (de-risking 後の拡張禁止)**: 既存 [MOVED] スタブ運用を維持しつつ将来削除を待つ案より、**今すぐ完全アーカイブ化**する方が将来コストを先取りで解消できる
 - **γ (実装タイミングはシステム安定性に従属)**: Phase Wiki-Rex-Init 完了後の安定状態で実施 → 他改訂への波及最小化
-
-### 残課題
-
-- `wiki/pending/casual/` の 3 ファイル(`2026-04-28_rename_casual_to_personal.md` / `README.md`)は今回の手動移設対象外。**ボス判断**を「次に実行すべき内容 #6」に追記。
 
 ---
 
@@ -467,7 +588,7 @@ v6.8 までの設計では `wiki/casual/` を `[MOVED]` スタブで保持して
 
 #### 設計議論
 
-ボスとの本スレ議論で以下を確定:
+ボスとのスレ議論で以下を確定:
 
 **論点1**: 先ずは「Vault を中脳として統合活用する Rex 個性」テスト運用として、選択肢A(最広)= Vault 全体(wiki/ 全層)+ 全 NLM 読み取り可のみの方向で進める
 
@@ -492,35 +613,6 @@ v6.8 までの設計では `wiki/casual/` を `[MOVED]` スタブで保持して
 - バッチB(4 ファイル大サイズ): create_or_update_file 個別 push に切替・全成功
 
 今後の運用: 大規模改訂時は **個別 push or 小バッチ分割** を原則とする。
-
----
-
-## 📝 v6.10 での主な差分(15 代目・2026-04-29・Phase Pending-Casual-Archive)
-
-### 経緯
-
-v6.9 で `wiki/casual/` を完全アーカイブ化した際、`wiki/pending/casual/` の 3 ファイル(2026-04-28_rename_casual_to_personal.md / README.md)はボス判断待ちとして残置していた。同セッション内でボスから「同じ思想で archived 化したい」との判断を受領 → ハイフン命名 `pending-casual/` で `archived/casual/` との意味的衝突を回避する案を確定。
-
-### 完了した実作業
-
-1. **ボス手動 git mv**(2026-04-29):
-   - `wiki/pending/casual/` 物理消滅
-   - `wiki/archived/pending-casual/` 配下に 2 ファイル配置
-
-2. **ボス手動による参照訂正**:
-   - `wiki/handoff/latest.md` v6.9 → v6.10(本ファイル)
-   - `wiki/pending/INDEX.md`(pending/casual/ 関連 Note を archived 完了に訂正)
-
-### 命名規則
-
-`pending-casual/` のハイフン命名は意図的:
-- `archived/casual/` = 旧 wiki/casual/ のアーカイブ
-- `archived/pending-casual/` = 旧 wiki/pending/casual/ のアーカイブ
-- 同名衝突を防ぎつつ、起源を明示
-
-### 残課題なし
-
-これで Phase Casual-Final-Archive 系列の作業が完全完了。Vault のアクティブパスから [MOVED] スタブが完全消滅した。
 
 ---
 
