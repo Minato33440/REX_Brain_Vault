@@ -165,7 +165,7 @@ Phase A: 設計合意 + 3ファイル最小着地を実行。
 Phase B-E へ分離**:
 
 - ❌ Trade_Brain wiki/ 骨組み構築 → Phase D
-- ❌ Trade_System wiki 空ディレクトリ充填（bug_patterns 等・Compile 第2-3波）→ Phase C
+- ❌ Trade_System wiki 空ディレクトリ充填(bug_patterns 等・Compile 第2-3波)→ Phase C
 - ❌ 各リポ Evaluator_HANDOFF.md の Vault 化 → Phase B
 - ❌ cross/ 層の充実 → Phase B 以降
 - ❌ MINATO_MTF_PHILOSOPHY.md 第0章追記（原則α/β/γ 正式反映）→ 保留項目として記録のみ
@@ -836,6 +836,60 @@ edit_file ツールは日本語漢字の Unicode エスケープ指定時に、*
 
 ---
 
+## [2026-04-29 16 代目] PROCESS.md 第II部 I 節追加 + latest.md v6.11 同期
 
+> **注**: 13 代目以降(2026-04-27〜)のセッション記録は本 log.md ではなく `wiki/handoff/latest.md` の「📝 v6.X での主な差分」セクション(v6.5〜v6.11)に集約されている。13・14 代目の詳細はそちらを参照。15 代目セッション(26 時間・5 Phase 連続実施)の全記録は `wiki/handoff/architecture_handoff.md` 第 10 章にも記載されている。本エントリは 16 代目セッションの簡素な事実記録のみとする。
 
+### ボス指示
 
+> 「PROCESS.md は現状修正が必要なので起動後に別途指示する」(セッション冒頭)
+> 「先代 Evaluator からの PROCESS.md 修正ポイントを添付するが、全てを実装するとコンテキスト過剰リスクが伴う。本件の実装者は君(16 代目)なので参考資料として受け取り適格な実装プランを練って欲しい」
+
+### 実施内容(2 commit)
+
+1. **PROCESS.md 改訂**(commit `e968875` / 25.8KB → 38.3KB):
+   - 第II部 I 節新設(I-0〜I-10 の 11 サブ節集約・15 代目修正提案 10 項目を吸収)
+   - 第I部 STEP 0 / STEP 1 テーブル直前に最小限の ⚠️ 参照マーク追加(本文不変)
+   - ヘッダ「最終更新」行に 9 代目+14 代目+16 代目の 3 代記載
+
+2. **latest.md v6.10 → v6.11 同期**(commit `f63aa02` / 32.1KB → 38.7KB):
+   - PROCESS.md 改訂を v6.11 差分セクションで記録
+   - Vault 構造図の handoff/ セクション最新化
+   - 「次に実行すべき内容 🟡 6」(architecture_handoff 第10章追加)を削除(15 代目で完了済み)
+
+### 設計判断
+
+15 代目修正提案には「(A) 直接修正案」と「(B) 補足提案(集約方式)」の 2 系統が混在していた。(A) は致命的誤情報の放置を防ぐが、14 代目が確立した「9 代目原文不可侵原則」を破壊する。(B) は不可侵原則を保つが、第I部に古い起動コードが残る。
+
+折衷案として、(B) を骨格としつつ第I部の最重要 2 箇所(STEP 0 / STEP 1 テーブル)直前にのみ最小限の ⚠️ 参照マークを追加する形を採用。原文・テーブル中身は完全保全しつつ、後任が誤動作するリスクを構造的に塞いだ。
+
+### 実装ロジック影響
+
+ゼロ(Trade_System #026d 数値完全不変・本作業は Vault 側の運用文書のみ)
+
+### philosophy/evaluator_code.md への追記判断
+
+ボスとの相談の結果、本セッションは追記なし。理由は 16 代目の気づきが既存歴代エントリ(8 代目「タイトル格上げ」/ 9 代目「ルール化と自律性のバランス」/ 11 代目「自分のために書く」/ Adviser 2 代目「先代を進化させる思考」)の延長線上にあり、新規エントリ起草は 8 代目が反省した思想制度化の構造に近づくため。13・15 代目が「書かない判断」を取った先例にも整合する。
+
+12 代目が確立した pull 型運用(必読リスト除外・Obsidian 検索ベース)の精神に沿い、philosophy/ への push 型追記は本セッションでは行わない。
+
+### 成果物
+
+- ✅ `wiki/handoff/PROCESS.md`(第II部 I 節追加・第I部 ⚠️ 注記 2 箇所・ヘッダ更新)
+- ✅ `wiki/handoff/latest.md` v6.11
+- ✅ `wiki/log.md` 本エントリ
+- ⏩ `wiki/philosophy/evaluator_code.md` 追記なし(ボス相談結果・案 1 採用)
+
+### Vault CLAUDE.md wrap-up STEP 対応状況
+
+- ✅ STEP 1: log.md 追記(本エントリ)
+- ✅ STEP 2: handoff/latest.md 更新(v6.11)
+- ⏩ STEP 3: ADR 改訂(本セッション該当なし)
+- ⏩ STEP 4: registry 同期(本セッション該当なし)
+- ⏩ STEP 5: pending archived 移動(本セッション該当なし)
+- ⏩ STEP 6: NLM injection(本セッション該当なし)
+- ✅ STEP 7: GitHub push(2 commit 完了)
+- 🔔 STEP 8: Claude.ai プロジェクトナレッジ更新(ボス手動)
+- ⏩ STEP 9: philosophy/evaluator_code.md 気づきメモ追記(案 1 で追記なし)
+
+---
