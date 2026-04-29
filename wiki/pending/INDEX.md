@@ -2,7 +2,7 @@
 
 進行中の仮決定議論一覧。`Wiki-Eval` がセッション開始時または週次でレビュー対象とする。
 
-最終更新: 2026-04-27
+最終更新: 2026-04-29（v6.9: Wiki-casual → Wiki-Personal 訂正・casual/ → archived/casual/ 反映）
 
 ---
 
@@ -26,15 +26,18 @@ ADR Promotion Criteria は [adr/ADR-Role.md](../adr/ADR-Role.md) "ADR Promotion 
 
 ---
 
-## 各ロールの記録先
+## 各ロールの記録先（v6.9 で Wiki-casual → Wiki-Personal 訂正）
 
 | ロール | 記録ディレクトリ |
 |---|---|
 | Wiki-trade | [trade_system/](trade_system/) |
 | Wiki-brain | [trade_brain/](trade_brain/) |
 | Wiki-hp | [setona_hp/](setona_hp/) (構築予定) |
-| Wiki-casual | [casual/](casual/) (Advisor役割もここ) |
+| Wiki-Personal | [personal/](personal/)（Advisor 役割もここ・旧 `pending/casual/` から改名） |
+| Wiki-Rex | （pending 起票権限なし・[ADR-Role v4 §16](../adr/ADR-Role.md) 参照） |
 | Wiki-Eval | 上記いずれかにレビューコメントを追記 / または直接ADR本体に反映 |
+
+> **旧 `pending/casual/` ディレクトリ Note**: 14 代目の Wiki-casual → Wiki-Personal 改名で `pending/casual/` → `pending/personal/` への移行が確定。15 代目で物理移行を実施したが、当時は `[MOVED]` スタブを `pending/casual/` 配下に残置していた（3 ファイル）。本 v6.9 時点では現状維持（`wiki/pending/casual/` に [MOVED] スタブ 3 ファイル残存）。完全アーカイブ化（`wiki/archived/pending_casual/` への手動 git mv）はボス判断待ち。
 
 ---
 
