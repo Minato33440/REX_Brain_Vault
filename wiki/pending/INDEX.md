@@ -37,7 +37,7 @@ ADR Promotion Criteria は [adr/ADR-Role.md](../adr/ADR-Role.md) "ADR Promotion 
 | Wiki-Rex | （pending 起票権限なし・[ADR-Role v4 §16](../adr/ADR-Role.md) 参照） |
 | Wiki-Eval | 上記いずれかにレビューコメントを追記 / または直接ADR本体に反映 |
 
-> **旧 `pending/casual/` ディレクトリ Note**: 14 代目の Wiki-casual → Wiki-Personal 改名で `pending/casual/` → `pending/personal/` への移行が確定。15 代目で物理移行を実施したが、当時は `[MOVED]` スタブを `pending/casual/` 配下に残置していた（3 ファイル）。本 v6.9 時点では現状維持（`wiki/pending/casual/` に [MOVED] スタブ 3 ファイル残存）。完全アーカイブ化（`wiki/archived/pending_casual/` への手動 git mv）はボス判断待ち。
+> **旧 `pending/casual/` ディレクトリ Note**: 14 代目の Wiki-casual → Wiki-Personal 改名で `pending/casual/` → `pending/personal/` への移行が確定。15 代目で物理移行を実施した際は [MOVED] スタブを残置していたが、**2026-04-29 ボス手動 git mv で `wiki/archived/pending-casual/` へ完全アーカイブ化完了**（`pending-casual/` ハイフン命名は `archived/casual/` との同名衝突を回避するため意図的に採用）。詳細は handoff/latest.md v6.10 §Phase Pending-Casual-Archive 参照。
 
 ---
 

@@ -28,7 +28,7 @@ REX_AI システムのAIロール登録簿(現在の状態)。
 
 > **Wiki-Rex 新設 Note (v4)**: 2026-04-28 ADR-Role v4 で新設。「役割なしのデフォルトモード」として Default Rex 人格 + Vault 全層読み取り + REX_Personal_Brain 読み取り専用クエリで構成。書き込み・他NLM クエリは全面禁止。起動コード未指定時のデフォルトとして機能。ROADMAP Stage 2「統合読み出し期」のテスト運用。詳細は [adr/ADR-Role.md](../adr/ADR-Role.md) §16 §17 参照。
 
-> **Wiki-Personal 改名 Note**: 2026-04-28 に旧 `Wiki-casual` から改名。NLM 表示名 `REX_Casual_Brain` → `REX_Personal_Brain`（UUID `daf281ae-...` 不変）。Vault 物理ディレクトリ `wiki/casual/` → `wiki/personal/` への移行は完了（Phase Personal-Migration・15 代目）。**さらに 2026-04-29 ボス手動 git mv により旧 `wiki/casual/` を `wiki/archived/casual/` へ完全アーカイブ化（Phase Casual-Final-Archive・[MOVED] スタブ運用を解消）**。詳細は [adr/ADR-Role.md](../adr/ADR-Role.md) §1 §4 / [adr/ADR-NLM.md](../adr/ADR-NLM.md) §2 / handoff/latest.md v6.9 参照。
+> **Wiki-Personal 改名 Note**: 2026-04-28 に旧 `Wiki-casual` から改名。... **さらに 2026-04-29 ボス手動 git mv により旧 `wiki/casual/` を `wiki/archived/casual/` へ、旧 `wiki/pending/casual/` を `wiki/archived/pending-casual/` へ完全アーカイブ化（Phase Casual-Final-Archive + Phase Pending-Casual-Archive・[MOVED] スタブ運用を完全解消）**。詳細は [adr/ADR-Role.md](../adr/ADR-Role.md) §1 §4 / [adr/ADR-NLM.md](../adr/ADR-NLM.md) §2 / handoff/latest.md v6.9 参照。
 
 ---
 

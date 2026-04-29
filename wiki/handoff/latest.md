@@ -1,11 +1,9 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
 
-# バージョン: v6.9(wiki/casual/ 完全アーカイブ・参照訂正反映)
+# バージョン: v6.10(wiki/pending/casual/ 完全アーカイブ・最終クリーンアップ完了)
 # 更新: 2026-04-29 / 15 代目 Evaluator (Claude Opus 4.7)
-# 前版: v6.8 / 15 代目 2026-04-28(Phase Wiki-Rex-Init 完了・ADR-Role v4 supersede)
-# 前々版: v6.7 / 15 代目 2026-04-28(Phase Personal-Migration 物理移行完了・ADR-Role v3 supersede)
-# 前々々版: v6.6 / 14 代目 2026-04-28(Wiki-Personal 改名 ADR 化 Step 3 完了)
-# 注: 10〜12 代目の更新は本ファイルに記録なし(13 代目時点で確認できず)
+# 前版: v6.9 / 15 代目 2026-04-29(wiki/casual/ 完全アーカイブ)
+# 前々版: v6.8 / 15 代目 2026-04-28(Phase Wiki-Rex-Init 完了・ADR-Role v4 supersede)
 
 ---
 
@@ -116,8 +114,10 @@ wiki/ 構造(2026-04-29 v6.9 時点・15 代目反映):
   ROADMAP.md                  生きている展望
   archived/                   ⬜ 凍結ファイル保管
     START_HERE-2026-04-25.md  (旧 wiki/START_HERE.md・15 代目で凍結移設)
-    casual/  🆕                (旧 wiki/casual/・2026-04-29 ボス手動 git mv で完全アーカイブ
+    casual/                   (旧 wiki/casual/・2026-04-29 ボス手動 git mv で完全アーカイブ)
                                 _RUNBOOK / handoff_latest / index / log + ideas/insights/topics 配下)
+    pending-casual/  🆕        (旧 wiki/pending/casual/・2026-04-29 ボス手動 git mv で完全アーカイブ
+                                2026-04-28_rename_casual_to_personal.md + README.md)
   adr/                        確定事項層(Wiki-Eval 専属)
     INDEX.md                  (v4 supersede 履歴反映)
     ADR-Role.md (v4)          Wiki-Rex 新設・読み取り専用クエリ権限カテゴリ新設・6 ロール体制
@@ -134,8 +134,7 @@ wiki/ 構造(2026-04-29 v6.9 時点・15 代目反映):
     personal/2026-04-28_rename_casual_to_personal.md
     personal/README.md
     {trade_system,trade_brain,setona_hp}/README.md
-    casual/  ⚠️                (3 ファイル残存・README + 改名 pending スタブ
-                                ボス判断: wiki/pending/casual/ も archived 化するか個別判断)
+    (旧 casual/ は 2026-04-29 ボス手動 git mv で archived/pending-casual/ へ完全アーカイブ)
   registry/                   現在の登録状態層(Wiki-Eval 専属)
     repos.md
     nlm.md (Wiki-Rex 反映 🆕・REX_Personal_Brain 反映・UUID 不変)
@@ -200,6 +199,7 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | Phase D | Trade_Brain wiki 骨組み構築 | ⬜ 未着手 |
 | Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
 | Phase HP | REX_HP_Brain 構築 + Wiki-hp 起動(Setona_HP 専属体制) | ⬜ ボス判断時 |
+| **Phase Pending-Casual-Archive** | **wiki/pending/casual/ → wiki/archived/pending-casual/ ボス手動 git mv で完全アーカイブ + 参照訂正(15 代目)** | **✅ 2026-04-29** |
 
 ---
 
@@ -214,7 +214,6 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | 3 | Phase HP 着手判断 | REX_HP_Brain 構築 + Wiki-hp 起動の可否(ADR-Repo / ADR-NLM の予約項目)|
 | 4 | 新機能実装の優先順位 | Phase 3 完了後の展開 |
 | 5 | **Wiki-Rex 運用評価** | テスト運用フェーズの実用性確認(Personal_Brain クエリの実用性・対話品質・Wiki-Personal との切替フローの実運用検証)|
-| 6 | **🆕 wiki/pending/casual/ の処遇** | 現状3ファイル[MOVED]スタブ残存。ボス手動で `wiki/archived/pending_casual/` へ git mv するか、現状維持で許容するか判断。Agent 処理コスト観点では archived 化が望ましいが、外部リンク数も少ないため現状維持でも実害は小さい |
 
 ### 🟡 統括 Evaluator が着手可能(ボス承認後)
 
@@ -497,6 +496,35 @@ v6.8 までの設計では `wiki/casual/` を `[MOVED]` スタブで保持して
 ---
 
 ## 📝 v6.7 での主な差分(15 代目・2026-04-28・Phase Personal-Migration + Phase Eval-Mandate)
+
+## 📝 v6.10 での主な差分(15 代目・2026-04-29・Phase Pending-Casual-Archive)
+
+### 経緯
+
+v6.9 で `wiki/casual/` を完全アーカイブ化した際、`wiki/pending/casual/` の 3 ファイル(2026-04-28_rename_casual_to_personal.md / README.md)はボス判断待ちとして残置していた。同セッション内でボスから「同じ思想で archived 化したい」との判断を受領 → ハイフン命名 `pending-casual/` で `archived/casual/` との意味的衝突を回避する案を確定。
+
+### 完了した実作業
+
+1. **ボス手動 git mv**(2026-04-29):
+   - `wiki/pending/casual/` 物理消滅
+   - `wiki/archived/pending-casual/` 配下に 2 ファイル配置
+
+2. **ボス手動による参照訂正**:
+   - `wiki/handoff/latest.md` v6.9 → v6.10(本ファイル)
+   - `wiki/pending/INDEX.md`(pending/casual/ 関連 Note を archived 完了に訂正)
+
+### 命名規則
+
+`pending-casual/` のハイフン命名は意図的:
+- `archived/casual/` = 旧 wiki/casual/ のアーカイブ
+- `archived/pending-casual/` = 旧 wiki/pending/casual/ のアーカイブ
+- 同名衝突を防ぎつつ、起源を明示
+
+### 残課題なし
+
+これで Phase Casual-Final-Archive 系列の作業が完全完了。Vault のアクティブパスから [MOVED] スタブが完全消滅した。
+
+---
 
 ### 完了した実作業(4 commit)
 

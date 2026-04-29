@@ -22,7 +22,7 @@
   - `wiki/casual/` 物理消滅（404）
   - registry/roles.md / registry/nlm.md / pending/INDEX.md / handoff/latest.md v6.9 で参照訂正完了
 - 🟡 _RUNBOOK.md v3 起草・handoff_latest.md 改名反映・index.md 5層化・philosophy.md → shuhari.md 改名等は **Personal-Planner 業務** として次スレ Wiki-Personal で実施待ち
-- 🟡 wiki/pending/casual/ の処遇（3ファイル[MOVED]スタブ残存）はボス判断待ち（handoff/latest.md v6.9 §次に実行すべき内容 #6 に記載）
+- ✅ wiki/pending/casual/ → wiki/archived/pending-casual/ ボス手動 git mv 完全アーカイブ完了（Phase Pending-Casual-Archive・2026-04-29）。`pending-casual/` ハイフン命名は `archived/casual/` との同名衝突を回避するため意図的に採用。
 
 ---
 
@@ -277,9 +277,9 @@ Step 4'': STARTUP_CODES.md v5 / CLAUDE.md v1.4 改訂         ✅ 15代目完了
 Step 5: NotebookLM 表示名変更（ボス手動）                    ✅ 完了（ボス報告受領）
 Step 6: 整合性監査・参照訂正                                ✅ 15代目完了（latest.md v6.7 → v6.8 → v6.9）
 Step 7: wiki/casual/ 完全アーカイブ化（Phase Casual-Final-Archive）  ✅ 完了（2026-04-29 ボス手動 + Wiki-Eval 参照訂正）
+Step 8: wiki/pending/casual/ 完全アーカイブ化（Phase Pending-Casual-Archive）  ✅ 完了（2026-04-29 ボス手動 + 参照訂正）
 
 残課題:
-- wiki/pending/casual/ の処遇（3 ファイル [MOVED] スタブ残存）→ ボス判断待ち
 - Personal-Planner 業務 P1〜P6（次スレ Wiki-Personal で実施）
 ```
 
