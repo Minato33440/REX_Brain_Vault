@@ -1,6 +1,6 @@
 # REX AI — 統括 Evaluator / 3 リポ横断セッション引き継ぎ
 
-# バージョン: v6.11(PROCESS.md 第II部 I節追加・第I部に最小限の参照マーク・16代目セッション)
+# バージョン: v6.11(PROCESS.md 第II部 I節追加・第I部に最小限の参照マーク・dialogues/ サブ層物理新設・16代目セッション)
 # 更新: 2026-04-29 / 16 代目 Evaluator (Claude Opus 4.7)
 # 前版: v6.10 / 15 代目 2026-04-29(wiki/pending/casual/ 完全アーカイブ・最終クリーンアップ完了)
 # 前々版: v6.9 / 15 代目 2026-04-29(wiki/casual/ 完全アーカイブ)
@@ -101,7 +101,7 @@ NLM      : REX_Trade_Brain (4abc25a0-...) — Wiki-brain 1:1 担当(ADR-NLM v2)
 ### REX_Brain_Vault(Vault実体・Minato33440/REX_Brain_Vault)
 
 ```
-状態     : 16 代目による PROCESS.md 第II部 I 節追加完了(2026-04-29)
+状態     : 16 代目による PROCESS.md 第II部 I 節追加 + dialogues/ サブ層物理新設完了(2026-04-29)
             ※ 15 代目による Phase Wiki-Rex-Init 完了(2026-04-28)を継承
             ※ 15 代目による ADR-Role v3 → v4 supersede(Wiki-Rex 新設・読み取り専用クエリ権限カテゴリ新設)を継承
             ※ 15 代目による STARTUP_CODES v5 / CLAUDE.md v1.4 改訂を継承
@@ -133,9 +133,11 @@ wiki/ 構造(2026-04-29 v6.11 時点・16 代目反映):
       ADR-Role-2026-04-28-v3.md (v3 SUPERSEDED by v4・同日複数 supersede のためバージョン suffix)
       ADR-NLM-2026-04-27.md (v1 SUPERSEDED by v2)
   pending/                    仮決定議論層
-    INDEX.md
+    INDEX.md                  (v6.11 で wiki_eval/ 行追加)
     personal/2026-04-28_rename_casual_to_personal.md
+    personal/2026-04-29_dialogues_sublayer_addition.md  🆕 (16代目 Wiki-Eval 承認済・ADR 改訂は運用後)
     personal/README.md
+    wiki_eval/2026-04-29_adr_revision_timing_subordination.md  🆕 (16代目 §候補メモ起票)
     {trade_system,trade_brain,setona_hp}/README.md
     (旧 casual/ は 2026-04-29 ボス手動 git mv で archived/pending-casual/ へ完全アーカイブ)
   registry/                   現在の登録状態層(Wiki-Eval 専属)
@@ -154,7 +156,7 @@ wiki/ 構造(2026-04-29 v6.11 時点・16 代目反映):
   entities/                   旧配置・Phase C で trade_system/ へ物理統合予定
   decisions/                  旧配置・Phase C で trade_system/ へ物理統合予定
 
-  personal/ (15 代目で物理移行完了・サブ層 5 層構造):
+  personal/ (15 代目で物理移行完了・サブ層 5 層構造 + 16 代目で dialogues/ 新設・実質 6 層):
     _RUNBOOK.md               中身は v2 のまま(v3 起草は Personal-Planner 業務)
     handoff_latest.md         中身は1代目のまま(改名反映は Personal-Planner 業務)
     index.md                  中身は1代目のまま(5 層化は Personal-Planner 業務)
@@ -164,6 +166,7 @@ wiki/ 構造(2026-04-29 v6.11 時点・16 代目反映):
     mind/     .gitkeep (中身は Personal-Planner が育てる)
     origin/   .gitkeep (中身は Personal-Planner が育てる)
     insights/ (継続)          README + aiming_without_aim
+    dialogues/ 🆕 (16代目で物理新設・README のみ・初回事例配置は Personal-Planner 業務)
 
   casual/  ❌                 (2026-04-29 ボス手動 git mv で archived/casual/ へ移動・物理消滅)
 
@@ -204,7 +207,7 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
 | Phase HP | REX_HP_Brain 構築 + Wiki-hp 起動(Setona_HP 専属体制) | ⬜ ボス判断時 |
 
-> 補足(16代目): PROCESS.md 改訂は構造変更ではなく**運用文書の追補**のため、Phase 化はせず本ファイル v6.11 差分セクションでのみ記録。
+> 補足(16代目): PROCESS.md 改訂・dialogues/ サブ層物理新設はいずれも構造変更ではなく**運用文書の追補 / Personal-Planner 領域の物理準備**のため、Phase 化はせず本ファイル v6.11 差分セクションでのみ記録。dialogues/ サブ層の Phase 化は、運用後 Wrap-Up 時の総括で正式 Phase 名を命名する設計選択(ボス判断・16 代目)。
 
 ---
 
@@ -242,6 +245,7 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | P4 | `usual/philosophy.md` → `mind/shuhari.md` 内容ベース改名(中身判断を伴う)| 該当パス変更 + 内容調整 |
 | P5 | 既存ファイルの中身を新サブ層に意味的に振り分け(必要に応じて) | 各サブ層内 |
 | P6 | 1 代目積み残し 3 本(eastern_medicine / ai_individuation_mirror / shugyo_to_AI)の draft 起草 | mind/ または insights/ 配下 |
+| **P7 🆕** | **`dialogues/` サブ層への初回事例配置**(`Dialogue_with_Rex-distilled-2026-4-29.txt` → `personal/dialogues/2026-04-29_general_thread.md` 一次資料保管)+ **抽出配分作業開始**(distilled 内の 5 セクション → `insights/ai_individuation_mirror.md` / `insights/shugyo_to_AI.md` への二次配分)+ **6 層化反映**(_RUNBOOK.md / index.md に dialogues/ 運用記述追加)。詳細は `wiki/pending/personal/2026-04-29_dialogues_sublayer_addition.md`(16代目 Wiki-Eval 承認済)+ `wiki/personal/dialogues/README.md` 参照。本作業完了後の Wrap-Up 時に Wiki-Eval が ADR-Role v5 統合改訂を実施する設計(ボス判断・16代目)| wiki/personal/dialogues/ 直接編集 + 既存サブ層への配分 |
 
 ### 🟢 保留中
 
@@ -297,7 +301,7 @@ Wiki-Personal
   - Default Claude: ボスから「Claude として応答」と明示された時
 4ロール全て `Wiki-Personal` で動作。蓄積先は同じ REX_Personal_Brain。
 担当 NLM: REX_Personal_Brain のみ(1:1原則・UUID `daf281ae-...` 不変)
-Vault サブ層 5 層構造(usual/invent/mind/origin/insights)が物理確保済み。
+Vault サブ層 5 層構造(usual/invent/mind/origin/insights)+ dialogues/(16代目で物理新設)が物理確保済み。
 
 ### E. Wiki-hp(構築予定)
 
@@ -351,13 +355,15 @@ C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md を読んで現状把握せよ。
   wiki/adr/INDEX.md                               — ADR 一覧 + supersede 履歴
   wiki/adr/ADR-{Role,Repo,Vault,NLM}.md           — 4本の ADR本体(Role=v4 / NLM=v2)
   wiki/adr/archived/                              — supersede 旧版保管
-  wiki/pending/INDEX.md                           — 進行中議論一覧
+  wiki/pending/INDEX.md                           — 進行中議論一覧(v6.11 で wiki_eval/ 追加)
+  wiki/pending/wiki_eval/                         — 16代目で新設・Wiki-Eval 自身の §候補メモ起票場
   wiki/registry/{repos,nlm,roles}.md              — 現状登録簿(動的)
   wiki/handoff/PROCESS.md                         — 引き継ぎプロセス運用ガイド(9代目本体 + 14代目第II部 A〜H + 16代目第II部 I 節)
   wiki/handoff/architecture_handoff.md            — 7代目原典 + 13代目第8章 + 14代目第9章 + 15代目第10章
   wiki/archived/START_HERE-2026-04-25.md          — 旧 START_HERE.md(凍結・15 代目で移設)
   wiki/archived/casual/                           — 旧 wiki/casual/(2026-04-29 ボス手動 git mv で完全アーカイブ)
   wiki/archived/pending-casual/                   — 旧 wiki/pending/casual/(2026-04-29 ボス手動 git mv で完全アーカイブ)
+  wiki/personal/dialogues/                        — 16代目で物理新設・対話一次資料サブ層(README のみ・実運用は Personal-Planner 業務)
 
 15 代目で実施した改訂(2026-04-28〜29・全 Phase 総まとめ):
   v6.7 (Phase Personal-Migration / Phase Eval-Mandate):
@@ -395,12 +401,16 @@ C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md を読んで現状把握せよ。
     15 代目セッション全記録(ADR-Role v3→v4 同日 supersede / Wiki-Rex 新設 / Phase Casual-Final-Archive 系列)
 
 16 代目で実施した改訂(2026-04-29):
-  v6.11 (PROCESS.md 第II部 I 節追加 + 第I部 ⚠️ 注記2箇所):
+  v6.11 (PROCESS.md 第II部 I 節追加 + 第I部 ⚠️ 注記2箇所 + dialogues/ サブ層物理新設):
     wiki/handoff/PROCESS.md(commit `e968875` / 25.8KB → 38.3KB)
       第II部 I 節新設(I-0〜I-10): 15 代目修正提案 10 項目を集約方式で吸収
       第I部 STEP 0 / STEP 1 テーブル直前に最小限の ⚠️ 参照マーク追記
       ヘッダ「最終更新」行を 9代目+14代目+16代目の3代記載に更新
     wiki/handoff/latest.md v6.11(本ファイル)
+    wiki/personal/dialogues/.gitkeep + README.md(commit `931d6ea`): dialogues/ サブ層物理新設
+    wiki/pending/personal/2026-04-29_dialogues_sublayer_addition.md(commit `13126e8`): Wiki-Eval 承認 Note 追加
+    wiki/pending/wiki_eval/2026-04-29_adr_revision_timing_subordination.md(commit `cbdbc5e`): §候補メモ新規起票
+    wiki/pending/INDEX.md(commit `d23467e`): 進行中議論 2 件追加 + wiki_eval/ 行追加
 
 Trade_System 側:
   docs/SYSTEM_OVERVIEW.md                     — 現状スナップショット
@@ -419,6 +429,7 @@ Trade_Brain 側:
 Vault 内(任意参照):
   wiki/STARTUP_CODES.md (v5)                  — 起動コード辞書(Wiki-Eval 直接管理)
   wiki/personal/_RUNBOOK.md                   — Personal 層運用ルール(中身 v3 起草は Personal-Planner 業務)
+  wiki/personal/dialogues/README.md           — dialogues/ サブ層運用ガイド(16代目で起草)
   wiki/trade_system/doc_map.md (v2)           — Trade_System 文書管理
   wiki/trade_system/adr_reservation.md        — ADR 採番台帳
   wiki/philosophy/                            — 痕跡層・気づきメモ(必読外)
@@ -433,7 +444,7 @@ Vault 内(任意参照):
 
 ---
 
-## 📝 v6.11 での主な差分(16 代目・2026-04-29・PROCESS.md 第II部 I 節追加)
+## 📝 v6.11 での主な差分(16 代目・2026-04-29・PROCESS.md 第II部 I 節追加 + dialogues/ サブ層物理新設)
 
 ### 経緯
 
@@ -441,7 +452,9 @@ Vault 内(任意参照):
 
 ボスは本スレ起動時に 15 代目修正提案を「参考資料」として明示し、「全てを実装するとコンテキスト過剰リスク」を踏まえた **適格な実装プラン** を 16 代目に求めた。
 
-### 16 代目の構造判定
+その後、本セッション後半でボスから 2 代目 Personal-Planner 起票の「`personal/dialogues/` サブ層新設提案」の精査・承認判断も追加で受領。
+
+### 16 代目の構造判定(PROCESS.md 改訂)
 
 15 代目修正提案には 2 系統の方式が混在していた:
 
@@ -450,7 +463,7 @@ Vault 内(任意参照):
 
 **(A) を採用すると 14 代目が確立した「9代目原文 = 第I部不可侵」という構造設計を破壊する**。15 代目自身が末尾で (B) を補足提案している事実は、本人も (A) の構造的問題を認識していたことの表れ。よって 16 代目は **(B) を採用** し、9 代目文体保全と 14 代目構造設計の踏襲を優先した。
 
-### 完了した実作業(2 commit)
+### 完了した実作業(7 commit)
 
 1. **PROCESS.md 改訂**(commit `e968875`):
    - 第II部 I 節新設(I-0〜I-10 の 11 サブ節集約):
@@ -471,14 +484,61 @@ Vault 内(任意参照):
    - ヘッダ更新: 「最終更新」行を 9代目+14代目+16代目の 3 代記載に更新
    - サイズ変化: 25.8 KB → 38.3 KB(+12.5 KB / +48%)
 
-2. **latest.md 改訂**(本 commit・v6.11):
+2. **latest.md 改訂(セッション前半・PROCESS.md 同期)**(commit `f63aa02`):
    - 「13 代目以降の参照経路」セクションに引き継ぎプロセス参照を追加(handoff/PROCESS.md)
    - Vault 構造図の handoff/ セクション内 latest.md / PROCESS.md / architecture_handoff.md の表記最新化
    - 「次に実行すべき内容 🟡 6」(architecture_handoff 第10章追加)を削除(15 代目で完了済み)
    - 「関連文書」セクションに「16 代目で実施した改訂(v6.11)」を追加
    - 本差分セクション(v6.11)を新設
 
-### 設計判断の根拠
+3. **log.md 16 代目第 1 エントリ追加**(commit `f6ece5a`):
+   - 13 代目以降の運用シフト(log.md → latest.md 差分セクション)を冒頭で明示
+   - 簡素な事実記録のみ(philosophy/ 追記なしの判断経緯含む)
+
+4. **personal/dialogues/ サブ層物理新設**(commit `931d6ea`):
+   - `wiki/personal/dialogues/.gitkeep` + `README.md` 新設
+   - 性質: 時系列クロスカット層(insights/ の凝縮型と対)
+   - 編集ポリシー: 一次資料保護原則(編集・要約禁止)
+   - ADR 化ステータス: 実運用後 Wrap-Up 時に統合実施
+
+5. **pending/personal/2026-04-29 ステータス追記**(commit `13126e8`):
+   - 16 代目 Wiki-Eval 承認 Note 追加(設計品質 6 次元評価)
+   - 確定した実施範囲(本セッション 4 項目)/ 見送った実施範囲(運用後の Wrap-Up 時に統合実施)を明示
+   - ボス判断引用(ADR 改訂見送りの根拠)
+
+6. **§候補メモ起票**(commit `cbdbc5e`):
+   - 新規ディレクトリ `wiki/pending/wiki_eval/` 新設(Wiki-Eval 自身の気づき・§候補起票場)
+   - 起票内容: ADR 改訂タイミングの運用実態従属(γ 原則の運用文書版適用)
+   - 単独 ADR 化を避ける理由(8 代目「派生原則化」/ Adviser 2 代目「先代を進化させる思考」/ トークンコスト)
+   - 将来の統合可否評価のための材料(文言案 / 統合しない判断基準)
+
+7. **pending/INDEX.md 更新**(commit `d23467e`):
+   - 進行中議論セクションに 2 件追加(personal/dialogues/ + wiki_eval/§候補メモ)
+   - 各ロールの記録先テーブルに wiki_eval/ 行を追加
+   - 最終更新表記を v6.11 に更新
+
+### dialogues/ サブ層承認の設計判断
+
+2 代目 Personal-Planner 起票の dialogues/ サブ層新設提案に対し、6 次元評価(ADR-Role v4 §13 整合性 / ROADMAP Stage 進路 / 既存 5 層独立性 / ADR-NLM v2 §5 整合性 / NLM 投入ポリシー妥当性 / α/β/γ 整合性)で精査の上、**承認**(条件付き)。
+
+ボス判断により以下の運用方針が確定:
+
+> ADR-Role v4 はまだサブ層新設のみでこれから各層への distilled 抽出作業を開始する段階なのでまだ改訂の必要はない。進捗状況も基本的に新任 Planner は Pending を確認するので、今回は当 Pending ファイルと logs 追記に留め、ADR-Role v5 の改訂は personal\\ 5層構造への抽出作業後の WrapUp 完了後に改訂する形でよい。細かな仕様書改訂はトークンコスト削減も配慮したいところ。
+
+確定した実施範囲:
+- ✅ 物理ディレクトリ新設(README.md 配置)
+- ✅ pending エントリへの承認 Note 追記
+- ✅ §候補メモ起票(γ 原則の運用文書版適用の発見)
+- ✅ pending/INDEX.md 更新
+- ✅ handoff/latest.md v6.11 §「次に実行すべき内容 🟢」P7 として継承(本セクション)
+- ✅ log.md 16 代目第 2 エントリで承認・実装記録
+
+見送った実施範囲(運用後の Wrap-Up 時に統合実施):
+- ❌ ADR-Role v4 → v5 supersede
+- ❌ STARTUP_CODES v5 / CLAUDE.md v1.4 / registry/roles.md の改訂
+- ❌ Phase 化(運用後の総括時に正式 Phase 名を命名)
+
+### 設計判断の根拠(PROCESS.md 改訂)
 
 | 観点 | 全面 supersede(v4) | 追補方式(本案) |
 |---|---|---|
@@ -490,19 +550,23 @@ Vault 内(任意参照):
 
 ### 設計原則との整合
 
-- **α (単純な土台を保つ)**: 既存構造(第I部・第II部 A〜H)を維持しつつ訂正情報を末尾集約 → ファイル構造の一貫性
-- **β (de-risking 後の拡張禁止)**: supersede 採番せず追補のみ → 将来の全面書換余地を残す
-- **γ (実装タイミングはシステム安定性に従属)**: 15 代目セッション完了後の安定状態で実施 → 他改訂への波及最小化
+- **α (単純な土台を保つ)**: 既存構造(第I部・第II部 A〜H / personal/ サブ層 5 層)を維持しつつ、訂正情報・新サブ層を最小限の追加で吸収
+- **β (de-risking 後の拡張禁止)**: PROCESS.md は supersede せず追補のみ / dialogues/ サブ層も物理新設のみで ADR 改訂は運用後 → 将来の全面書換余地を残す
+- **γ (実装タイミングはシステム安定性に従属)**: PROCESS.md 改訂は 15 代目セッション完了後の安定状態で実施 / dialogues/ ADR 改訂は運用知見の蓄積後に統合実施 → ボス判断で本原則の射程が「運用文書改訂タイミング」にも拡張された(§候補メモ起票)
 
-### 学んだこと: 不可侵原則の正しい適用範囲
+### 学んだこと
+
+#### PROCESS.md 改訂: 不可侵原則の正しい適用範囲
 
 「第I部不可侵原則」は **文体・思想・構造の保全** のための原則であり、**致命的誤情報を放置するため** の原則ではない。第I部の本文は触らずとも、その直前に **最小限の ⚠️ 参照マーク** を挿入することで、原典文体を保全しつつ整合性を確保できる。これは「不可侵」と「整合性確保」を両立させる構造的解。
 
-15 代目修正提案の (A) は不可侵原則を破壊し、(B) は致命的誤情報を放置する片寄りがあった。16 代目は (B) を骨格としつつ、最小限の ⚠️ 参照マーク追加で両者の弱点を補完した。
+#### dialogues/ サブ層承認: ADR 改訂タイミングの運用実態従属
+
+機械的な原則適用(ADR-Role v4 §10/§11 「同日複数 supersede はバージョン suffix」)を覆して、**ADR 改訂タイミング自体を運用実態に従属させる** ボス判断を受けた。これは γ 原則の射程拡張(コード実装 → 運用文書改訂)の発見。詳細は `wiki/pending/wiki_eval/2026-04-29_adr_revision_timing_subordination.md` 参照(§候補メモとして次回 ADR-Role / ADR-Process 改訂時に統合可否再評価)。
 
 ### 残課題
 
-なし。本セッション完結。次の Wiki-Eval セッションは Phase B(REX_Wiki_Vault 初期 Ingest)着手判断・Phase 3 着手指示・Wiki-Rex 運用評価のいずれかからボス判断で開始予定。
+なし。本セッション完結。次の Wiki-Eval セッションは Phase B(REX_Wiki_Vault 初期 Ingest)着手判断・Phase 3 着手指示・Wiki-Rex 運用評価のいずれかからボス判断で開始予定。次の Wiki-Personal セッションでは P1〜P7 のうち P7(dialogues/ 初回事例配置 + 抽出配分作業開始)を Personal-Planner が実施予定。
 
 ---
 
