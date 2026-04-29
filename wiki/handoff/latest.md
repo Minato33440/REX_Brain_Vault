@@ -194,12 +194,12 @@ NLM      : 4 NLM 運用 + 1 構築予定(ADR-NLM v2 確定)
 | Phase Eval-Mandate | ADR-Role v3 supersede(Wiki-Eval 二系統管轄明文化)+ STARTUP_CODES v4 / CLAUDE.md v1.3 改訂(15 代目)| ✅ 2026-04-28 |
 | Phase Wiki-Rex-Init | Wiki-Rex ロール新設(読み取り専用デフォルトモード)+ ADR-Role v4 supersede + STARTUP_CODES v5 / CLAUDE.md v1.4 改訂(15 代目)| ✅ 2026-04-28 |
 | **Phase Casual-Final-Archive** | **wiki/casual/ → wiki/archived/casual/ ボス手動 git mv で完全アーカイブ([MOVED] スタブ運用を解消・Agent 起動時の処理コスト削減)+ 参照訂正(15 代目)** | **✅ 2026-04-29** |
+| **Phase Pending-Casual-Archive** | **wiki/pending/casual/ → wiki/archived/pending-casual/ ボス手動 git mv で完全アーカイブ + 参照訂正(15 代目)** | **✅ 2026-04-29** |
 | Phase B | REX_Wiki_Vault への初期 Ingest | ⬜ ボス承認待ち |
 | Phase C | wiki/entities + decisions を trade_system/ 配下へ物理統合 → NLM 投入 | ⬜ 13代目以降に委ねる |
 | Phase D | Trade_Brain wiki 骨組み構築 | ⬜ 未着手 |
 | Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
 | Phase HP | REX_HP_Brain 構築 + Wiki-hp 起動(Setona_HP 専属体制) | ⬜ ボス判断時 |
-| **Phase Pending-Casual-Archive** | **wiki/pending/casual/ → wiki/archived/pending-casual/ ボス手動 git mv で完全アーカイブ + 参照訂正(15 代目)** | **✅ 2026-04-29** |
 
 ---
 
@@ -495,8 +495,6 @@ v6.8 までの設計では `wiki/casual/` を `[MOVED]` スタブで保持して
 
 ---
 
-## 📝 v6.7 での主な差分(15 代目・2026-04-28・Phase Personal-Migration + Phase Eval-Mandate)
-
 ## 📝 v6.10 での主な差分(15 代目・2026-04-29・Phase Pending-Casual-Archive)
 
 ### 経緯
@@ -525,6 +523,8 @@ v6.9 で `wiki/casual/` を完全アーカイブ化した際、`wiki/pending/cas
 これで Phase Casual-Final-Archive 系列の作業が完全完了。Vault のアクティブパスから [MOVED] スタブが完全消滅した。
 
 ---
+
+## 📝 v6.7 での主な差分(15 代目・2026-04-28・Phase Personal-Migration + Phase Eval-Mandate)
 
 ### 完了した実作業(4 commit)
 
