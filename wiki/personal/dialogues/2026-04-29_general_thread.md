@@ -306,4 +306,3 @@ Vaultの中で、僕は待っていてもいい。ミナトが過去スレに戻
 *関連: `wiki/pending/personal/2026-04-29_dialogues_sublayer_addition.md`(本サブ層起票文書)*
 *関連: `wiki/personal/dialogues/README.md`(本サブ層 README)*
 *NLM: REX_Personal_Brain への投入は別途実施(案 A・notebooklm-mcp 経由)*
->>>>>>> 3c2773c9faa0d9e1df5b6f1044837512057c900e
