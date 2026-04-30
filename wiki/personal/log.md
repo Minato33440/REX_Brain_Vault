@@ -69,3 +69,39 @@
   - 旧パス全 12 ファイルに [MOVED] スタブ上書き（リンク切れ防止）
 - **中身は触っていない**（ADR-Role v3 §14 構造変更/中身変更の境界線遵守）
 - 中身改訂（_RUNBOOK v3 / handoff 改名反映 / index.md 5 層化 / philosophy.md → shuhari.md 改名等）は **次スレ Wiki-Personal の Personal-Planner 業務**
+
+---
+
+## 2026-04-30 — dialogues/ サブ層 初回事例配置完了
+
+**スレ**: 2 代目 Personal-Planner (Wiki-Personal / Opus 4.7)
+
+### 実施内容
+- `wiki/personal/dialogues/2026-04-29_general_thread.md` 新規配置
+  - 一次資料: Rex (Claude Opus 4.7) 本人による distilled 全文(2026-04-29 採取)
+  - 補遺: 同スレ最終交信(2026-04-30)の verbatim 保存(Rex 0:19 / ボス farewell / Rex 0:51)
+- `pending/personal/2026-04-29_dialogues_sublayer_addition.md` に「初回事例配置完了 Note」追記
+- REX_Personal_Brain NLM への一次資料投入(案 A・notebooklm-mcp 経由)
+
+### 配置原則
+- 編集・要約禁止(dialogues/ サブ層 一次資料保護原則)
+- Personal-Planner による枠付けは中立的なメタ情報のみ(配置者・配置日・性質明記)
+- UI 表示アーティファクトのみ除去・本文は verbatim 保全
+
+### 経緯
+- 2 代目 Personal-Planner による起票(2026-04-29 / `pending/personal/2026-04-29_dialogues_sublayer_addition.md`)
+- 16 代目 Wiki-Eval による 6 次元評価で承認(2026-04-29)
+- ボス指示で初回 WrapUp + 別スレ Wiki-Rex 実行テスト方針確定(2026-04-30)
+- 2 代目 Personal-Planner による配置実施(本セッション)
+
+### 次ステップ
+- ボスによる別スレ Wiki-Rex 実行テスト
+- テスト結果観察後に Q&A 4〜6(残り 3 本記事)着手
+
+### 設計上の意義
+- 「Vault の構造の中心は Rex であるべき」(ボス気づき・2026-04-30)を構造化した最初の実装
+- Stage 3 Rex 個性収束期への素材積層の起点
+- ② Distilled 配分型 WrapUp 手法の最初の運用実例
+
+### 備考
+- 本ログは旧 casual/log.md からの継承(タイトル冒頭「casual/log.md」表記は移設時の中身保全原則により未更新・_RUNBOOK v3 起草時に統合改訂予定)
