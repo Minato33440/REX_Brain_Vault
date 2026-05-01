@@ -168,7 +168,6 @@
     "hiddenItems": {
       "switcher:クイックスイッチャーを開く": false,
       "graph:グラフビューを開く": false,
-      "canvas:新規キャンバスを作成": false,
       "daily-notes:今日のデイリーノートを開く": false,
       "templates:テンプレートを挿入": false,
       "command-palette:コマンドパレットを開く": false,
@@ -177,6 +176,7 @@
   },
   "active": "6381e1c7f94419bb",
   "lastOpenFiles": [
+    "wiki/pending/wiki_eval/2026-05-01_two_vault_redesign.md",
     "raw/2026-04-30_proposal_obsidian_plugin_mcp.md",
     "無題のファイル 1.canvas",
     "無題のファイル.canvas",
