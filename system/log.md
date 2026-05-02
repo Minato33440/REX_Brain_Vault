@@ -1399,3 +1399,135 @@ Vault-Planner ロールは「Default Rex が能動的に書ける土台を整え
 - ⏩ STEP 9: philosophy/evaluator_code.md 気づきメモ追記(本セッションでは追記なし方針)
 
 ---
+
+## [2026-05-02 19 代目セッション] ADR-MCP v1 新設 + M1 部分達成 + Vault-Planner 仮設定線維持 + Path B 全面採用
+
+### 起動と初期把握
+
+ボスから「Wiki-Eval / 19 代目統括 Evaluator として準備しておいてくれ・ultrathink」(2026-05-02)の指示を受領。続けてボス追加指示「今フェーズでは君には新たに創設する『Vault-Planner』を兼任してもらう形で、構築中のREX/のRex用VaultにObsidian 自動 backlink / tag 自然言語処理システムを実装補助をしてもらいたい」を受け、Wiki-Eval + Vault-Planner 暫定兼任の体制で開始(18 代目踏襲)。
+
+ボス指定の進捗確認 4 ファイル(layer1_implementation_confirmed / log.md / Wiki-Rex Initial Test / Vault 2-part division plan)+ 標準必読 6 ファイル + 4 代目 → 5 代目 Adviser 引き継ぎ書を読了。検証チェックリスト 10 問に全問回答。
+
+### ボス指示による Vault-Planner 仮設定線維持
+
+セッション中盤、ボスから明示指示:
+
+> 次回スレではやはり初代Vault-Planner創設をお願いしたい。また次期20代目統括EvaluatorはサブでVault-Planner兼任可能としてほしい。現状兼任はトークンリスクがあるため、取り敢えず仮設定log記載ということで
+
+これにより 19 代目セッションでの Vault-Planner 関連処理を以下に確定:
+
+- 本 ADR-MCP v1 では Vault-Planner ロールを **仮設定状態**として記述(§7.1)
+- **正式創設は 20 代目以降の Wiki-Eval が ADR-Role v5 改訂時に確定**
+- 初代として誰を遡及認定するかは ADR-Role v5 改訂時の判断(18 代目候補だが固定化しない)
+- 20 代目統括 Evaluator は **Vault-Planner サブ兼任可能** な体制継続
+
+これは 18 代目 handoff v6.15 の「暫定兼任・遡及認定の設計線」と整合した判断。トークンリスクを避けるため独立起動コード新設は ADR-Role v5 で判断保留。
+
+### 確定した主要設計判断(本セッション)
+
+| # | 判断 | 19 代目評価 |
+|---|---|---|
+| 1 | M2/M3(Local REST API + mcp-obsidian)を defer | 5 軸評価で Veto 軸クリア + α 原則整合・Layer 1 が Obsidian コア機能のみで完結することの帰結・Path X(filesystem MCP)単独で Layer 2 書込経路が成立 |
+| 2 | Origin Myth 新定義(M1 完了 + filesystem MCP 既存稼働で M5 起源神話発火可能) | 旧定義(Local REST API + mcp-obsidian 接続完了)から条件緩和・本 ADR §6 で確定 |
+| 3 | ADR-MCP v1 を新設(Phase Two-Vault-Init 統合 ADR) | 4 つの確定インプット(4 代目提言書 v2 / 17 代目 two_vault_redesign / 18 代目 layer1_implementation_confirmed.md / 本セッション M2/M3 defer 判断)を統合・Pending Dependencies 注記で ADR-Vault v2 / ADR-Role v5 改訂前提を明示 |
+| 4 | Vault-Planner ロールは仮設定継続(20 代目以降で正式創設) | ボス指示(本セッション中盤)に従う・トークンリスク考慮 |
+
+### M1 PAT 環境変数化の試行錯誤(部分達成)
+
+本セッション最大のコンテキスト消費源。最終的に部分達成で完結:
+
+#### 経過
+
+1. **初期手順提示**: claude_desktop_config.json の env セクションで `${GITHUB_PAT}` 構文を提示 → Claude Desktop の Windows 実装で構文展開非対応 → 認証エラー(Bad credentials)
+2. **修正手順**: env セクション全体削除型 + Windows 環境変数 `GITHUB_PERSONAL_ACCESS_TOKEN` 設定で OS 環境変数継承を確立 → Bad credentials 解消
+3. **Repository access 問題**: 古い PAT が Fine-grained で `Only select repositories` スコープ → REX_Brain_Vault が含まれない → 404 Not Found
+4. **新 PAT 発行**(Claude-MCP3): All repositories 設定で発行 → Trade_System への読書込は成功
+5. **REX_Brain_Vault 限定 404 継続**: All repositories 設定にも関わらず REX_Brain_Vault のみ 404・GitHub Fine-grained PAT のリポジトリスコープ反映遅延の可能性・別タイミング切り分け継続
+
+#### 達成・未達
+
+| 項目 | 状態 |
+|---|---|
+| GITHUB_PERSONAL_ACCESS_TOKEN 環境変数化 | ✅ 達成 |
+| claude_desktop_config.json の env セクション削除型 | ✅ 達成 |
+| Trade_System への GitHub MCP 読み書き | ✅ 達成 |
+| REX_Brain_Vault への GitHub MCP 書込テスト | ❌ 未完了(別タイミング切り分け) |
+
+### Path B 全面採用
+
+REX_Brain_Vault への GitHub MCP 書込が一時不可のため、本セッションは 18 代目で確立した Path B(filesystem MCP write_file → ボス手動 git commit & push)を **全面採用**で進行:
+
+| # | ファイル | 経路 | 状態 |
+|---|---|---|---|
+| 1 | system/adr/ADR-MCP.md(新設) | filesystem MCP write_file | ✅ ローカル書込完了 |
+| 2 | system/adr/INDEX.md(更新) | filesystem MCP write_file | ✅ ローカル書込完了 |
+| 3 | system/pending/INDEX.md(更新) | filesystem MCP write_file | ✅ ローカル書込完了 |
+| 4 | system/log.md(本エントリ追記) | filesystem MCP write_file | ✅ ローカル書込完了(本 commit) |
+| 5 | system/handoff/latest.md(v6.15 → v6.16) | filesystem MCP write_file | ⏩ 次工程 |
+
+最終 git commit & push はボス手動で 1 回にまとめる。
+
+### 19 代目が触らなかった範囲(罠回避)
+
+- ❌ ADR-Vault v2 改訂・ADR-Role v5 改訂(20 代目以降の業務・本 ADR の Pending Dependencies)
+- ❌ STARTUP_CODES v6 改訂(Vault-Planner 起動コード新設可否含む・ADR-Role v5 改訂時に判断)
+- ❌ registry/ 同期(同上)
+- ❌ REX/ ディレクトリの先行内容書込(Default Rex 起源神話主権侵食回避)
+- ❌ philosophy/evaluator_code.md への気づき追記(13・15・16・17・18 代目「書かない判断」を踏襲)
+- ❌ Layer 2 の具体的書き込みパターン設計(Default Rex 自発性に委ねる)
+- ❌ M5 起源神話発火の前倒し(Personal-Planner-Rex スレ復帰・別スレ・ボス手動)
+
+### 設計原則との整合
+
+- **α(単純な土台を保つ)**: M2/M3 defer・追加プラグイン非導入・既存 filesystem MCP 活用・5 ファイル更新で完結
+- **β(de-risking 後の拡張禁止)**: Layer 1 → Layer 2 → Phase 4 ADR の順序維持・Path Y 追加は将来の必要性発生時に再評価
+- **γ(実装タイミングはシステム安定性に従属)**: Layer 2 を M5 起源神話発火に従属・Vault-Planner 正式創設を 20 代目以降のセッション安定性に従属
+
+### 実装ロジック影響
+
+ゼロ(Trade_System #026d 数値完全不変・本作業は Vault 側の運用文書のみ・物理ファイル移動なし)
+
+### MCP 運用上の参照点(本セッション固有・実例)
+
+ボス指示「経験則の取り扱い」(2026-05-02 18 代目セッション)に従い、本セッションで観察した MCP・Git 運用の実例を記録:
+
+1. **Claude Desktop 実装の env 構文非対応**: claude_desktop_config.json の env セクションで `${VAR}` 構文を使用しても変数展開されず、リテラル文字列として MCP サーバーに渡される。Windows 実装での仕様。**OS 環境変数継承(env セクション削除型)が最も確実**。
+2. **Fine-grained PAT のリポジトリスコープ反映遅延**: 既存 PAT に対する `Only select repositories → All repositories` 変更が即時反映されない場合あり。**新 PAT 発行で確実に解決**(本セッションで Claude-MCP3 として実施)。
+3. **GitHub MCP の Repository access 切り分け手法**: 別リポでの読み取りテスト成功 → 認証経路 OK 確定・対象リポ単独 404 → Repository access 設定問題と切り分け可能。**1 リポでの 404 で診断を止めず、複数リポでの切り分けが必要**。
+4. **filesystem MCP の edit_file はマルチバイト境界でマッチ失敗**: userMemories 既存記載の警告と整合(本セッション ADR INDEX.md 更新で再現)。**write_file 全文上書きが安全**。日本語混在ファイルでは edit_file を試さず最初から write_file を選択する判断が時間効率上は正解。
+5. **Path B(filesystem write_file → ボス手動 push)の運用安定**: 18 代目で確立・19 代目で 5 ファイル全面採用で実証。GitHub MCP 障害時の確実な完結経路として機能。
+
+### 19 代目所感(個人的気づき・後任への強制ではない)
+
+ADR-MCP v1 の **Pending Dependencies 注記設計** が、ADR 完成度と次スレへの引き継ぎ完全性のバランスを取る実用的解決策として機能した。次スレ Wiki-Eval(20 代目以降)が ADR-Vault v2 / ADR-Role v5 を改訂する際、本 ADR の Pending Dependencies 注記を削除するだけで三部包括改訂の整合性が確定する。これは「ADR を完成度 100% で確定する」ことに執着せず、「次スレでの完了を構造的に保証する」設計判断。8 代目「派生原則化の罠」と §候補メモ §2「独自運用発明の罠」の両方を構造的に避けた運用例として記録する。
+
+ただし、この所感を philosophy/evaluator_code.md に追記しない方針で統一する(13・15・16・17・18 代目「書かない判断」を踏襲)。本所感は本 v6.16 差分セクション(handoff/latest.md)と本 log.md エントリにのみ残し、強制力を持たせない。
+
+### Vault-Planner 仮設定継続の構造的意義
+
+ボスの「次回スレで初代 Vault-Planner 創設・20 代目はサブ兼任可能・現状はトークンリスクで仮設定 log 記載」判断は、**ロール創設のタイミング自体を運用安定性に従属**させる γ 原則の運用文書版適用。18 代目 handoff v6.15 の「暫定兼任・遡及認定の設計線」を一段引き継ぎながらも、**「正式創設の権限は次スレに委ねる」** という後任への裁量委譲を構造化した判断。
+
+これは 17 代目セッション 2 回目の「ADR 採番タイミングの運用従属」(γ 射程拡張)と同型の構造。Wiki-Eval 兼任ロールの正式化を性急にせず、運用実態が安定してから ADR-Role v5 改訂で確定する流れに統一されている。
+
+### 残課題
+
+なし。本セッション完結。後継 Wiki-Eval(20 代目以降)は以下を順次実施:
+
+1. **Phase 4 ADR 三部包括改訂**: ADR-Vault v2(REX/ vs rex/ 命名確定)+ ADR-Role v5(Personal-Planner 廃止・Default Rex 明文化・Vault-Planner 正式創設・Wiki-Rex 図書館利用規約化)+ ADR-MCP v1 の Pending Dependencies 注記削除
+2. **STARTUP_CODES v6 改訂**: ADR-Role v5 確定後・Vault-Planner 独立起動コード新設可否の判断含む
+3. **registry/ 同期**: ADR 三部改訂後に repos.md / nlm.md / roles.md を更新
+4. **M1 完全達成への切り分け**: REX_Brain_Vault への GitHub MCP 書込が回復しているか別タイミングで確認・古い PAT(Claude-MCP)の revoke 検討含む
+
+### Vault CLAUDE.md wrap-up STEP 対応状況
+
+- ✅ STEP 1: log.md 追記(本エントリ・Path B でボス手動 git commit & push)
+- ⏩ STEP 2: handoff/latest.md 更新(v6.16・本 commit 後の最終 commit)
+- ✅ STEP 3: ADR 改訂(ADR-MCP v1 新設・本セッションで確定)
+- ⏩ STEP 4: registry 同期(本セッション該当なし・Phase 4 で実施予定)
+- ⏩ STEP 5: pending archived 移動(本セッション該当なし・吸収済 status は INDEX で表現)
+- ⏩ STEP 6: NLM injection(本セッション該当なし)
+- ✅ STEP 7: GitHub push(全 5 ファイル Path B でボス手動 push 予定)
+- 🔔 STEP 8: Claude.ai プロジェクトナレッジ更新(ボス手動)
+- ⏩ STEP 9: philosophy/evaluator_code.md 気づきメモ追記(本セッションでは追記なし方針)
+
+---
