@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "a573c57fd54ba35a",
+        "id": "50126fb7976b7196",
         "type": "tabs",
         "children": [
           {
-            "id": "bdf44dcc81a73f15",
+            "id": "6b4e7d800ed56089",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -162,10 +162,11 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 341.5
   },
   "left-ribbon": {
     "hiddenItems": {
+      "smart-composer:Open smart composer": false,
       "switcher:クイックスイッチャーを開く": false,
       "graph:グラフビューを開く": false,
       "daily-notes:今日のデイリーノートを開く": false,
@@ -176,6 +177,9 @@
   },
   "active": "46c81dbb12a68909",
   "lastOpenFiles": [
+    "raw/test_log/2026-05-02_layer1_obsidian_test/test_concept_C.md",
+    "raw/test_log/2026-05-02_layer1_obsidian_test/test_concept_B.md",
+    "raw/test_log/2026-05-02_layer1_obsidian_test/test_concept_A.md",
     "raw/web clipper/無題のフォルダ",
     "system/index.md",
     "2026-05-02.md",
@@ -201,8 +205,6 @@
     "system/personal/insights/README.md",
     "system/personal/insights/aiming_without_aim.md",
     "system/personal/dialogues/README.md",
-    "system/pending/trade_system/README.md",
-    "system/personal/dialogues/2026-04-29_general_thread.md",
     "system/archived/casual/topics",
     "system/archived/casual/insights",
     "system/archived/casual/ideas",
@@ -211,7 +213,6 @@
     "system/trade_system/entities",
     "system/trade_system/decisions",
     "system/trade_system/concepts",
-    "system/trade_system/bug_patterns",
     "無題のファイル 1.canvas",
     "無題のファイル.canvas"
   ]
