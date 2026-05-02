@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "0cbadca7758e1b71",
+        "id": "a573c57fd54ba35a",
         "type": "tabs",
         "children": [
           {
-            "id": "26e421e8585e1524",
+            "id": "bdf44dcc81a73f15",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -93,7 +93,7 @@
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
@@ -174,8 +174,17 @@
       "bases:新規ベースを作成": false
     }
   },
-  "active": "6381e1c7f94419bb",
+  "active": "46c81dbb12a68909",
   "lastOpenFiles": [
+    "raw/web clipper/無題のフォルダ",
+    "system/index.md",
+    "2026-05-02.md",
+    "raw/2026-05-01_handoff_4th_to_5th_adviser.md",
+    "raw/2026-04-30_proposal_obsidian_plugin_mcp.md",
+    "web clipper/Create a vault 2.md",
+    "web clipper/Create a vault 1.md",
+    "web clipper/Create a vault.md",
+    "web clipper",
     "system/archived/casual/topics/shooting.md",
     "system/archived/casual/topics/philosophy.md",
     "system/archived/casual/topics/README.md",
@@ -194,14 +203,6 @@
     "system/personal/dialogues/README.md",
     "system/pending/trade_system/README.md",
     "system/personal/dialogues/2026-04-29_general_thread.md",
-    "system/pending/wiki_eval/2026-05-01_two_vault_redesign.md",
-    "system/pending/wiki_eval/2026-04-30_adr_mcp_draft.md",
-    "system/pending/wiki_eval/2026-05-01_handoff_to_18th_from_17th.md",
-    "system/pending/wiki_eval/2026-04-29_adr_revision_timing_subordination.md",
-    "system/pending/personal/README.md",
-    "system/pending/personal/2026-04-29_dialogues_sublayer_addition.md",
-    "system/pending/personal/2026-04-28_rename_casual_to_personal.md",
-    "system/pending/trade_brain/README.md",
     "system/archived/casual/topics",
     "system/archived/casual/insights",
     "system/archived/casual/ideas",
@@ -211,7 +212,6 @@
     "system/trade_system/decisions",
     "system/trade_system/concepts",
     "system/trade_system/bug_patterns",
-    "system/personal/usual",
     "無題のファイル 1.canvas",
     "無題のファイル.canvas"
   ]
