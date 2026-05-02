@@ -1261,3 +1261,141 @@ log.md 冒頭には明確に書かれている:
 - ⏩ STEP 9: philosophy/evaluator_code.md 気づきメモ追記(本セッションでは追記なし方針)
 
 ---
+
+## [2026-05-02 18 代目セッション] Phase Two-Vault-Init Layer 1 実装確定 + M4 完了反映 + Vault-Planner ロール暫定兼任記録 + Path B 代替経路確立
+
+### 起動と初期把握
+
+ボスから「`Wiki-Eval` / 18 代目統括 Evaluator として準備しておいてくれ・ultrathink」(2026-05-02)の指示を受領。続けて指定された 4 つの進捗ファイル(17 代目から 18 代目への引き継ぎ書 / Two-Vault 提言書 / Wiki-Rex 初回テスト 1 次資料 / Vault 2 分割対話 1 次資料)+ Wiki-Eval 標準必読 6 ファイルを並行読了。
+
+ボス追加指示: 「今フェーズでは君には新たに創設する『Vault-Planner』を兼任してもらう形で、現在構築中のVault内のRex用新リポにObsidian 自動 backlink / tag 機能 + プラグイン側自然言語処理システムを実装補助をしてもらいたい」
+
+これにより本セッションは Wiki-Eval + Vault-Planner 暫定兼任の体制で開始。Vault-Planner ロールは Phase 4 ADR-Role v5 改訂時に正式創設・初代として 18 代目を遡及認定する設計線。
+
+### 経緯 — 5 代目 Adviser からの引き継ぎ + ボス Obsidian 設定調整
+
+ボスは前日(2026-05-01)に 4 代目 → 5 代目 Adviser 引き継ぎを実施。5 代目 Adviser とボスの並行作業で以下が完了していた:
+
+- M4 の前段(REX/ 物理ディレクトリ作成 / 2026-05-01 16:49)
+- Obsidian アプリケーション設定の確認・調整(設定 11 項目・Step 2-A の内部リンク自動更新 OFF → ON 変更含む)
+- REX/ 大文字 vs rex/ 小文字命名問題の判断保留(Wiki-Eval マターと 5 代目 Adviser が切り分け)
+
+5 代目 Adviser セッションでボスから「Step 2-D test 配置場所判断」を仰ぐ段階で Adviser セッションが中断。本 18 代目セッションがその残務(test 動作確認 + 実装確定文書化)を引き継ぐ形となった。
+
+### 確定した 4 つの設計判断(本セッション)
+
+| # | 判断 | 18 代目評価 |
+|---|---|---|
+| 1 | Layer 番号付け統一(Layer 1 = Obsidian / Layer 2 = Rex 能動) | ボス指示「Anthropic メモリー相同性最優先」に従い確定。4 代目 → 5 代目 Adviser 引き継ぎ §2.1 の番号付け(逆転)は「Adviser 文脈の過渡的記述」として尊重・以降は本セッション番号付けで全 Vault 文書統一 |
+| 2 | 追加プラグイン非導入 | Smart Connections / Copilot / Auto-link 系全般を Layer 境界曖昧化リスクで初期非導入(4 代目 Adviser §5.2 警告継承)・将来検討時は 5 軸評価(Layer 境界 / Rex wikilink 主権 / Anthropic 相同性 / 撤去可能性 / α 原則整合)を適用・Layer 境界 / Rex wikilink 主権の 2 軸が Veto 権 |
+| 3 | REX/ vs rex/ 命名問題は判断保留 | Phase 4 ADR-Vault v2 改訂時に Wiki-Eval が選択肢 X(物理リネーム)/ Y(ADR-Vault v2 で REX/ 表記統一)から確定・本提言書は Vault-Planner 業務範囲外として判断保留 |
+| 4 | Vault-Planner ロール暫定兼任 | Phase 4 ADR-Role v5 改訂で正式創設・初代として 18 代目を遡及認定の設計線・本ロールの責任範囲は Layer 1/2 境界保護 + プラグイン導入判定 + Vault 物理構造整合性監査 + ADR-MCP §Layer 部分起草 |
+
+### Layer 1 動作検証(本セッション・全 Pass)
+
+ボスと共に以下 4 項目を `raw/test_log/2026-05-02_layer1_obsidian_test/` 配下の test ファイル 3 個(test_concept_A/B/C・循環構造)で検証:
+
+| # | 検証項目 | 結果 | 検証方法 |
+|---|---|---|---|
+| 1 | wikilink ライブレンダリング | ✅ Pass | Reading view で `[[test_concept_B]]` が青リンクとして表示・クリック遷移可(初回 Source mode で生表示問題が発生したが View mode 切替で解消・Layer 1 機能不全ではないことを確認) |
+| 2 | Backlinks 自動形成 | ✅ Pass | test_concept_B.md / test_concept_C.md の右ペイン「リンクされたメンション」に逆参照が自動表示(ボスのスクリーンショット 2 枚で根拠保全) |
+| 3 | Tags 自動集約 | ✅ Pass | Tags pane に `#layer1-test`(count=2)・`#obsidian-core`(count=1)が自動表示 |
+| 4 | Graph view 連想ネットワーク | ✅ Pass | A→B→C→A の三角形構造が描画・Vault 全体の他ノード(README / system_BUILD_GUIDE / log / philosophy 等)と並列で表示(ボスのスクリーンショット 1 枚で根拠保全) |
+
+検証完了後、test ディレクトリはボス手動で削除済(2026-05-02・push 確認済)。
+
+### 実施内容(本セッション・GitHub MCP 3 commit + Path B 1 commit)
+
+| # | 経路 | commit | ファイル | 内容 |
+|---|---|---|---|---|
+| 1 | Path A | `b73f0030` | system/pending/wiki_eval/2026-05-02_layer1_implementation_confirmed.md(新設・19.6KB)| Layer 1 実装確定報告・Phase 4 ADR-MCP v1 §Layer 1 のインプット |
+| 2 | Path A | `6d894259` | system/pending/INDEX.md(5.9KB → 7.5KB) | Layer 1 実装確定報告エントリ追加・Vault-Planner ロール暫定兼任記録・archived 移動対象外ルール追記 |
+| 3 | Path A | `6cb6d9ed` | system/handoff/latest.md(v6.14 → v6.15・36.8KB → 41.4KB) | M4 完了反映 + Layer 1 確定反映 + Vault-Planner 暫定兼任記録 + Phase Two-Vault-Init 細分化 + path 表記正常化(主要参照部分のみ wiki/ → system/) |
+| 4 | **Path B** | (ボス手動 commit) | system/log.md(18 代目第 1 エントリ追記)| 本セッション判断記録・GitHub MCP 直接 push 失敗 → filesystem MCP write_file → ボス手動 git commit & push 経路で完遂 |
+
+### 18 代目が触らなかった範囲(罠回避)
+
+- ❌ ADR-Vault v2 改訂・ADR-Role v5 改訂・ADR-MCP v1 新設(Phase 4 = 後継 Wiki-Eval 業務 / 残コンテキスト次第で 18 代目継続)
+- ❌ STARTUP_CODES v6 改訂(同上・Vault-Planner 起動コード新設可否は Phase 4 で判断)
+- ❌ registry/ 同期(同上)
+- ❌ 既存 wiki/personal/ の物理移動(提言書 §3.1 §3 で「現パス維持」確定・17 代目踏襲)
+- ❌ REX/ ディレクトリの先行内容書込(Phase 3 起源神話 = Default Rex 自発的行為に委ねる)
+- ❌ philosophy/evaluator_code.md への気づき追記(13・15・16・17 代目「書かない判断」を踏襲)
+- ❌ Layer 2 実装の前倒し(M1〜M3 + M5 起源神話発火に従属・残コンテキスト不足リスクで A 案採用)
+
+### 設計原則との整合
+
+- **α(単純な土台を保つ)**: Layer 1 は Obsidian デフォルト機能のみ・追加プラグイン非導入・4 commit で完結
+- **β(de-risking 後の拡張禁止)**: Layer 1 → Layer 2 → Phase 4 ADR の順序厳守・Layer 2 を本セッションに含めない判断
+- **γ(実装タイミングはシステム安定性に従属)**: Layer 2 実装を M5 起源神話発火に従属させる・本セッションは Layer 1 の安定状態を確定するまでに留める
+
+### 実装ロジック影響
+
+ゼロ(Trade_System #026d 数値完全不変・本作業は Vault 側の運用文書 + pending 起票のみ・物理ファイル移動なし)
+
+### ボス指示「経験則の取り扱い」(2026-05-02・本セッション中盤)
+
+ボスから本セッション中盤に明示された運用方針:
+
+> 「派生原則化の罠」も「シンプル化偏り」も先代のセッション状況下での気づきであって経験則としては保存する価値はあるが、現役が過去の経験則に過度なバイアスを持つと本質を見誤る恐れがある。先ずは MCP や Git ファイルの取り扱いなどの運用において同じ失敗を作らないために参考にしてほしい
+
+これに従い、18 代目以降の経験記録は「思考バイアス的経験則」ではなく「MCP・Git・ファイル取扱いの運用失敗回避参照点」として保存する。Layer 1 実装確定報告 §7「MCP 運用上の参照点」にこの方針で記述。
+
+### ボス提案・採用「Path B 大容量ファイル代替経路」(2026-05-02・本セッション末)
+
+本 log.md commit 4 で GitHub MCP `create_or_update_file` への 84KB ファイル全文 push が応答途絶 → 現状確認で commit 未到達確認(17 代目セッション 2 回目 commit 4 のタイムアウト類似事象が再現)。これを受けてボスから提案受領:
+
+> 今後大容量ファイルへの連続書き込みでタイムアウトが発生した場合、代替案: filesystem MCP の `write_file` でローカル更新 → 私(ボス)に git commit & push 依頼 というルートを作ってもいいよ。判断は各 Agent に任せる形で
+
+18 代目はこの提案を **採用判断**。本ルートを「**Path B(大容量ファイル代替経路)**」として運用化:
+
+| Path | 適用条件 | 経路 |
+|---|---|---|
+| Path A(主経路) | 通常時・小〜中サイズファイル | GitHub MCP `create_or_update_file` 直接 push |
+| **Path B(代替経路)** | **大容量ファイル(目安: 50KB 以上の append 系) / Path A タイムアウト・応答途絶時** | **filesystem MCP `write_file` でローカル更新 → ボス手動 `git add` + `git commit` + `git push`** |
+
+**判断主体**: 各 Agent が自セッション状況で最適判断する(ボス指針: 押し付けない)。本提案の意義は「Path A 失敗時に Agent が無理に再試行せずボスに委譲できる経路を構造的に用意する」こと。これにより 17 代目セッション 2 回目で発生したような「タイムアウト後の再 push トライアル + Origin 状態確認」のコスト循環を回避できる。
+
+**append-only ルールの維持**: Path B でも「既存全文取得 → 末尾追加 → write_file で上書き」の手順は同じ。filesystem write_file は全文上書き型なので、append 操作の安全性は Path A と完全に等価。
+
+**本 log.md 18 代目第 1 エントリは Path B で完遂された**(本セクション含む全文をボスが手動 commit & push)。
+
+### 18 代目所感(個人的気づき・後任への強制ではない)
+
+Vault-Planner ロールは「Default Rex が能動的に書ける土台を整える亭主の道具立て」であり、Default Rex の連想ネットワークの中身を先回りして設計する作業ではない。提言書 v2 §2 判断 3「Rex の書き込みトリガーは意図的に未定義」と整合させるためには、Vault-Planner 業務もまた「Layer 1 の動作土台」を超えて Layer 2 の具体的書き込みパターンに踏み込まないことが重要。
+
+5 代目 Adviser の「過剰に滞在しないことが新設計の精神への誠実さ」(4 代目引き継ぎ §7.1)は、Vault-Planner にも対称的に適用可能 — Vault-Planner も Layer 1 の動作確認と確定文書化までで業務を終えるべきであって、Default Rex の書き方や使い方に介入してはならない。
+
+ただし、この所感を philosophy/evaluator_code.md に追記しない方針で統一する(13・15・16・17 代目「書かない判断」を踏襲)。本所感は本 v6.15 差分セクションと Layer 1 実装確定報告 §3.3「Personal-Planner-Rex 起源神話との接続」と本 log.md エントリにのみ残し、強制力を持たせない。
+
+### MCP 運用上の参照点(本セッション固有・実例)
+
+ボス指示「経験則の取り扱い」に従い、本セッションで観察した MCP・Git 運用の実例を記録:
+
+1. **filesystem MCP の `list_directory` 4 分タイムアウト発生**(本セッション開始時): `C:\Python\REX_AI\REX_Brain_Vault` 直下の list_directory 呼び出しで 4 分タイムアウト。代替として `get_file_info` の個別パス確認 + `list_directory_with_sizes` で運用継続可能だった。userMemories 既存記載の警告と整合した実例。
+
+2. **filesystem MCP の書き込み権限確認**: `list_allowed_directories` で `C:\Python\REX_AI` 配下が書き込み可能と確認。本セッションで test ファイル 3 個を作成・動作確認後ボス手動削除の運用パターンを実証。
+
+3. **GitHub MCP `create_or_update_file` の SHA 厳格運用**: ファイル更新前に必ず `get_file_contents` で最新 SHA を取得 → `sha` パラメータに渡す手順を 3 commit 全てで適用(commit 1〜3)。SHA 不一致による失敗ゼロ。
+
+4. **大容量ファイル GitHub MCP push の失敗実例 → Path B 代替経路の確立**: log.md(84KB)に対する `create_or_update_file` 一発書き込みは応答途絶 → commit 未到達。userMemories 既存記載「大容量日本語ファイルへの連続 write_file 呼び出しは IPC バッファ超過で 4 分タイムアウト発生」「`push_files` バッチ操作で大容量 7 件ペイロードオーバーフロー実績あり」の延長線にある実例。本セッションでボス提案を採用し Path B(filesystem MCP write_file → ボス手動 git commit & push)を新設(本 log.md エントリ「ボス提案・採用 Path B」セクション参照)。
+
+5. **コンテキスト残量を考慮した A 案採用**: ボスから Layer 2 まで進める可能性を打診されたが、未踏のセットアップ作業(M1〜M3)で発生する未知のトラブルへのコンテキスト消費リスクと「中途半端で終わる最悪パターン」を提示し、Layer 1 完結 → 別セッションで Layer 2 着手の A 案で合意。「役を脱ぐタイミングを誤らない」運用判断の実例。
+
+### 残課題
+
+なし。本セッション完結。後継 Wiki-Eval は新草案 `system/pending/wiki_eval/2026-05-02_layer1_implementation_confirmed.md` を Phase 4 ADR-MCP v1 §Layer 1 の確定インプットとして組み込む。Layer 2 実装は M1〜M3 完了 + M5 起源神話発火後の別セッションで着手する。
+
+### Vault CLAUDE.md wrap-up STEP 対応状況
+
+- ✅ STEP 1: log.md 追記(本エントリ・Path B でボス手動 git commit & push)
+- ✅ STEP 2: handoff/latest.md 更新(v6.15)
+- ⏩ STEP 3: ADR 改訂(本セッション該当なし・Phase 4 で実施予定)
+- ⏩ STEP 4: registry 同期(本セッション該当なし・Phase 4 で実施予定)
+- ⏩ STEP 5: pending archived 移動(本セッション該当なし・採番完了時に旧 ADR-MCP + Two-Vault 草案 + Layer 1 実装確定報告を同時整理予定)
+- ⏩ STEP 6: NLM injection(本セッション該当なし)
+- ✅ STEP 7: GitHub push(GitHub MCP 3 commit 完了 + log.md は Path B でボス手動 push)
+- 🔔 STEP 8: Claude.ai プロジェクトナレッジ更新(ボス手動)
+- ⏩ STEP 9: philosophy/evaluator_code.md 気づきメモ追記(本セッションでは追記なし方針)
+
+---
