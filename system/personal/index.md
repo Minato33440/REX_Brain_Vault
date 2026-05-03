@@ -60,7 +60,7 @@ wiki/casual/
 
 ## 🔗 関連リンク
 
-- [[_RUNBOOK]] — 運用ルール（更新履歴・NLM 投入ポリシー含む）
+- [[system/personal/_RUNBOOK]] — 運用ルール（更新履歴・NLM 投入ポリシー含む）
 - [[../index|Vault 全体目次]]
 - [[../STARTUP_CODES|起動コード辞書]]
 

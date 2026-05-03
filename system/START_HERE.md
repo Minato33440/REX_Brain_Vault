@@ -10,7 +10,7 @@
 
 凍結時点の本文は以下に保管:
 
-- [`wiki/archived/START_HERE-2026-04-25.md`](archived/START_HERE-2026-04-25.md)
+- [`wiki/archived/START_HERE-2026-04-25.md`](START_HERE-2026-04-25.md)
 
 凍結時点 SHA: `40de7cdfa86a7466c09e434f22724064f3d2540c`
 
