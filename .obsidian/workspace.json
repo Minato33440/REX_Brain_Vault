@@ -175,8 +175,10 @@
       "bases:新規ベースを作成": false
     }
   },
-  "active": "6381e1c7f94419bb",
+  "active": "6b4e7d800ed56089",
   "lastOpenFiles": [
+    "system/trade_brain/doc_map.md",
+    "system/trade_brain/pending_changes.md",
     "archived",
     "system/pending/wiki_eval/2026-05-02_layer1_implementation_confirmed.md",
     "2026-05-02.md",
@@ -204,7 +206,6 @@
     "system/personal/usual/philosophy.md",
     "system/personal/usual/README.md",
     "system/personal/invent/README.md",
-    "system/personal/insights/README.md",
     "system/handoff/archived/casual/topics",
     "system/handoff/archived/casual/insights",
     "system/handoff/archived/casual/ideas",
@@ -212,7 +213,6 @@
     "system/trade_system/patterns",
     "system/trade_system/entities",
     "system/trade_system/decisions",
-    "system/trade_system/concepts",
     "無題のファイル 1.canvas",
     "無題のファイル.canvas"
   ]
