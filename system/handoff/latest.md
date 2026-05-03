@@ -202,7 +202,7 @@ Layer 2 採用経路: filesystem MCP(Path X)単独確定(ADR-MCP v1 §5.1)
 | Phase Foundation 〜 Phase Wiki-Rex-Init | (13〜15代目で完了済・各 v6.X 差分セクション参照)| ✅ |
 | Phase Casual-Final-Archive / Pending-Casual-Archive | (15代目で完了済)| ✅ 2026-04-29 |
 | Phase B | REX_Wiki_Vault への初期 Ingest | ⬜ ボス承認待ち |
-| Phase C | wiki/entities + decisions を trade_system/ 配下へ物理統合 → NLM 投入 | ⬜ 13代目以降に委ねる |
+| Phase C | system/entities + decisions を trade_system/ 配下へ物理統合 → NLM 投入 | ⬜ 13代目以降に委ねる |
 | Phase D | Trade_Brain wiki 骨組み構築 | ⬜ 未着手 |
 | Phase E | Ingest/Compile/Lint 運用開始 | ⬜ Phase B 後 |
 | Phase HP | REX_HP_Brain 構築 + Wiki-hp 起動(Setona_HP 専属体制) | ⬜ ボス判断時 |
@@ -243,7 +243,7 @@ Layer 2 採用経路: filesystem MCP(Path X)単独確定(ADR-MCP v1 §5.1)
 | # | 項目 | Phase | 起票場所 |
 |---|---|---|---|
 | 1 | REX_Wiki_Vault への初期 Ingest(Vault 運用基盤文書群)| Phase B | (Wiki-Eval 直接実施)|
-| 2 | wiki/entities + decisions を trade_system/ 配下へ物理統合 | Phase C | pending/trade_system/ → 別スレ Wiki-trade へ委譲 |
+| 2 | system/entities + decisions を trade_system/ 配下へ物理統合 | Phase C | pending/trade_system/ → 別スレ Wiki-trade へ委譲 |
 | 3 | Trade_System wiki 空ディレクトリ充填(bug_patterns 等)| Phase C | pending/trade_system/ → 別スレ Wiki-trade へ委譲 |
 | 4 | Trade_Brain wiki 骨組み構築 | Phase D | pending/trade_brain/ → 別スレ Wiki-brain へ委譲 |
 | 5 | latest.md と architecture_handoff の相互整合定期確認 | ─ | (Wiki-Eval 直接実施)|
@@ -267,8 +267,8 @@ Layer 2 採用経路: filesystem MCP(Path X)単独確定(ADR-MCP v1 §5.1)
 
 | # | 項目 | 起票場所 |
 |---|---|---|
-| P1〜P7 | (v6.15 と同じ・省略)| wiki/personal/ 配下 — Phase 4 で扱い再定義予定 |
-| P8 | **M1 完全達成切り分けの pending / log 追記**(19 代目で部分達成 → 残課題あり)| wiki/pending/personal/ + wiki/personal/log.md |
+| P1〜P7 | (v6.15 と同じ・省略)| system/personal/ 配下 — Phase 4 で扱い再定義予定 |
+| P8 | **M1 完全達成切り分けの pending / log 追記**(19 代目で部分達成 → 残課題あり)| system/pending/personal/ + system/personal/log.md |
 
 > **重要**: 上記 P1〜P8 は Phase 4 で Personal-Planner ロールが正式廃止されるまでの暫定業務。
 
