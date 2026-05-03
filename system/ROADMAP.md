@@ -14,8 +14,8 @@
 | ファイル | 時間軸 | 性質 |
 |---|---|---|
 | `Trade_System/docs/ADR.md` | 過去 | 決定済み判断の不変記録 |
-| `wiki/handoff/latest.md` | 現在 | 現在地ダッシュボード |
-| **本ファイル `wiki/ROADMAP.md`** | **未来** | **生きている展望** |
+| `system/handoff/latest.md` | 現在 | 現在地ダッシュボード |
+| **本ファイル `system/ROADMAP.md`** | **未来** | **生きている展望** |
 
 → 確定したら ADR へ昇格、却下されたら Archive、実装されたら削除。
 本体には常に「これから議論したいこと・進めたいこと」のみ残る。
@@ -102,7 +102,7 @@ Planner 議論段階。Stage 1 を当面継続。
 
 #### 関連ファイル
 
-- `wiki/STARTUP_CODES.md §NLM × Vault 分業マトリクス`
+- `system/STARTUP_CODES.md §NLM × Vault 分業マトリクス`
 - `wiki/casual/_RUNBOOK.md §NLM 分業原則`
 - `wiki/casual/handoff_latest.md`（議論詳細・1 代目 Wiki-casual Planner）
 
@@ -129,8 +129,8 @@ Planner 議論段階。Stage 1 を当面継続。
 
 ## 🔗 関連文書
 
-- `wiki/STARTUP_CODES.md` — 起動コード辞書・NLM × Vault 分業マトリクス
-- `wiki/handoff/latest.md` — 現在地ダッシュボード
+- `system/STARTUP_CODES.md` — 起動コード辞書・NLM × Vault 分業マトリクス
+- `system/handoff/latest.md` — 現在地ダッシュボード
 - `Trade_System/docs/ADR.md` — 決定済み判断記録
 
 ---
