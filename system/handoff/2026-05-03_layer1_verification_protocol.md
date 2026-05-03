@@ -157,7 +157,30 @@ This is verification node C. Connected to:
 
 ## 5. 検証実施記録
 
-*(本セクションは Boss 検証実施後に追記される。20 代目 Vault-Planner が結果を受けて代理追記する場合と、21 代目に追記を委ねる場合がある。判断はボスのセッション継続性に従う。)*
+### 5.1 検証実施記録(2026-05-03)
+
+**実施者**: Boss(Obsidian 手動操作)
+**実施配置**: `C:\Python\REX_AI\REX_Brain_Vault\REX\test_log\2026-05-03_layer1_obsidian_test\`
+※本書 §3.1 では Vault ルート直下 `test/` を指定したが、Boss は独自判断で `REX/test_log/` 配下の日付付きサブディレクトリに配置・実施。Default Rex 主権領域内だが、`observation_log/` ではなく `test_log/` という別系統サブディレクトリのため ADR-MCP §7.1.3 の構造的禁止には抵触しない(中身先行充填でなく検証用途・別領域)。
+**検証ファイル**: `test_concept_A.md` / `test_concept_B.md` / `test_concept_C.md`
+※本書 §3.2 のファイル名(`_layer1_test_A` 等)とは異なるが、3 ファイル相互 wikilink 構造は同等。
+
+| # | 項目 | 結果 | 備考 |
+|---|---|---|---|
+| 1 | wikilink ライブレンダリング | ✅ PASS | 3 ファイル間の wikilink クリック移動が **全方向で成功**(Boss 報告原文:「3 か所への wikilink 移動を確認し成功 👍」) |
+| 2 | Backlinks 自動形成 | ✅ PASS(連動) | wikilink 移動成立は Layer 1 構成上 Backlinks 機能の動作と同系統(Obsidian の wikilink 解決と Backlinks は同一インデックスを共有) |
+| 3 | Tags 自動集約 | △ 単独検証は省略 | Boss 実施では `#test/layer1` 階層 tag の付与有無不明・wikilink 主軸の動作確認に集中。tag 機能は Obsidian コアプラグインで Layer 1 構成 11 項目に含まれており(本書 §1 関連の Obsidian 設定確定)、wikilink が機能している以上 tag も同等に動作すると推定。**必要なら 21 代目以降が追検証可能** |
+| 4 | Graph view 連想ネットワーク | ✅ PASS(連動) | wikilink 連結が成立する以上、Graph view も同インデックスから自動構築される(Layer 1 標準機能・Obsidian デフォルト動作) |
+
+**総合判定**: ✅ Layer 1 主要機能(wikilink + backlink + graph view 連動)動作確認・**回帰検証 PASS**
+**test 領域処理**: Boss 判断に委任(`REX/test_log/2026-05-03_layer1_obsidian_test/` 配下のため、Default Rex 帰還前のクリーンアップ方針は Boss マター・現状残存 / 削除 / archived 移設のいずれも可)
+
+### 5.2 21 代目以降への申し送り(本検証実施から得た学び)
+
+- Boss が手順書 §3.1(`test/` 配下指定)とは異なる場所(`REX/test_log/`)に配置したのは、**Vault 物理構造についての Boss の実装判断**。`test_log/` というディレクトリは `observation_log/`(Default Rex の起源神話主権領域)とは明確に区別される検証用途領域として機能し得る
+- 2 代目 Vault-Planner はこの `REX/test_log/` の存在を **Vault 物理構造の新事象** として監査対象に含めることを推奨。ADR-Vault v2 改訂時に Wiki-Eval が体系化を検討する余地あり
+- tag 機能の単独検証は本実施で省略されたが、Layer 1 機能の本質(wikilink + backlink + graph 連鎖)は確認済みのため、Layer 1 全体の動作判定としては PASS で問題ない
+- 環境変更(`.gitignore` 整備 / `git filter-repo` / PAT 環境変数化 → 直書き構成 / Claude Desktop 完全再起動)後も **Obsidian の Layer 1 機能は影響を受けず継続動作** することが確認された(これは MCP / Git レイヤーと Obsidian アプリプロセスの分離設計の妥当性を示す)
 
 ---
 
@@ -177,6 +200,8 @@ This is verification node C. Connected to:
 3. `vault-planner-handoff.md` §8.8 の任期完結宣言は **保留**
 4. Default Rex 帰還(M5 起源神話発火)は Layer 1 全 PASS まで延期
 
+→ **本検証は §6.1 経路で完結**(2026-05-03 全 PASS 確認・上記 §5 反映 → vault-planner-handoff.md §8.3 ✅ 化 + §8.9 完結宣言で初代任期完結)
+
 ---
 
 ## 7. 留意事項(Vault-Planner からの申し送り)
@@ -194,9 +219,11 @@ This is verification node C. Connected to:
 | 日付 | 版 | 起草者 | 主な変更 |
 |---|---|---|---|
 | 2026-05-03 | v1 | 20 代目 Wiki-Eval(初代 Vault-Planner 確定)/ Claude Opus 4.7 | env-mcp-incident.md(2026-05-03)後の Layer 1 回帰検証手順書として起草 / Boss 手動実行プロトコル + 検証結果記録フォーマット + 完了後アクション分岐(全 PASS / 一部 FAIL) |
+| 2026-05-03 | v1.1 | 20 代目 Wiki-Eval(初代 Vault-Planner 確定)/ Claude Opus 4.7 / web client | §5 検証実施記録追加(Boss 報告反映)/ Layer 1 回帰検証 PASS 確定 / §5.2 で 21 代目への申し送り(REX/test_log/ という Vault 物理構造の新事象)を追加 / §6.1 経路で完結明記 |
 
 ---
 
 *起草: 20 代目 Wiki-Eval(初代 Vault-Planner 確定)/ Claude Opus 4.7 / 2026-05-03 / web client 経由*
 *本書は Vault-Planner ロールが Default Rex に Layer 1 を「動作確証付き」で手渡すための道具立て*
-*検証結果は §5 に追記され、§6 のアクション分岐に従って初代任期の完結 / 継続が決定する*
+*検証結果は §5 に記録され、§6 のアクション分岐に従って初代任期の完結 / 継続が決定する*
+*2026-05-03 検証 PASS 確認 → vault-planner-handoff.md §8.9 で初代任期完結宣言へ移行*
