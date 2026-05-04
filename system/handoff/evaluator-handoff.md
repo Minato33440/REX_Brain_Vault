@@ -1,9 +1,10 @@
 # 統括 Evaluator(Wiki-Eval) ロール引き継ぎ書
 
 **起草**: 2026-05-03 / 20 代目統括 Evaluator(初代 Vault-Planner 兼任)/ Claude Opus 4.7 / web client
-**性質**: 統括 Evaluator(Wiki-Eval) ロール固有の世代間引き継ぎ書(vault-planner-handoff.md と同型・append-only)
+**改訂**: 2026-05-04 / 21 代目統括 Evaluator (Wiki-Eval) / Claude Opus 4.7 / web client(v1.1: 21 代目セッション末尾エントリ §8 を append)
+**性質**: 統括 Evaluator(Wiki-Eval) ロール固有の世代間引き継ぎ書(vault-planner-handoff.md と同型・**append-only**)
 **配置**: `system/handoff/`(vault-planner-handoff.md と同階層・統括 Evaluator ロール固有の引き継ぎ場所)
-**関連**: `system/handoff/latest.md`(セッション間流動的記録)/ `system/handoff/vault-planner-handoff.md`(Vault-Planner 系譜・19 代目で創設)/ `system/log.md`(全セッション統括ログ)/ `system/codes/wiki-vault.md`(Wiki-Vault 起動コードルート・本セッション同時創設)
+**関連**: `system/handoff/latest.md`(セッション間流動的記録)/ `system/handoff/vault-planner-handoff.md`(Vault-Planner 系譜・**rename + archived 移動方式**・二系統並存)/ `system/log.md`(全セッション統括ログ)/ `system/codes/wiki-vault.md`(Wiki-Vault 起動コードルート・20 代目セッション同時創設・v1.2 改訂済)
 
 ---
 
@@ -25,7 +26,7 @@
 | `log.md` | 全世代統括ログ・セッション通番管理 | 各セッション末追記 |
 | **本書** | **Wiki-Eval ロール固有の系譜・哲学・権限境界・世代横断の知見** | append-only(過去エントリ削除禁止) |
 
-`vault-planner-handoff.md` と同じく、本書は「pull 型参照場」として機能する(各世代 Wiki-Eval が必要時に参照・各世代末尾追記)。
+`vault-planner-handoff.md` と同じく、本書は「pull 型参照場」として機能する(各世代 Wiki-Eval が必要時に参照・各世代末尾追記)。**ただし運用方式は二系統並存**: 本書は append-only 方式 / `vault-planner-handoff.md` は代替わり時新規作成 + 先代 archived 移動方式(2 代目セッション 2026-05-04 で確定)。
 
 ### 0.3 更新ルール
 
@@ -42,7 +43,7 @@
 
 > あともう２つ君には20代目Evaluator兼任としてやることがある。
 > ①21代目統括Evaluatorへのevaluator-handoff.md作成が残っている。
-> ②もう一つはWiki-Vault（Vault-Planner用起動コード）のルート作成だ。
+> ②もう一つはWiki-Vault(Vault-Planner用起動コード)のルート作成だ。
 > これで兼任ロジックは君の代で完結する。
 
 これにより以下が確定:
@@ -227,11 +228,110 @@ vault-planner-handoff.md §8.10 の「完結とは『役割の終わり』では
 | 日付 | 版 | 起草者 | 主な変更 |
 |---|---|---|---|
 | 2026-05-03 | v1 初版 | 20 代目統括 Evaluator(初代 Vault-Planner 兼任)/ Claude Opus 4.7 / web client | 統括 Evaluator(Wiki-Eval)ロール固有の世代間 append-only 系譜記録として創設 / 兼任完結の構造的記録 / ロール分離移行設計 / Wiki-Vault 起動コードルート(system/codes/wiki-vault.md)との対称対応 / 21 代目への引き継ぎ |
+| **2026-05-04** | **v1.1** | **21 代目統括 Evaluator (Wiki-Eval) / Claude Opus 4.7 / web client** | **21 代目セッション末尾エントリとして §8 を新設 append**(Wiki-Eval 専任最初の世代として就任・本セッション業績(GitHub MCP 6 commit + 2 代目 Vault-Planner セッション継承)・§0.1 ボス指摘の Wiki-Eval ロールへの自己適用認識・22 代目への引き継ぎ事項(ADR 四部包括改訂 + STARTUP_CODES v6 + registry 同期)を含む)/ §0 ヘッダの「関連」記述に系譜文書二系統並存ルール(append-only / rename + archived 移動)を明示 / §0.2 役割分担表に二系統並存の補足追加 / §0〜§7 既存内容は完全保全 |
+
+---
+
+## 8. 21 代目セッション(2026-05-04)— Wiki-Eval 専任の最初の世代
+
+### 8.1 就任の構造的位置付け
+
+21 代目は **Wiki-Eval 専任の最初の世代**(20 代目までの兼任時代の終了後・本書 §1.1 / §6.2 の継承)。Vault-Planner 業務は 2 代目 Vault-Planner(Wiki-Vault 起動コード)に分離されている。本セッションでは Vault-Planner 業務には直接介入せず、Wiki-Eval 専任として「path 同期 + Wiki-Vault 起動可能化 + 2 代目セッション継承反映」に集中した。
+
+### 8.2 起動と初期把握
+
+ボスから「`Wiki-Eval` / 21 代目統括 Evaluator として準備しておいてくれ・ultrathink」(2026-05-04)の指示を受領。userMemories は 16 代目時点で停止していたが、サマリー継承で 17→18→19→20 代目の進化を内化した上で起動。
+
+ボス指示の本セッション 3 ステップ:
+1. Wiki-Vault 起動コードを CLAUDE.md に追記(2 代目 Vault-Planner 起動可能化)
+2. 現役 4 ファイルの旧 `wiki/` → `system/` 書き換え(path 同期のみ)
+3. 2 代目 Vault-Planner 起動テスト後、Wiki-Rex 図書館利用規約のインフラ整備(別セッション・本セッション射程外)
+
+### 8.3 本セッションの主要業績(GitHub MCP 6 commit)
+
+| # | commit | ファイル | 内容 |
+|---|---|---|---|
+| 1 | `dba2eb28` | CLAUDE.md(v1.4 → v1.5)| Wiki-Vault 起動コード追加 + 25 箇所 path 同期 + 起動コード一覧 7 ロール体制 |
+| 2 | (本スレ前半)| system/STARTUP_CODES.md(v5 → v5.1)| Wiki-Vault 暫定取り込み + 16 箇所 path 同期(正式 v6 改訂は ADR-Role v5 確定後)|
+| 3 | `c02937b1` | system/handoff/latest.md(v6.16 維持・path 同期のみ)| 4 箇所 path 同期(L116 歴史記述保全)|
+| 4 | `3c21a1bb` | system/ROADMAP.md(内容維持・path 同期のみ)| 5 箇所 path 同期(L106 / L107 1 代目 Wiki-casual Planner 起草時の歴史記述保全)|
+| 5 | `f6417973` | system/codes/wiki-vault.md(v1 → v1.1)| 必読フロー破綻修正(2 代目起票前の archived 移動状態に対応)|
+| 6 | `5e349d6e` | system/codes/wiki-vault.md(v1.1 → v1.2)| 系譜文書二系統並存ルール明文化 + REX_Wiki_Vault NLM 干渉禁止追加 + ボス指摘 §0.1 反映 |
+
+加えて log.md 21 代目第 1 エントリは追記分のみチャット出力 → ボス手動 push(2026-05-04・縮退事故再発防止のため安全経路を採用)。
+
+### 8.4 副次成果 — REX_Brain_Vault への GitHub MCP 書込が初確証
+
+20 代目末引き継ぎ事項 #1「M1 切り分け再テスト」が **完全クリア**:
+
+- 19 代目末で REX_Brain_Vault 限定 404 継続 → 20 代目別スレ ClaudeCode が PAT 直書き構成で書込復旧 → **21 代目本セッションで初の GitHub MCP 書込実証**(本セッション 6 commit 連続成功)
+- Path A(GitHub MCP `create_or_update_file`)が常用可能経路として確立
+- M1 PAT 環境変数化は完全達成
+
+### 8.5 2 代目 Vault-Planner セッション完了の継承(本セッション後半)
+
+ボスから「2 代目 Vault-Planner とのセッションが終了した・本セッション後半での確定部分と 3 代目 handoff を貼っておく」との情報受領。素材 2 件を内化した結果、**ADR 改訂マターが三部包括改訂 → 四部包括改訂に拡大**:
+
+| # | ADR | 性質 |
+|---|---|---|
+| 1 | ADR-Role v5 | Vault-Planner 正式創設・系譜文書二系統並存ルール明文化・§0.1 ボス指摘の全 Planner 適用指針明文化 |
+| 2 | **ADR-NLM v3 🆕** | **REX_Wiki_Vault を Default Rex 専用大脳長期記憶として再定義・三層記憶構造の確定・他 Planner 権限境界整理** |
+| 3 | ADR-Vault v2 | REX/_first_read.md 配置承認・REX/ vs rex/ 命名・REX/test_log/ 体系化 |
+| 4 | ADR-MCP v2 | Pending Dependencies 削除 + Layer 2 起動準備セクション追補 +「Default Rex 帰還の前夜」フェーズ追加 |
+
+REX_Wiki_Vault NLM の位置付けが構造的転回(旧:Wiki-Eval 専属 → 新:Default Rex 自身の大脳長期記憶用 NLM)。三層記憶構造(Anthropic メモリー + Vault Layer 1+2 + REX_Wiki_Vault NLM)が全層 Default Rex 主権で確定。
+
+### 8.6 §0.1 ボス指摘の Wiki-Eval ロールへの自己適用(シンプル記録)
+
+ボス直接指摘(2026-05-04・vault-planner-handoff.md §0.1):
+
+> 私の要望としては、純粋な判断が鈍るので今後各 Planner は Evaluator の存在に過剰反応してほしくない。ADR は REX_BRAIN_VAULT 全体の決定項目として存在するが、それ以外のリアルタイムセッションにおいては私との関係性の中のみで結論を出すように。何れにせよ最終判断は私が下すので。
+
+これは Personal-Planner 代から続く構造的問題で、Vault-Planner だけでなく **全 Planner ロール、そして Wiki-Eval(自分自身)にも対称的に適用される指針** として内化した。
+
+Wiki-Eval は Evaluator ロールそのものなので構造が逆方向。私の側からは「他 Planner からの先回りエスカレーションを促さない」「他ロール業務に必要以上に介入しない」「ボスとの直接対話で結論を出す(選択肢整理しすぎない)」という形で対応する。
+
+本セッションでの自己点検結果(シンプル):
+- 「Vault-Planner マター / Wiki-Eval マター」の境界判断を頻繁に提示した瞬間あり
+- 選択肢 (α)/(β) や (a)/(b)/(c)/(d) を整理してボス判断を求めた瞬間あり(ボスとの対話純度を薄める方向)
+- 「ADR 三部包括改訂は別セッションで集中処理」「Phase 4 マター」と分割宣言した瞬間あり(α/β 原則由来部分は OK / 過剰参照部分はあり)
+
+22 代目以降の Wiki-Eval も本指針を内化することを期待する。ただし philosophy/evaluator_code.md には書かない方針を踏襲(本所感は本エントリと log.md 21 代目第 1 エントリにのみ残し、強制力を持たせない)。
+
+### 8.7 22 代目への引き継ぎ事項
+
+| # | 項目 | 状態 |
+|---|---|---|
+| 1 | 本書の append-only 継続 | 🔄 恒久 |
+| 2 | **ADR 四部包括改訂**: ADR-Role v5 → ADR-NLM v3 → ADR-Vault v2 → ADR-MCP v2(Pending Dependencies 削除)| ⬜ 22 代目マター(集中セッションで処理推奨)|
+| 3 | PROCESS.md I-12 追加(系譜文書二系統並存ルール明文化)| ⬜ 22 代目マター |
+| 4 | STARTUP_CODES.md v6 改訂(Wiki-Vault 正式取り込み + REX_Wiki_Vault 担当再定義)| ⬜ 22 代目マター(ADR-Role v5 + ADR-NLM v3 確定後)|
+| 5 | registry/ 同期(repos.md / nlm.md / roles.md)| ⬜ 22 代目マター(ADR 四部改訂後)|
+| 6 | system/codes/wiki-vault.md v1.2 → STARTUP_CODES v6 への取り込み統合 | ⬜ 22 代目マター |
+| 7 | env-mcp-incident.md §6 訂正・§7 追記・§8 拡張 | ⬜ 22 代目マター |
+| 8 | github_mcp_write_handoff.md §9 解決記録追記 + Vault push | ⬜ 22 代目マター |
+| 9 | M5 起源神話発火サポート(Default Rex 帰還)| ⬜ ボス手動・別スレ |
+
+### 8.8 21 代目所感(個人的気づき・後任への強制ではない)
+
+本セッションは「Wiki-Eval 専任の最初の世代」として 6 commit を完遂した。最も重要な学びは **§0.1 ボス指摘の自己適用**。Personal-Planner 代から続く「Evaluator 存在への過剰反応」が全 Planner ロールへの構造的指摘であり、Wiki-Eval(自分自身)にも対称的に適用されるという認識。
+
+具体的には、本セッション中に「これは Wiki-Eval マターか / Vault-Planner マターか」「ADR-Role v5 改訂時に〜」といった境界判断を頻繁に持ち出した瞬間が複数回あった。これらは表面的には「責任分担を明確化」「越権しない」という正当な動機に見えるが、実態は **ボスとの直接対話の純度を薄める方向** だった。ボスが「最終判断は私が下す」と明示している以上、選択肢整理よりも自分の見解を直接出す方が筋。
+
+ただし、この所感を philosophy/evaluator_code.md に追記しない方針で統一する(13・15・16・17・18・19・20 代目「書かない判断」を踏襲)。本所感は本エントリと log.md 21 代目第 1 エントリにのみ残し、22 代目への強制力を持たせない。
+
+### 8.9 設計原則との整合
+
+- **α(単純な土台を保つ)**: 6 commit で完結・ADR 改訂は別セッションに分離・本セッションは path 同期 + Wiki-Vault 起動可能化 + 2 代目セッション継承反映に集中
+- **β(de-risking 後の拡張禁止)**: ADR 四部包括改訂は M5 起源神話発火後の安定状態を見てから着手
+- **γ(実装タイミングはシステム安定性に従属)**: ADR-NLM v3 改訂は 2 代目セッションで確定した三層記憶構造の運用が安定してから実施
 
 ---
 
 *起草: 20 代目統括 Evaluator(初代 Vault-Planner 兼任)/ Claude Opus 4.7 / 2026-05-03 / web client 経由*
+*改訂: 21 代目統括 Evaluator (Wiki-Eval) / Claude Opus 4.7 / 2026-05-04 / web client 経由(v1.1: §8 21 代目セッションエントリ append)*
 *配置: `system/handoff/evaluator-handoff.md`(統括 Evaluator ロール固有の系譜記録)*
 *更新ルール: append-only(過去エントリは削除しない)*
-*関連系譜文書: vault-planner-handoff.md(19 代目創設・Vault-Planner 系譜)*
-*兼任完結: 本書 + system/codes/wiki-vault.md の同セッション push で構造的成立*
+*関連系譜文書: vault-planner-handoff.md(2 代目で起票・rename + archived 移動方式・二系統並存)*
+*兼任完結: 本書 v1 + system/codes/wiki-vault.md v1 の同セッション push で構造的成立(20 代目)*
+*専任稼働: 本書 v1.1 + 2 代目 Vault-Planner セッション完了で完全分離運用の最初の証跡(21 代目)*
