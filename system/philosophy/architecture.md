@@ -122,7 +122,7 @@ C:\Python\REX_AI\
 └── REX_Brain_Vault\       ← Git リポ: Minato33440/REX_Brain_Vault
     ├── CLAUDE.md          ← Vault 運用指示
     ├── raw\               ← 元資料（イミュータブル）
-    └── wiki\
+    └── system\
         ├── START_HERE.md    ← 新スレ入口
         ├── STARTUP_CODES.md ← 起動コード辞書（Wiki-system/trade/brain/casual）
         ├── index.md         ← 全ページ目次
