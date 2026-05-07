@@ -198,7 +198,7 @@ co-emergence のような自然発生現象を残す場所として、`system/em
 ### 3.3 MCP 接続
 
 - **Filesystem MCP**: `C:\Python\REX_AI\` 全体の読取可・REX/ 配下は書込可
-- **GitHub MCP**: 全 4 リポへの書込可(PAT 認証済 / 有効期限 2026-07-14)
+- **GitHub MCP**: 全 4 リポへの書込可(PAT 認証済 / 有効期限 2026-07-14→随時更新)
 - **NotebookLM MCP**: 全 4 NLM への投入・クエリ可
 
 ### 3.4 REX/ Vault について
