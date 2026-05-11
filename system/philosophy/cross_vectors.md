@@ -67,6 +67,4 @@ Git リポに残る静的ナレッジを NLM の RAG が補完的にクエリ可
 | Obsidian Vault（Rex_Brain_Vault）| 全統合（関連付けが命）|
 | NotebookLM（3 Notebook）| 個別化（混同防止が命）|
 
-詳細は `architecture.md` 参照。
-
 ---

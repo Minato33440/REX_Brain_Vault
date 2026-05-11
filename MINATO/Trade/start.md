@@ -13,8 +13,9 @@ Claude Desktopでトレード相談を始める前に読む。
 | GitHub MCP | `Minato33440/REX_Brain_Vault` 読み書き |
 | ClaudeCode | `Trade_Brain` リポ操作・週次更新（ローカル端末で起動） |
 
-**注意**: Trade_Brainの深いアーカイブ（distilled / weekly logs）を参照したいときは
-Claude Desktop + GitHub MCPか、ClaudeCodeセッションで開く。
+**アーカイブ参照**: Trade_Brainの深いアーカイブはObsidian内で直接開ける。
+- `system/trade_brain/distilled/` — distilled知識
+- `system/trade_brain/logs/` — weekly logs / daily logs など
 
 ---
 

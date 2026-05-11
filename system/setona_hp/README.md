@@ -20,15 +20,6 @@ wiki/setona_hp/
 ├── adr_reservation.md   # HP固有のADR予約管理
 ├── pending_changes.md   # 進行中の変更
 └── ...
+
 ```
-
 実際の構造は `Wiki-hp` 構築時に決定する。
-
-## アクセス権限
-
-- 書込: `Wiki-hp` / `Wiki-Eval`(構造変更時)
-- 読込: `Wiki-Eval` / `Wiki-hp` / 監査時の Wiki-casual
-
-## 構築フロー
-
-詳細は [adr/ADR-Repo.md](../adr/ADR-Repo.md) "Setona_HP の専属ロール体制(構築予定)" 参照。
