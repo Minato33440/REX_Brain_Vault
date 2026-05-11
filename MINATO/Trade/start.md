@@ -42,7 +42,8 @@ Trade/
 ├── trades/
 │   ├── GM/           ← GMポジション記録
 │   └── CFD/          ← CFD個別トレード記録
-└── strategies/       ← 戦略メモ（GM/CFDはfrontmatterで区別）
+├── strategies/       ← 戦略メモ（GM/CFDはfrontmatterで区別）
+└── lessons.md        ← 繰り返し現れるパターン・メタ教訓（問題発生時に参照）
 ```
 
 ---

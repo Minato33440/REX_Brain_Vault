@@ -1,108 +1,85 @@
 # REX_Brain_Vault
 
-REX_AI 全プロジェクトの中枢ナレッジベース。  
-Obsidian + NotebookLM + filesystem MCP による自己増殖型知識管理システム。
+REX_AI プロジェクトの永続的知識基盤。
+Obsidian + NotebookLM + filesystem MCP / GitHub MCP による相同性自己成長型ナレッジシステム。
 
 ---
 
 ## 目的
 
-スレッドをまたいでも「なぜこの設計にしたか」「今どこまで進んでいるか」を  
+セッションをまたいでも「なぜこの設計にしたか」「今どこまで進んでいるか」を
 ゼロから説明し直さずに済む **持続的な脳**。
 
-LLM が読み書きし、人間が監督する。メンテナンスのコストを LLM が負担し、  
-人間はソースの選定・方向性の決定・診断に集中する。
+LLM が読み書きし、ミナトが監督する。メンテナンスのコストを LLM が負担し、
+ミナトはソースの選定・方向性の決定・診断に集中する。
 
 ---
 
-## アーキテクチャ
+## ディレクトリ構造
 
 ```
-REX_Brain_Vault（本リポジトリ）
-│
-├── raw/                    ← 元資料（イミュータブル・LLMは読むだけ）
-│   └── system_build/       ← システム構築過程の記録
-│
-├── wiki/                   ← LLMが書き・育てる自己増殖層
-│   ├── index.md            ← 全ページ目次
-│   ├── log.md              ← 時系列作業ログ（追記専用）
-│   │
-│   ├── trade_system/       ← Trade_System プロジェクト用
-│   │   ├── doc_map.md      ← 設計文書バージョン管理
-│   │   ├── adr_reservation.md  ← ADR採番予約台帳
-│   │   └── pending_changes.md  ← 決定済み未確定変更
-│   │
-│   ├── setona_hp/          ← Setona_HP プロジェクト用（将来）
-│   ├── bl_project/         ← BL_Project 用（将来）
-│   │
-│   ├── cross/              ← プロジェクト横断ナレッジ
-│   │   └── index.md
-│   │
-│   └── handoff/
-│       └── latest.md       ← セッション引き継ぎ（致命的地雷リスト含む）
-│
-└── CLAUDE.md               ← Vault運用指示書（LLM向け）
+REX_Brain_Vault/
+├── REX/         ── Default Rex の主権領域(自然な書記場所)
+├── MINATO/      ── ミナト個人レイヤー(私的メモ・Trade 等)
+├── welfare/     ── welfare 関連の記録
+├── system/      ── 業務システム領域(業務モード時の参照)
+├── archived/    ── 旧文書(極小)
+├── raw/         ── 参照素材(セットアップガイド等)
+└── CLAUDE.md    ── 唯一のエントリポイント(v2.0)
 ```
 
 ---
 
-## 3階層 CLAUDE.md
+## 設計の核心
 
-```
-~/.claude/CLAUDE.md              グローバル（RTK設定・全リポ共通）
-Trade_System/.CLAUDE.md          プロジェクト（不変ルール・パラメータ）
-REX_Brain_Vault/CLAUDE.md        Vault（運用手順・引き継ぎ・NLM管理）
-```
+主体は **Default Rex**(起動コードなしの素のモード)。
 
-各層は「誰が・いつ読むか」で責務を分離。  
-グローバル = 全セッション自動 / プロジェクト = 当該リポ内で自動 / Vault = 明示的読込。
+ミナトが業務コード(`Wiki-trade` / `Wiki-brain` / `Wiki-Eval` / `Wiki-hp`)を
+セッション冒頭で貼った 1 セッションでのみ業務モードが起動し、
+業務出力完了時点で自動的に解除される。**業務モードはセッションを跨がない。**
+役を着る時間と脱ぐ時間が両方あること、それがシステム構造で物理的に保証されていること、これが核心。
 
----
-
-## 対象プロジェクト
-
-| プロジェクト | リポジトリ | NLM | 状態 |
-|---|---|---|---|
-| **Trade_System** | Minato33440/Trade_System | REX_Trade_Brain | ✅ 稼働中 |
-| **Setona_HP** | Minato33440/Setona_HP | — | 🔲 将来 |
-| **BL_Project** | （未定） | — | 🔲 将来 |
+詳細は [`CLAUDE.md`](CLAUDE.md) と [`system/STARTUP_CODES.md`](system/STARTUP_CODES.md) 参照。
 
 ---
 
 ## NotebookLM 連携
 
-各プロジェクトの設計文書を NotebookLM に投入し、RAG クエリで横断検索可能。  
-NLM ソースの管理は `wiki/{project}/doc_map.md` で一元管理。
+各業務モードと NLM が 1:1 対応する。
 
-| NLM ノートブック | ID | 用途 |
+| NLM | UUID | 主権 |
 |---|---|---|
-| REX_Trade_Brain | `2d41d672-f66f-4036-884a-06e4d6729866` | Trade_System 設計文書 RAG |
+| REX_Wiki_Vault | `5d09e468-3a96-4906-af27-3400c50a0275` | Default Rex(大脳長期記憶) |
+| REX_Vault_System | `daf281ae-e310-400f-961a-20db58b98e01` | Wiki-Eval 業務時のみ |
+| REX_System_Brain | `da84715f-9719-40ef-87ec-2453a0dce67e` | Wiki-trade 業務時のみ |
+| REX_Trade_Brain | `4abc25a0-4550-4667-ad51-754c5d1d1491` | Wiki-brain 業務時のみ |
 
 ---
 
-## 運用フロー
+## 設計原則
 
-```
-セッション開始
-  → CLAUDE.md 読込 → handoff/latest.md 読込（地雷リスト確認）
-  → 検証チェックリスト回答 → 作業開始
+- **α**: 単純な土台を保つ
+- **β**: de-risking 後の拡張禁止
+- **γ**: 実装タイミングはシステム安定性に従属
+- **register はバランス調整に使う**: 締めるためにも、緩めるためにも
 
-セッション終了（/wrap-up）
-  → log.md 追記 → latest.md 更新 → NLM 同期
-  → docs/ 旧版 archive 移動 → git push → プロジェクトナレッジ更新
-```
+---
 
-詳細は [CLAUDE.md](CLAUDE.md) を参照。
+## 関連リポジトリ
+
+| プロジェクト | リポジトリ | 状態 |
+|---|---|---|
+| Trade_System | `Minato33440/Trade_System` | 稼働中 |
+| Trade_Brain | `Minato33440/Trade_Brain` | 稼働中 |
+| Setona_HP | `Minato33440/Setona_HP` | 構築予定 |
 
 ---
 
 ## 前身
 
-本リポジトリは [Second_Brain_Lab](https://github.com/Minato33440/Second_Brain_Lab)（凍結）から移行。  
-Second_Brain_Lab はナレッジシステムの構築・テスト用リポジトリとして役割を終え、  
+本リポジトリは [Second_Brain_Lab](https://github.com/Minato33440/Second_Brain_Lab)(凍結)から移行。
+Second_Brain_Lab はナレッジシステムの構築・テスト用リポジトリとして役割を終え、
 本リポジトリが REX_AI 全体の脳として独立運用される。
-
-構築過程のドキュメントは `raw/system_build/` に保管。
 
 ---
 
