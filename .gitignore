@@ -21,3 +21,6 @@ Thumbs.db
 
 # Junction to Trade_Brain/distilled (tracked in Trade_Brain repo, not here)
 system/trade_brain/distilled/
+
+# Junction to World_Tracker/docs (tracked in World_Tracker repo, not here)
+MINATO/Trade/world_tracker/docs/
