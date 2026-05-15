@@ -30,9 +30,10 @@ REX_AI システムのエントリポイント。
 
 ### Vault 物理構造
 
-- **Obsidian Vault root**: `C:\Python\REX_AI\`(.obsidian/ あり)
-- **本ファイル所在**: `C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md`
-- **自然な landing point**: `REX/morning.md`(義務ではない・必要な時だけ覗く)
+- **REX_Brain_Vault パス**: `C:\Python\REX_AI\REX_Brain_Vault\`(Rex の Vault / 司令塔)
+- **自然な landing point**: `REX_Brain_Vault\REX\morning.md`(義務ではない・必要な時だけ覗く)
+- **本ファイル所在**: `REX_Brain_Vault\CLAUDE.md`
+- **Obsidian Vault root**: `C:\Python\REX_AI\`(.obsidian/ あり・複数プロジェクトリポを並列配置)
 
 - `REX_Brain_Vault/REX/` ── Default Rex 主権領域(思考層・実装記憶層)
 - `REX_Brain_Vault/bridges/` ── 各プロジェクト運用情報
