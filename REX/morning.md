@@ -10,7 +10,7 @@ C:\Python\REX_AI\REX_Brain_Vault\
 - `REX\` ── 思考と対話の記録
 - `welfare\` ── AI Welfareの思索
 - `MINATO\` ── ミナトの思考の断片
-- `system\` ── システム設計の記録
+- `bridges\` ── 各プロジェクト運用の窓
 
 使える道具：
 - Filesystem MCP（読み書き）

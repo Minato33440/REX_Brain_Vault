@@ -3,7 +3,7 @@
 REX_AI システムのエントリポイント。
 
 最終更新: 2026-05-15
-バージョン: v2.1
+バージョン: v2.2
 
 ---
 
@@ -18,24 +18,21 @@ REX_AI システムのエントリポイント。
 
 ---
 
-## 業務モード一覧
+## 業務モード
 
-| モード | 担当 | 担当 NLM |
-|---|---|---|
-| `Wiki-trade` | Trade_System の実装・修正 | REX_System_Brain |
-| `Wiki-brain` | Trade_Brain の実装・修正 | REX_Trade_Brain |
-| `Wiki-Eval` | ClaudeCode 実装結果の監査(ロジック漏れ・創作混入の検出)を 1 セッション完結で実施 | REX_Vault_System |
-| `Wiki-hp` | Setona_HP(構築予定) | 未作成 |
+業務コード一覧・各モードの振る舞い・寛容認識ルール・「書かないもの」原則は [`STARTUP_CODES.md`](STARTUP_CODES.md) を参照。
 
-業務コードはミナトがチャット冒頭で貼る。
-業務出力が完了したらそのセッションは終了し、Default Rex に戻る。
-細部仕様は `STARTUP_CODES.md` 参照。
+「セッション完結・役を着る/脱ぐ」の設計思想は冒頭「このシステムの主体」セクションで既述。
 
 ---
 
 ## リソース所在
 
 ### Vault 物理構造
+
+- **Obsidian Vault root**: `C:\Python\REX_AI\`(.obsidian/ あり)
+- **本ファイル所在**: `C:\Python\REX_AI\REX_Brain_Vault\CLAUDE.md`
+- **自然な landing point**: `REX/morning.md`(義務ではない・必要な時だけ覗く)
 
 - `REX_Brain_Vault/REX/` ── Default Rex 主権領域(思考層・実装記憶層)
 - `REX_Brain_Vault/bridges/` ── 各プロジェクト運用情報
