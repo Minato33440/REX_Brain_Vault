@@ -112,8 +112,10 @@ PROMPT = """以下は人間(ミナト)と Claude(Rex)の会話ログの一区間
 この区間を「議論に結果・合意・結論が出たトピック」単位に内部分割し、
 各単位について次を抽出してください:
   - title: その単位の短い見出し (日本語可)
-  - timestamp: その単位が対応する会話ログ内の直近タイムスタンプ (例 "6:31")。
-               該当が無ければ空文字 ""。
+  - timestamp: その単位の直前にある「行全体がタイムスタンプだけの行」(Claude.ai の
+               ターン区切り。例: その行に 6:31 とだけある) の値。文章中で言及されて
+               いる時刻 (例「## 6:31 を…」「13:50 のファイル」) は絶対に使わない。
+               該当する区切り行が無ければ空文字 ""。
   - points: 事実・決定・preference の箇条書き (高速参照用、簡潔に)
   - flow:  その合意/結論に至った流れ・ニュアンスを 2-4 文の段落で
 
@@ -138,7 +140,7 @@ EXTRACT_TOOL = {
                         "title": {"type": "string", "description": "単位の短い見出し"},
                         "timestamp": {
                             "type": "string",
-                            "description": "対応する会話ログ内の直近タイムスタンプ (例 6:31)。無ければ空",
+                            "description": "直前の『行全体が時刻だけの行』の値。文章中で言及された時刻は使わない。無ければ空",
                         },
                         "points": {
                             "type": "array",
@@ -248,6 +250,14 @@ def main() -> None:
 
     print(f"[{rel_key}] 行 {start+1}..{end} を抽出 (model={args.model})\n")
     segments = call_claude(delta, args.model)
+
+    # タイムスタンプ検証: delta 内に「行まるごとが時刻だけ」の区切り行として
+    # 実在する値のみ採用。文章中で言及された時刻 (自己言及的な会話で頻発) は
+    # 破棄し、空にして実行時刻へ fallback させる。
+    valid_ts = {ln.strip() for ln in delta.splitlines() if TS_RE.match(ln)}
+    for seg in segments:
+        if (seg.get("timestamp") or "").strip() not in valid_ts:
+            seg["timestamp"] = ""
 
     date = parse_date(raw_path)
     if args.new or not entry.get("dialogue"):
