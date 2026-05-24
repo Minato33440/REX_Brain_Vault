@@ -1,0 +1,36 @@
+**Market Sentiment Summary (May 17-24, 2026)**
+
+**Overall Tone**  
+Mixed-to-cautious on equities and gold in the short term, with a short-term bullish tilt from geopolitical de-escalation news. High skepticism around headline durability. Defensive technical views on S&P 500, intervention watch on USD/JPY, and policy uncertainty from new Fed leadership. Crypto stands out as relatively resilient.
+
+**S&P 500 / Equities**  
+- Dominant driver: Potential US-Iran peace deal (Trump May 23 post). S&P perpetuals surged >1.5% on the headline.  
+- Reaction split between “buy the rumor” and “sell the news.” Bears who held puts into the weekend faced pain.  
+- Technical caution dominant: references to euphoric expansion followed by rebalancing toward the 0.5 Fib zone (~$6,000). Some Wyckoff distribution setups discussed.  
+- Macro backdrop: CPI above Fed 2% target for 62 straight months, yet S&P returned +106% over that period — cited as evidence of equity resilience.  
+- Short-term: bullish on reduced geopolitical risk premium. Medium-term: cautious on distribution risk and concentration.
+
+**FX (USD/JPY)**  
+- Range: 158–159.5, with quick pullbacks on de-escalation news and oil moves.  
+- Key theme: intervention vigilance (BOJ/MoF capping upside near 159–160). Yen carry trade sensitivity to Middle East tensions noted.  
+- Tone: cautious. Traders watching for technical breaks and geopolitical “Black Monday” scenarios.  
+- Broader FX discussion often bundled with DXY, EURUSD, and oil in weekly outlooks.
+
+**Gold (XAUUSD)**  
+- Price action: volatile range around $4,500–$4,600/oz. Key support zone $4,490–$4,500; resistance $4,540–$4,570+.  
+- Major development: Kevin Warsh sworn in as new Fed Chairman. Hawkish comments from Governor Waller on sticky inflation and reluctance to signal cuts.  
+- Short-term: bearish tilt from stronger USD and higher yields. Wall Street more bearish than retail.  
+- Longer-term support: central bank buying, geopolitical hedging, and inflation hedge role remain intact.  
+- Trading bias: many leaning short on rallies toward 4,500–4,510.
+
+**Macroeconomic Data & Policy**  
+- Focus areas: upcoming US CPI/PMI, FOMC under new leadership, Tokyo CPI, potential BOJ moves in June.  
+- Hawkish Fed signals pushing back rate-cut expectations.  
+- Geopolitical de-escalation viewed positively for risk assets via lower oil and improved financial conditions.  
+- Broader caution on equity indices due to technical distribution risks and sector breadth divergences.  
+- Crypto/Bitcoin sentiment relatively constructive by comparison, with some viewing it as a Trump-era beneficiary.
+
+**Key News Driver (Last 7 Days)**  
+US-Iran peace agreement headlines (May 23) overtook most macro discussion. Markets reacted immediately to the de-escalation narrative, though confirmation and durability remain heavily questioned.
+
+This reflects high-engagement trader/analyst chatter. Markets can shift rapidly on confirmation or denial of the deal.

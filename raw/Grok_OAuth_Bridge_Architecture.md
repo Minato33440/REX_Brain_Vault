@@ -196,6 +196,7 @@ Claude Desktop 設定：
    - 選択すると `no configuration needed!` と出る。これは**既存の SuperGrok OAuth セッションをそのまま使う**意味で正常（追加のブラウザ認証は不要だった）。
    - もう一方の選択肢 `2. xAI API key [paid]` は**従量課金ライン A**。OAuth・追加課金なしで行くなら必ず `1` を選ぶ。
 3. **bridge の `-t` に `x_search` を明示**（`ask_grok` = `x_search,web,vision`）。
+4.口語要約：Claude Desktopのheadless MCP環境ではOAuth対話認証が不安定だったため、先にHermes CLI側でSuperGrok OAuth資格情報を確立し、その保存済みセッションを hermes -z ワンショット実行で再利用するMCP bridgeを作って、Claudeから同期的にGrokを呼べるようにした。
 
 ### 名前の罠（沼の本体）
 - **`x_search` は toolset 名ではなく tool 名。** Hermes の Toolsets Reference / Built-in Tools Reference の toolset レジストリに `x_search` という toolset は載っていない（xAI モデル内蔵の Responses ツール扱い）。
