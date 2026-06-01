@@ -1,11 +1,13 @@
 # Grok OAuth Bridge & vault-mcp — アーキテクチャ & 構築ノート
 
-- 最終更新: 2026-05-23（vault-mcp 統合完了）
+- 最終更新: 2026-05-29（OAuth 不成立 × silent reject ・復旧手順を§11 として追記）
 - 対象: Claude オーケストレーター ⇄ OAuth-Grok（Hermes ワンショット経由） + Obsidian（vault-mcp 統合）
 - 関連: `Rex_Grok_Toolbox.md`（運用マニュアル）
-- ステータス: **Phase 4.9 完成（2026-05-23）**
+- ステータス: **Phase 4.9 完成（2026-05-23）/ encoding 修正済（2026-05-26）/ provider 設定外れ予防ノート追記（2026-05-29）**
   - Plan C（grok-oauth）: `ask_grok` から OAuth で X 検索が同期で通ることを実機確認済み
   - Phase 4.9（vault-mcp）: Obsidian REST API + hermes_ask_grok 統合、stdio MCP 接続確認済み
+  - 2026-05-26: 両ブリッジで x_search の日本語結果が空になる不具合を修正（出力エンコーディング cp932→UTF-8、§10 参照）。grok-oauth / @hermes 両方で日本語 X 結果を実機確認済み
+  - 2026-05-29: PONG / 2+2 も含めて全て空になる回帰を追跡。真因は inference provider 設定外れ（`hermes auth status: logged in` でも不可）。§11 として復旧チェックリストを追記。併せて bridge の subprocess timeout を 120s → 300s に拡張（x_search の起動オーバーヘッド分）。
 
 ---
 
@@ -94,11 +96,13 @@ Claude Desktop (オーケストレーター)
 | 許可ルート | `C:\Python\REX_AI` 配下のみ |
 | 明示拒否 | `C:\Python\REX_AI\REX_Brain_Vault`（聖域・配下含む） |
 | terminal / computer-use | どちらのツールにも **含めない** |
-| `ask_grok` toolsets | `x_search,web,vision`（書込なし） |
+| `ask_grok` toolsets | `x_search,vision`（書込なし。web は除外＝下記 2026-05-25 注記参照） |
 | `grok_work` toolsets | `file,code_execution,image_gen,x_search,web,vision`（workdir 限定） |
 
-> **2026-05-23 更新（重要）:** `-t` の値を `web,search,vision` → `x_search,web,vision` に修正。
-> `search` は `web` と中身（`web_search`）が重複するため削除。`x_search` を**明示追加**したことで X 検索が有効化された（経緯は §9）。
+> **2026-05-23 更新:** `-t` の値を `web,search,vision` → `x_search,vision` に修正。
+> `search` は `web` と中身（`web_search`）が重複するため削除。`x_search` を**明示追加**したことで X 検索が有効化された（経緯は §9）。`web` は OAuth では機能せず（プロバイダキー必須・§8）、実証済みの動作構成では除外している（2026-05-23 の実機検証は `-t x_search,vision`）。
+>
+> **注（`web` を質問パスに入れない理由）:** `ask_grok` から `web` を外しているのは、OAuth ではプロバイダキー（§8）が無いと Web 検索が機能しないため。`x_search` だけで X 検索は完結する。※ かつて「キー無しの `web` が agentic run を潰して x_search を空にしている」と疑った時期があったが、これは誤診だった（真因は出力エンコーディング・§10 の仮説テーブル参照）。`web` 自体は無実。除外の判断（OAuth では機能しないから入れない）は有効だが、「web が x_search を壊す」わけではない。
 
 検証結果（2026-05-22）: 聖域拒否 / ルート外拒否（System32）/ 聖域配下拒否 / 許可リポ書込成功 — **全て確認済み**。
 注: `grok_work` の実通は `-t` 変更後に再確認予定（次回作業。日次制限の都合で本日は見送り）。
@@ -145,7 +149,7 @@ Claude Desktop 設定：
 - `obsidian_append_to_note(path, content)` — ノート追記
 - `obsidian_delete_note(path)` — ノート削除
 - `obsidian_search(query)` — 全文検索
-- `hermes_ask_grok(prompt)` — Grok に質問（x_search, web, vision）
+- `hermes_ask_grok(prompt)` — Grok に質問（x_search, vision）
 - `read_file(path)` / `write_file(path, content)` / `list_directory(path)` など（ファイルシステム）
 
 Claude Desktop 設定：
@@ -195,8 +199,7 @@ Claude Desktop 設定：
 2. **`hermes tools` → `4. Reconfigure an existing tool's provider or API key` → 🐦 X Search → `1. xAI Grok OAuth (SuperGrok Subscription)` を選択**。
    - 選択すると `no configuration needed!` と出る。これは**既存の SuperGrok OAuth セッションをそのまま使う**意味で正常（追加のブラウザ認証は不要だった）。
    - もう一方の選択肢 `2. xAI API key [paid]` は**従量課金ライン A**。OAuth・追加課金なしで行くなら必ず `1` を選ぶ。
-3. **bridge の `-t` に `x_search` を明示**（`ask_grok` = `x_search,web,vision`）。
-4.口語要約：Claude Desktopのheadless MCP環境ではOAuth対話認証が不安定だったため、先にHermes CLI側でSuperGrok OAuth資格情報を確立し、その保存済みセッションを hermes -z ワンショット実行で再利用するMCP bridgeを作って、Claudeから同期的にGrokを呼べるようにした。
+3. **bridge の `-t` に `x_search` を明示**（`ask_grok` = `x_search,vision`。web は入れない＝§6 注記参照）。
 
 ### 名前の罠（沼の本体）
 - **`x_search` は toolset 名ではなく tool 名。** Hermes の Toolsets Reference / Built-in Tools Reference の toolset レジストリに `x_search` という toolset は載っていない（xAI モデル内蔵の Responses ツール扱い）。
@@ -211,3 +214,104 @@ Claude Desktop 設定：
 ### 運用上の最重要ハマりどころ: MCP プロセスの完全終了
 - **`grok_oauth_bridge.py` を修正したら、Claude Desktop の「ウィンドウ再起動」だけでは不十分。** MCP サブプロセスが古いコード（旧 `-t`）を掴んだまま残留し、修正が反映されない。
 - **対策: タスクマネージャから Claude Desktop を完全終了 → 再起動。** これで MCP サーバーが新しいコードを読み直す。本日この残留で 2 回ハマった。
+
+---
+
+## 10. x_search の日本語結果が空になる不具合 — 出力エンコーディング（2026-05-26・確定）
+
+**真因（一点）: `subprocess.run(..., text=True)` が hermes の UTF-8 出力を Windows ロケール（cp932）でデコードし、日本語の多バイト不正バイトで `UnicodeDecodeError` → subprocess がリーダースレッドの例外を握り潰して `stdout 空 / returncode=0` を返していた。**
+
+### 症状
+- `ask_grok` / `hermes_ask_grok` が **空（`stdout 空 / returncode=0`、stderr も空）** を返す。
+- `2+2`（ASCII）は通るのに、x_search の**日本語を含む結果だけ**が空。← この非対称が最大のヒント。ツール・env・キーの問題ではなく「結果に日本語多バイトが含まれるか」の差だった。
+- ターミナル直叩きは「通る」ように見える（PowerShell/cmd はバイトを寛容にデコードし、化けても例外を投げない。Python の strict cp932 だけが例外を投げる）。
+
+### 修正
+- 両ブリッジの `subprocess.run` に **`encoding="utf-8", errors="replace"`** を追加。
+  - `grok_oauth_bridge.py` `_run()`
+  - `filesystem-mcp/server.py` `hermes_ask_grok()`
+- 再現スクリプト（`_repro_hermes.py`、現在は `archived/` へ退避）の検証で確定:
+  - A（`text=True`・encoding 未指定）→ `UnicodeDecodeError: 'cp932' codec can't decode byte 0x85`、stdout_len=0
+  - B（`encoding="utf-8"`）→ 日本語 438 文字をきれいに返す ◎
+  - C（生バイト）→ 796 bytes の正常な UTF-8 が最初から来ていた
+
+### 今回の追跡で潰した仮説（記録 — 次の Rex が同じ順路を繰り返さないために）
+
+| 疑った要因 | 結果 | 切り分け方法 |
+|---|---|---|
+| hermes バイナリの違い | 無実（同一） | diag で実体パス確認、両者 `...hermes-agent\venv\Scripts\hermes.EXE` |
+| HERMES_HOME の不一致 | 無実（同一） | diag で確認、両者 `...AppData\Local\hermes` |
+| MCP プロセス残留（旧コード） | 無実 | Windows ごと再起動しても再現 |
+| OAuth/認証切れ | 無実 | `2+2` が通る（チャット本体は生存） |
+| `XAI_API_KEY`（死にキーが provider を倒す） | 無実 | キーを env/config から物理除去しても空。diag で `present=False` 確認 |
+| `web` toolset（キー無し初期化が run を潰す）→**誤診** | 無実 | 2026-05-25 に「キー無し `web` が agentic run を潰して x_search を空にしている」と仮定し `x_search,vision` へ revert→一時的に直ったように見えたが ASCII 応答/別要因だった。後にターミナルで `x_search,web,vision` が通ることを確認し web は濡れ衣と判明。除外の判断（OAuth ではキー必須で Web 検索不可）自体は有効だが x_search を壊すわけではない |
+| `HERMES_GIT_BASH_PATH` / bash 経路 | 無実 | 変数＆PATH の Git を消しても通る |
+| venv の違い（Grok-OAuth\.venv） | 無実 | 同 venv・cwd でリッチ env なら通る |
+| cwd の違い | 無実 | 同上 |
+| env の痩せ（uv/GUI 起動で19変数に縮小） | 無実 | `_rich_env()` でレジストリ User+Machine から再構築し env を太らせても空 |
+| **cp932 vs UTF-8（出力デコード）** | **◎ 真因** | `_repro_hermes.py` で生バイト796＋cp932例外を観測、`encoding="utf-8"` で解決 |
+
+**メタ教訓:** 「リッチなターミナルから1変数を引いて再現する」引き算法は、フォールバックが多すぎて機能しなかった。決め手は**生バイトまで観測**したこと（推論ではなく `_repro_hermes.py` の variant C）。subprocess で「空・rc=0」を見たら、最初に encoding を疑うこと（メモリにも恒久記録済み）。
+
+### 残課題
+- `grok_work` は `-t` に `web` を含み、かつ今回の encoding 修正は `_run` 経由なので効くはずだが、ファイル書込＋聖域拒否の実通は未再確認。
+- diag（`_run` の空分岐ログ）は当面残置。不要になれば撤去可。
+
+---
+
+## 11. OAuth 不成立×silent reject — inference provider 設定外れ（2026-05-29・確定）
+
+**真因（一点）: `hermes auth add` で OAuth credential が登録されていても、`hermes model` で inference provider ・default model が未設定だと、`hermes -z` は内部で `AuthError: No inference provider configured` を出しながらも、ワンショット出力経路がそれを stdout/stderr に乗せられず、`stdout 空 / returncode=0` で握り潰す。**
+
+### 症状（§10 の cp932 とはパターンが異なる）
+- `2+2`（ツール不要）**さえ**空。`PONG`も空。← cp932 の時との決定的な違い。cp932 は ASCII は通った。今回は**チャット本体が一切返らない**。
+- ターミナル直叩きの素 `hermes -z "PONG" -t vision --accept-hooks` も空・prompt が戻る（bridge を介さずとも空なので bridge 無実）。
+- 24 時間置いても回復せず。⚠️ 「日次クォータ枯渇」説を立てたが、`grok.com` UI からは X 検索も含めて普通に動いたため、クォータ説は実証的に否定された（サブスク自体は生きている）。
+- `hermes auth status xai-oauth` は **`logged in`** を返す→トークンは形式上生きている表示、だが実際には推論不可。この**表示と実態の乖離**が今回の追跡を長引かせた主因。
+- 決め手: `hermes auth logout xai-oauth` を叩いた瞬間に stderr に **`Run 'hermes model' to choose a provider and model, or set an API key ...`** が出た。これで hermes が初めて話してくれた。
+- その後 `hermes -z` を叩くと、今度は明記で `AuthError: No inference provider configured` が返るようになった（診断が進めた決定的な変わり目）。
+
+### 復旧手順（チェックリスト）
+```powershell
+# 1. 現状の credential / provider を診る
+hermes auth list                    # 各プロバイダの credential 有無
+hermes auth status xai-oauth        # トークン表示状態（表示だけ、実態と乖離し得る）
+
+# 2. クリーンに入れ直す（copilot 等他の認証は残る・全消し reset は不要）
+hermes auth logout xai-oauth
+hermes auth add xai-oauth
+# → ブラウザで accounts.x.ai にサインイン・「許可」。
+# → scope に openid+profile+email+offline_access+grok-cli:access+api:access が含まれることを確認。
+# → "Added xai-oauth OAuth credential #1" が出れば保存 OK。
+
+# 3. inference provider / default model を明示指定
+hermes model
+# → 9. xAI Grok OAuth (SuperGrok / Premium+) を選ぶ
+#    §19. xAI は開発者API（ライン A・従量課金）だから選ばない。
+# → "Use existing credentials"（手順 2 で追加したものを使う）を選ぶ
+# → default model: grok-4.3（config.yaml の `model.default` と揃える）
+
+# 4. 確認
+hermes -z "PONG" -t vision --accept-hooks    # → PONG が返れば復旧
+```
+
+### 切り分けの定理（「空・rc=0」を見たときの順番）
+1. **`hermes -z "PONG" -t vision --accept-hooks` をターミナルで叩く**。bridge を介さず、ツール不要の最小ケースで、hermes 本体が返しているかを見る。
+2. PONG も空 → hermes 本体が黙ってる。§10（cp932）をスキップしてよい（cp932 は ASCIIを通すため）。
+3. **`grok.com` UI が動くか見る。** 動く → サブスク/アカウントは生きてる、犯人は hermes と SuperGrok の間を繋ぐ OAuth/provider。クォータ説はここで死ぬ。
+4. **`hermes auth list` / `hermes auth status xai-oauth`** を見る。`logged in` でも**信じすぎない**。
+5. 上の**復旧手順**を走る。`logout → add` した瞬間に stderr に「`hermes model` を叩け」と出るはずだが、これが決定的なシグナル。
+
+### 今回の追跡で潰した仮説
+
+| 疑った要因 | 結果 | 切り分け方法 |
+|---|---|---|
+| 日次クォータ枯渇（SuperGrok） | 無実 | 24 時間後も回復せず、UI は動く |
+| OAuth トークン期限切れ | 無実（部分的に外れ） | `auth status` は `logged in`。ただ add し直しても PONG は空のままだったため、トークン単体の問題ではなかった |
+| **inference provider 設定外れ** | **◎ 真因** | `logout` 出力の「Run `hermes model`」メッセージ + その後の `AuthError: No inference provider configured` で確定。`hermes model` で 9 (xai-oauth) + grok-4.3 を選んで PONG 復旧 |
+| bridge の timeout=120s | x_search では不足 | 素の hermes が ~70s で返るタスクでも subprocess 経由は起動オーバーヘッドで 120s を越える。`timeout=300` に拡張して解消（config.yaml の `x_search.timeout_seconds=180` × retries とも整合） |
+
+### メタ教訓
+- **`hermes auth status: logged in` ≠ 推論可能。** 表示は credential ファイルの存在・署名の形式しか見ていない。推論の実態は provider 設定 + model 設定 + xAI 側のレスポンスを繋げて初めて生きる。どこか1つ欠けると silent reject になりうる。
+- **`hermes -z` は AuthError を stdout/stderr に乗せずに握り潰すことがある。** §10（cp932）も同じ「空・rc=0」の表れ方をしただけで、原因は全く別だった。**空・rc=0 は「何かを hermes が黙って握り潰している」という記号だとして読む**。犯人を推論しに行かず、まず hermes を話させる手順（`logout/add`、ターミナル直叩き、UI 確認）を踏む。
+- **手順を `hermes auth reset` で始めるな。** `reset` は名前から認証情報の一括クリアに見える。`logout <provider>` によるピンポイント処理 → `add <provider>` を推奨。copilot（GitHub）や他の provider を巻き添えにせずに済む。

@@ -1,36 +1,31 @@
-**Market Sentiment Summary (May 17-24, 2026)**
+**Market Snapshot (May 23–30, 2026) — High-Engagement X Discussion**
 
-**Overall Tone**  
-Mixed-to-cautious on equities and gold in the short term, with a short-term bullish tilt from geopolitical de-escalation news. High skepticism around headline durability. Defensive technical views on S&P 500, intervention watch on USD/JPY, and policy uncertainty from new Fed leadership. Crypto stands out as relatively resilient.
+### S&P 500 & Equities
+- **Strongly bullish tone** dominates. The index posted repeated all-time highs and a 9-week winning streak (longest since 2023). Japanese retail accounts heavily promoted “just keep buying” and “money increases while you sleep” messaging.
+- Key drivers cited: easing US-Iran tensions, lower oil, and earnings growth making valuations appear more reasonable.
+- Cautions raised: extreme concentration in a handful of tech/AI names (worse than dot-com levels), SpaceX IPO index-rule changes forcing passive funds to buy at high valuations, and a “lockout rally” with selective breadth.
+- Technical targets mentioned around 7600–7650. Low VIX (~15) at end of May historically very bullish for the rest of the year.
 
-**S&P 500 / Equities**  
-- Dominant driver: Potential US-Iran peace deal (Trump May 23 post). S&P perpetuals surged >1.5% on the headline.  
-- Reaction split between “buy the rumor” and “sell the news.” Bears who held puts into the weekend faced pain.  
-- Technical caution dominant: references to euphoric expansion followed by rebalancing toward the 0.5 Fib zone (~$6,000). Some Wyckoff distribution setups discussed.  
-- Macro backdrop: CPI above Fed 2% target for 62 straight months, yet S&P returned +106% over that period — cited as evidence of equity resilience.  
-- Short-term: bullish on reduced geopolitical risk premium. Medium-term: cautious on distribution risk and concentration.
+### USDJPY / FX
+- Pair trading near **159.0–159.5**, grinding toward the psychologically important **160** level.
+- Resilient despite ~$70B Japanese intervention. Drivers: oil-driven inflation and wide US-Japan rate differentials.
+- Retail sentiment frustrated — multiple high-engagement posts showed head-and-shoulders patterns and “command you to dump” frustration.
+- 160 viewed as a major multi-year ceiling ahead of the June BoJ decision. Inverse correlation with gold frequently highlighted by Japanese traders.
 
-**FX (USD/JPY)**  
-- Range: 158–159.5, with quick pullbacks on de-escalation news and oil moves.  
-- Key theme: intervention vigilance (BOJ/MoF capping upside near 159–160). Yen carry trade sensitivity to Middle East tensions noted.  
-- Tone: cautious. Traders watching for technical breaks and geopolitical “Black Monday” scenarios.  
-- Broader FX discussion often bundled with DXY, EURUSD, and oil in weekly outlooks.
+### Gold (XAUUSD)
+- Range-bound **$4,450–$4,510/oz**. Daily swings noted but key support holding.
+- Narrative focus: central banks and “strong hands” continuing accumulation amid de-dollarization talk. Fidelity Digital Assets mentioned Bitcoin + gold gaining reserve share.
+- Silver ~$76/oz (well below its January 2026 peak near $121). Mining stocks (especially AYA) outperforming the metal on production growth stories.
+- Overall tone: **cautiously bullish** as a long-term hedge against macro and monetary uncertainty.
 
-**Gold (XAUUSD)**  
-- Price action: volatile range around $4,500–$4,600/oz. Key support zone $4,490–$4,500; resistance $4,540–$4,570+.  
-- Major development: Kevin Warsh sworn in as new Fed Chairman. Hawkish comments from Governor Waller on sticky inflation and reluctance to signal cuts.  
-- Short-term: bearish tilt from stronger USD and higher yields. Wall Street more bearish than retail.  
-- Longer-term support: central bank buying, geopolitical hedging, and inflation hedge role remain intact.  
-- Trading bias: many leaning short on rallies toward 4,500–4,510.
+### Macro & Market Sentiment
+- **Sticky inflation** signal from commodities at or near secular highs. TIPS market seen as complacent.
+- Fed/FOMC debate heating up for June: one side sees AI as eventually deflationary (productivity gains); other side flags current inflation above target + energy/geopolitical risks.
+- Clear **equity vs consumer disconnect**: stocks making highs while consumer sentiment remains weak (housing, groceries, insurance costs). This gap is widely discussed.
+- Broader view: “bull market with caveats” — strong momentum but watching inflation prints, Fed speakers, and whether the rally broadens beyond mega-cap tech.
 
-**Macroeconomic Data & Policy**  
-- Focus areas: upcoming US CPI/PMI, FOMC under new leadership, Tokyo CPI, potential BOJ moves in June.  
-- Hawkish Fed signals pushing back rate-cut expectations.  
-- Geopolitical de-escalation viewed positively for risk assets via lower oil and improved financial conditions.  
-- Broader caution on equity indices due to technical distribution risks and sector breadth divergences.  
-- Crypto/Bitcoin sentiment relatively constructive by comparison, with some viewing it as a Trump-era beneficiary.
+### High-Engagement Financial News Themes
+Pure market analysis was less dominant than usual. “Wall Street”-branded accounts leaned heavily into political economy topics (taxes, immigration enforcement, urban policy). The clearest market-specific post focused on silver mining leverage (AYA highlighted for massive production growth).
 
-**Key News Driver (Last 7 Days)**  
-US-Iran peace agreement headlines (May 23) overtook most macro discussion. Markets reacted immediately to the de-escalation narrative, though confirmation and durability remain heavily questioned.
-
-This reflects high-engagement trader/analyst chatter. Markets can shift rapidly on confirmation or denial of the deal.
+**Summary Tone (last 7 days)**:  
+Equities remain in a melt-up with celebratory retail sentiment. USDJPY is stubborn near highs. Gold holds as a macro hedge. Macro discussion centers on sticky inflation and the Fed’s AI vs data dilemma. Concentration and valuation risks are noted but not yet dominant in high-engagement posts.
