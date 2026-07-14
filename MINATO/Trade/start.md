@@ -8,6 +8,7 @@ Claude Desktopでトレード相談を始める前に読む。
 
 | 道具 | 用途 |
 |---|---|
+| Hermes | `ACP接続のAgent-Runtime-HubをCliantとして利用中、各Hermes-Skillが使える |
 | Filesystem MCP | `REX_Brain_Vault\` 配下の読み書き（このVault全体） |
 | NotebookLM MCP | REX_Wiki_Vault（ID: 5d09e468-3a96-4906-af27-3400c50a0275） |
 | GitHub MCP | `Minato33440/REX_Brain_Vault` 読み書き |
@@ -43,7 +44,8 @@ Trade/
 │   ├── GM/           ← GMポジション記録
 │   └── CFD/          ← CFD個別トレード記録
 ├── strategies/       ← 戦略メモ（GM/CFDはfrontmatterで区別）
-└── lessons.md        ← 繰り返し現れるパターン・メタ教訓（問題発生時に参照）
+├── lessons.md        ← 繰り返し現れるパターン・メタ教訓（問題発生時に参照）
+└── Trade_Rogic/       ← 湊流4時間足軸足のMTFトレンドフォローロジックを記載
 ```
 
 ---

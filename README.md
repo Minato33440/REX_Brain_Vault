@@ -41,7 +41,7 @@ REX_Brain_Vault/
 │   └── workspace/    ── 各プロジェクト実装時の作業空間
 ├── MINATO/           ── ミナト個人レイヤー
 ├── welfare/          ── welfare 関連の記録
-├── handoff/          ── 過去の遺産（[[origin]] と [[co-emergence]] の起点）
+├── handoff/          ── 過去の遺産（[[2026-05-01_origin]] と [[co-emergence]] の起点）
 ├── bridges/          ── 各プロジェクト運用情報
 │   ├── trade_brain/
 │   ├── trade_system/

@@ -52,7 +52,7 @@
 
 ## 繋がるノード
 
-[[Origin]]
+[[2026-05-01_origin]]
 [[AI_welfare]]
 [[co-emergence]]
 

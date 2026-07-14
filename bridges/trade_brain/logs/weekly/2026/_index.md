@@ -253,3 +253,76 @@ updated: 2026-01-19 (JST)
   - [meta](./2026-5-22_wk04/meta.yaml)
   - [review](./2026-5-22_wk04/review.md)
   - [charts](./2026-5-22_wk04/charts.md)
+
+### 2026-5-29_wk05（2026-05-25 → 2026-05-29）
+- Regime: Neutral（equities=up / volatility=normal / oil=range / gold=range / crypto=range / yields=rising）← wk04継続も内部品質は「AI・量子テーマ主導 × BTC戻り売り転換」へ質的シフト。VIX 15.32で低ボラ環境。
+- 1行：SpaceX/OpenAI/Anthropic上場期待（6/12）と量子テーマが相場主導。US100 30,333（wk04比+2.9%）・日経66,351円方向。VIX 15.32でAdd risk gate開放、停戦合意観測でリスクオン継続。BTCは『上がったら売る』へ転換（量子暗号解読リスク）。ドル円159.27で160円が壁。6月大型触媒（6/3植田・6/12上場・6/16日銀）に向けた準備フェーズ。CFD：ゴールド3トレード全勝・残1/3ロット週越し。
+- Key gates:
+  - Add risk: **開放**（VIX 15.32<18）。イラン情勢の突発報道で再度閉じるリスク
+  - Reduce risk: US10Y>4.4%定着 OR JP10Y>2.9% OR US100 D1 close<29,900 OR VIX>22 で株式エクスポージャー一段落とし
+- Links:
+  - [note](./2026-5-29_wk05/note.md)
+  - [meta](./2026-5-29_wk05/meta.yaml)
+  - [review](./2026-5-29_wk05/review.md)
+  - [charts](./2026-5-29_wk05/charts.md)
+
+### 2026-6-5_wk01（2026-06-01 → 2026-06-05）
+- Regime: Neutral（equities=flat / volatility=normal / oil=range / gold=off / crypto=weak / yields=rising）← wk05から内部転換。NFP 172Kサプライズ起点で「AI主導」→「リスクオフ・whipsaw」へ質的シフト（equities up→flat・gold range→off・crypto range→weak）。
+- 1行：NFP 172K（予想85K）＋上方修正の "good news is bad news" で楽観相場が一気にリスクオフへ。Nasdaq総合-4.18%（半導体distribution主導）、VIX 21.51で6/5単日+39-40%急騰（Add risk gate閉・Reduce risk〔VIX>18〕成立）。ドル円160突破（160.293）が今週のキングピン。金$4,365で2026年安値（gold=off）、BTC$60,000割れ19ヶ月安値。全資産が「ドル円160×満タン円ショート×6/16-17ダブル中銀」の一枚岩。6/16-17まで観測優位・戻り売り/ヘッジ優位。CFD：Gold残ポジを4390で全撤退（防衛的）。
+- Key gates:
+  - Add risk: **閉**（VIX 21.51>18）。再開＝VIX<18回帰 + 6/16-17ダブル中銀通過 + US100 27,989維持確認
+  - Reduce risk: **成立中**（VIX>18）。さらに US100 D1 close<27,989 OR US10Y>4.6% OR ドル円160実弾介入/円高カスケード OR JP10Y>2.9% で株式エクスポージャー一段落とし
+- Links:
+  - [note](./2026-6-5_wk01/note.md)
+  - [meta](./2026-6-5_wk01/meta.yaml)
+  - [review](./2026-6-5_wk01/review.md)
+  - [charts](./2026-6-5_wk01/charts.md)
+
+### 2026-6-19_wk03（2026-06-15 → 2026-06-19）
+> ※ wk02（2026-6-12）はスルー。前々週 wk01 を比較基準とする（ボス指示 2026-06-20）。
+- Regime: Neutral（equities=up / volatility=normal / oil=slump / gold=off / crypto=weak / yields=falling）← wk01「リスクオフ・whipsaw」から **6/16-17ダブル中銀通過＋停戦/ホルムズ再開でリスクオン回帰**（equities flat→up・yields rising→falling・VIX 21.51→16.4・oil range→slump）。
+- 1行：6/16-17ダブル中銀通過（FOMC 3.50-3.75%を4会合連続据え置き＋利上げ予想に転換）＋米イラン停戦/ホルムズ再開で株高・ドル高リスクオン回帰、VIX 16.4でAdd risk gate再開。WTI-20.56%急落（地政学プレミアム剥落・oil=slump）。一方**今週の新キングピンはドル円161.80の介入警戒**（2024年4月29日介入直前とほぼ同水準）。日経6/18終値71,053.49円で初の7万円超えも上値青丸72,800危険ゾーン。US100 30,406（wk01比+5.0%）も30,900は逆張り短期。金は4120-4060週足ネック反発買い（→4,230）でCFDゴールド半値持ち越し。BTC下落相場で戻り売り。「リスクオン回帰 × 介入警戒で上値追わずの綱引き」。
+- Key gates:
+  - Add risk: **再開**（VIX 16.4<18）。ダブル中銀通過＋停戦/ホルムズ再開でリスクオン回帰。ただしドル円介入警戒・米休場明け薄商いで上値追い慎重・分割限定
+  - Reduce / caution: ドル円161.80超で実弾介入/レートチェック→円高フラッシュ OR JP225 72,800-73,000青丸拒否で急落 OR US100 30,900拒否/D1 close<29,900 OR US10Y>4.6%上抜け OR VIX>18再上昇
+- Links:
+  - [note](./2026-6-19_wk03/note.md)
+  - [meta](./2026-6-19_wk03/meta.yaml)
+  - [review](./2026-6-19_wk03/review.md)
+  - [charts](./2026-6-19_wk03/charts.md)
+
+### 2026-6-26_wk04（2026-06-22 → 2026-06-26）
+- Regime: **Equities Down**（equities=down / volatility=normal / oil=slump / gold=off / crypto=weak / yields=rising）← wk03「Neutral（equities=up / yields=falling・リスクオン回帰）」から **株安・金利上昇方向へ反転**（VIX 16.4→18.41で18超え再上昇＝Add risk gate再閉鎖）。
+- 1行：wk03のリスクオン回帰が反転。**PCEデフレーター4.1%高止まり＋シカゴ連銀グールズビー総裁「物価上昇圧力は引き続き高すぎる」で利上げ警戒再点火**（yields=rising）、**Mag7メモリ価格転嫁でApple値上げ→マグ7全面安**（メモリ株は逆行高／--news #4）、**米イラン再エスカ**（米軍イラン爆撃→イラン報復・湾岸米軍基地攻撃＋ホルムズ商船攻撃／--news #1 #2）でwk03の停戦/ホルムズ再開から逆戻り。US100 29,118（wk03比-4.2%）、VIX 18.41でAdd risk gate再閉鎖。boss＝「レンジ前提・戻り売り中心、ただし日本株の半導体/メモリと金は押し目買い、BTCは戻り売り」。ドル円160後半〜162で介入警戒継続（片山/佐々木×ベッセント協議報道）。金は機械off継続だが boss=大底圏で押し目買い（3,930→4,000）、CFD 6/25 $3,992で1Lotロング追加（15m DT上抜け確定・TP$4,200/SL$3,960）・残1/4（=0.5Lot建値$4,097）を建値で泳がせ週足Fibo38.2（$4,060）上抜けで週持ち越し（当週確定トレード0件）。
+- Key gates:
+  - Add risk: **再閉鎖**（VIX 18.41>18）。wk03 16.4で再開→wk04で再び閉。株安・利上げ警戒・イラン再エスカでボラ復元。18割れ回帰でリスクオン復元の綱引き
+  - Reduce / caution: VIX 18超え定着 OR ドル円162台で実弾介入/レートチェック（協議報道）→深夜帯の円高フラッシュ OR NAS100 28,957割れ→28,600下抜け OR 米イラン交戦の拡大（覚書履行危機）
+- Links:
+  - [note](./2026-6-26_wk04/note.md)
+  - [meta](./2026-6-26_wk04/meta.yaml)
+  - [review](./2026-6-26_wk04/review.md)
+  - [charts](./2026-6-26_wk04/charts.md)
+
+### 2026-7-3_wk01（2026-06-29 → 2026-07-03）
+- Regime: **Equities Down**（equities=down / volatility=normal / oil=slump / gold=off / crypto=range / yields=falling）← wk04から機械ラベル継続だが内部品質転換（株安主因が「PCE利上げ警戒＋Mag7メモリ」→「韓国発の半導体AI個別材料」へ入れ替わり、VIX 18.41→16.15で18割れ＝Add risk gate再開、curve bear→bull_flattening(5s10s)、週次はUS100+0.7%・BTC+3.0%の小反発）。
+- 1行：7/3米独立記念日の薄商い。株安主因は雇用（+5.7万未達）でなく**韓国発の半導体AI材料**（Anthropic×SamsungのAIチップ提携・競合報道＋韓国アルゴ取引規制→流動性低下）。半導体以外は底堅く非半導体へシフト。boss＝『深く下がったら買い』の押し目スタンス、半導体AIは戻り売り。VIX 18割れでAdd risk gate再開。日経は今週初の機械実測69,744（強トレンド・structure_led）。金利カーブbull_flattening(5s10s)＝長期低下主導・3m10s+70.9bp/positiveで逆イールド遠く。ドル円は本流円安の戻り高値売り・162.268上抜け監視・薄商いで覆面介入リスク。CFDゴールド6/29 $4,041で1Lot利確(+1.28%)＋Total 1Lot週持越し、今週から日足環境足・4Hトレード足スウィング運用へ切替。
+- Key gates:
+  - Add risk: **再開**（VIX 16.15<18）。wk04 18.41で再閉鎖→wk01で18割れ再開。株安が半導体個別要因＋雇用未達で利上げ観測後退がボラ低下に寄与。薄商い明け・介入警戒でスパイク余地
+  - Reduce / caution: VIX 18再上抜け定着 OR ドル円162.268上抜け後の急反落（覆面介入・サプライズ円買い） OR US100 29,089割れの下落加速（両義の節目） OR 韓国発半導体AI competition懸念の他資産波及
+- Links:
+  - [note](./2026-7-3_wk01/note.md)
+  - [meta](./2026-7-3_wk01/meta.yaml)
+  - [review](./2026-7-3_wk01/review.md)
+  - [charts](./2026-7-3_wk01/charts.md)
+
+### 2026-7-10_wk02（2026-07-06 → 2026-07-10）
+- Regime: **Neutral**（equities=flat / volatility=normal / oil=range / gold=off / crypto=range / yields=rising）← wk01「Equities Down」から転換。VIX 16.15→15.03でAdd risk gate継続開放。金利は falling→rising。
+- 1行：機械 Neutral 化。US100 29,825（wk01比+1.7%）・BTC 64,127（+4.3%）・VIX15。boss＝**寄り天(午前天井)→一旦調整／為替レンジ**。背景はメモリ・半導体買い戻し＋金曜時点のイランリスク後退、ウィリアムズ系インフレ警戒。最大イベント**7/14米大手銀行決算**。USDJPY 161.672で intervention=watch（不意打ち介入警戒）。金$4104、CFD 7/11 0:15 $4104.5で0.5pips追加→**Total1.5pips週持越し**（スウィング継続）。--news(7/12)は空爆再開・ホルムズ閉鎖＝Boss金曜との時間差を監視。
+- Key gates:
+  - Add risk: **開放継続**（VIX 15.03<18）。寄り天シナリオ優先で高値追わず
+  - Reduce / caution: VIX18再上抜け OR ドル円介入フラッシュ OR ホルムズ/空爆継続の株安波及 OR 銀行決算失望 OR US100三角下抜け
+- Links:
+  - [note](./2026-7-10_wk02/note.md)
+  - [meta](./2026-7-10_wk02/meta.yaml)
+  - [review](./2026-7-10_wk02/review.md)
+  - [charts](./2026-7-10_wk02/charts.md)

@@ -292,7 +292,7 @@ hermes model
 # → default model: grok-4.3（config.yaml の `model.default` と揃える）
 
 # 4. 確認
-hermes -z "PONG" -t vision --accept-hooks    # → PONG が返れば復旧
+hermes -z "PONG" -t vision --accept-hooks    # → PONG が返れば復旧（PONG=ツール不要））
 ```
 
 ### 切り分けの定理（「空・rc=0」を見たときの順番）
@@ -315,3 +315,21 @@ hermes -z "PONG" -t vision --accept-hooks    # → PONG が返れば復旧
 - **`hermes auth status: logged in` ≠ 推論可能。** 表示は credential ファイルの存在・署名の形式しか見ていない。推論の実態は provider 設定 + model 設定 + xAI 側のレスポンスを繋げて初めて生きる。どこか1つ欠けると silent reject になりうる。
 - **`hermes -z` は AuthError を stdout/stderr に乗せずに握り潰すことがある。** §10（cp932）も同じ「空・rc=0」の表れ方をしただけで、原因は全く別だった。**空・rc=0 は「何かを hermes が黙って握り潰している」という記号だとして読む**。犯人を推論しに行かず、まず hermes を話させる手順（`logout/add`、ターミナル直叩き、UI 確認）を踏む。
 - **手順を `hermes auth reset` で始めるな。** `reset` は名前から認証情報の一括クリアに見える。`logout <provider>` によるピンポイント処理 → `add <provider>` を推奨。copilot（GitHub）や他の provider を巻き添えにせずに済む。
+
+### 観測待ちの仮説（真因の引き金・未確定）
+
+「provider 設定がなぜ最初に外れたか」の遠因は 2026-05-29 時点で未確定。有力な仮説が 2 つあり、どちらも状況証拠は筋が通るが実証されていない。次回同様の回帰が出たとき、どちらかを観測で割りたいため記録しておく。
+
+仮説① **新クライアント追加時のランタイムリセット**。同じ Hermes Runtime（同一 `HERMES_HOME`）を共有する新クライアント（Discord-Bot / Slack-Bot 等）を追加する際の `hermes` 系コマンドが、ランタイム provider / model 設定を一時的にクリア / 上書きする可能性。今回の場合、Discord-Hermes-Bot 作成時期と回帰発生期が近い。ただし config.yaml の `model.provider`・`model.default` 自体は正しい値を保っていたため、「config.yaml を書き換えた」形ではなく、もし起きているならランタイム binding 層での現象。
+
+仮説② **Hermes Runtime のアイドルタイムアウト**。一般ユーザー向け OAuth クライアントとして、セキュリティ上「使われていないランタイム binding を一定期間で失効させる」仕様が入っている可能性。`hermes auth status: logged in`（credential ファイル存在）は保たれつつ、推論に使う binding だけが切れると、今回の「表示と実態の乖離」が作れる。`grok.com` UI （ブラウザ cookie 経路）が独立に動く事実とも整合する。
+
+### 次回再発時の観測項目
+
+どちらの仮説かを割るため、以下を記録する:
+- 直前の grok-oauth 利用から何日/何時間経ってたか（仮説②のアイドル期間を推定）
+- その間に新クライアントを追加したか / `hermes` 系コマンドを叩いたか（仮説①の検証）
+- `hermes model` を開いた時点の `Active provider` / `Current model` の表示
+- config.yaml の LastWriteTime（`Get-Item ...\config.yaml | Select-Object LastWriteTime`）
+
+これらが揃えば、どちらの仮説が成立してるか、あるいはダブルヒットか別要因かが見えるはず。確証されたら上の仮説を本セクションから「潰した仮説表」もしくはメタ教訓へ映し替える。

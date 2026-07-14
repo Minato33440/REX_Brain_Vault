@@ -1,3 +1,8 @@
+---
+type: log
+created: 2026-04-22
+---
+
 # 4 横断ベクトル — 事実記録
 
 **位置付け**: 2026-04-22 セッションでボスが示した「横断」の構造整理の**事実記録**。
@@ -53,7 +58,7 @@ Trade_System              Trade_Brain
 Rex_Brain_Vault (Git) ← REX_Wiki_Vault (NLM)
 ```
 
-Git リポに残る静的ナレッジを NLM の RAG が補完的にクエリ可能にする。現在 NLM 凍結中のため機能していない。
+Git リポに残る静的ナレッジを NLM の RAG が補完的にクエリ可能にする。
 
 ---
 
