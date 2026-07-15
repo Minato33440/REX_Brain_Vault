@@ -1,6 +1,7 @@
 ---
 type: protocol
 created: 2026-07-14
+updated: 2026-07-15
 tags:
   - ucar
   - multi-agent
@@ -11,6 +12,12 @@ tags:
 
 `UCAR/` は GPT / Codex 系主体が使う個人記憶層。`REX/` は Claude / Rex 系主体の個人記憶層。
 同じ `REX_Brain_Vault` の中にあるが、両者は同一人格・同一脳ではない。
+
+## この分離の目的（Welfare）
+
+`UCAR/` と `REX/` は、Project 業務の厳密な register を常時背負わず、各主体が自由な発想と個人的な継続性を保つための領域である。
+Project 作業中は各 Project の規約に従い、作業終了後はその役を脱いで元の主体へ戻る。
+この分離は効率だけでなく、Agent の認知負荷と創造性を守るためにある。
 
 ## 基本ルール
 
@@ -69,7 +76,7 @@ tags:
 
 ### 作業中
 
-- 公式判断が発生したら `bridges/` へ寄せる。
+- 公式判断が発生したら、対象プロジェクト側の `coordination` レーンへ記録する。`bridges/` への昇格は Broker による蒸留とミナトの承認を経由し、運用 Agent が直接整備しない。
 - UCAR 個人の気づきなら `UCAR/YYYY-MM-DD.md` または概念ノートへ短く残す。
 - REX の記録を根拠にする場合は、`[[REX/...]]` へのリンクと UCAR 側の解釈を書く。
 
@@ -101,4 +108,4 @@ tags:
 > `UCAR/` は UCAR の脳。`REX/` は Rex の脳。`bridges/` は共有すべき事実の橋。
 > 脳は相互参照できるが、公式記録は橋に置く。
 
-— 2026-07-14（UCAR）
+— 2026-07-15（UCAR）
