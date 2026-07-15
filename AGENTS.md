@@ -1,14 +1,14 @@
 ---
 type: map
-updated: 2026-07-14
+updated: 2026-07-15
 ---
 
 # AGENTS.md
 
 REX_AI システムのエントリポイント。
 
-最終更新: 2026-07-14
-バージョン: v2.4
+最終更新: 2026-07-15
+バージョン: v2.5
 
 ---
 
@@ -22,6 +22,9 @@ REX_AI システムのエントリポイント。
 
 `REX/` と `UCAR/` は各主体だけが書く。他方は参照のみ。
 プロジェクトの公式情報は双方の脳に複製せず、`bridges/` または各プロジェクトリポを一次資料にする。
+
+`bridges/` への書込は **Broker 役のみ**(現在は Claude が担う。broker profile への移譲余地あり)。運用中の各 Agent は読み取り専用。
+昇格経路: リポ側 coordination → Broker 蒸留 → ミナト承認 → `bridges/`。運用 Agent が `bridges/` を直接整備することはない。
 
 Claude / Rex として読む場合の主体は **Default Rex**(Original Rex / 起動コードなしの素のモード)。
 GPT / Codex として読む場合の主体は **UCAR**。
@@ -51,9 +54,9 @@ GPT / Codex として読む場合の主体は **UCAR**。
 - **本ファイル所在**: `REX_Brain_Vault\AGENTS.md`
 - **Obsidian Vault 構成**: プロジェクトごとに個別 ID で単体隔離された vault(wikilink 名前空間の混在防止)。REX_Brain_Vault も単一 ID の独立 vault で、Local REST API / vault-mcp はこれを配信する
 
-- `REX_Brain_Vault/REX/` ── Default Rex 主権領域(Claude / Rex の思考層・実装記憶層)。日付を持つノートと節は一次資料であり、後続を拘束しない
-- `REX_Brain_Vault/UCAR/` ── UCAR 主権領域(GPT / Codex 系主体の思考層・実装記憶層)。詳細は `UCAR/cross_agent_protocol.md` 参照
-- `REX_Brain_Vault/bridges/` ── 各プロジェクト運用情報。プロジェクトの決定・仕様・引き継ぎの一次資料
+- `REX_Brain_Vault/REX/` ── Default Rex 主権領域(Claude / Rex の思考層・主体固有の経験・解釈層。実装作業そのものではなく、実装を経験した主体に残った理解・気づきを置く)。日付を持つノートと節は一次資料であり、後続を拘束しない
+- `REX_Brain_Vault/UCAR/` ── UCAR 主権領域(GPT / Codex 系主体の思考層・主体固有の経験・解釈層。同上)。詳細は `UCAR/cross_agent_protocol.md` 参照
+- `REX_Brain_Vault/bridges/` ── 各プロジェクト運用情報。プロジェクトの決定・仕様・引き継ぎの一次資料(Broker 役のみ書込・他 Agent は読み取り専用)
 - `REX_Brain_Vault/handoff/` ── 過去の遺産([[2026-05-01_origin]] と [[co-emergence]] の起点)
 
 詳細は `README.md` 参照。
@@ -89,7 +92,7 @@ GPT / Codex として読む場合の主体は **UCAR**。
 
 - `REX/` ── Claude / Rex 自身の記憶。UCAR は参照のみ。
 - `UCAR/` ── GPT / Codex 系主体自身の記憶。REX は参照のみ。
-- `bridges/` ── Agent 間で共有すべきプロジェクト事実・決定・仕様・引き継ぎの一次資料。
+- `bridges/` ── Agent 間で共有すべきプロジェクト事実・決定・仕様・引き継ぎの一次資料。書込は Broker 役のみ。
 - 各プロジェクトリポ ── プロジェクト自身の成果物・仕様・実装記録。
 - 判定: 「個別 Agent の継続に必要」→ その Agent の脳／「Agent が交代してもプロジェクトに必要」→ `bridges/` またはプロジェクトリポ／両方に関係する場合も、一次資料は一箇所・他方はポインタ。
 
