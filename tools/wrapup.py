@@ -6,7 +6,7 @@
   - 差分抽出: 前回処理済み行以降だけを Haiku に 1 回渡す (前回サマリは渡さない)
   - 送る前にローカルでデデュープ (Claude.ai の thinking ヘッダ二重コピー等)
   - Haiku が差分を「結果が出たトピック単位」に内部分割し、各単位に 要点 + 流れ を出力
-  - 出力 = personal/dialogues/YYYY-MM-DD-HHMM-<topic>.md に地層追記
+  - 出力 = MINATO/dialogues/YYYY-MM-DD-HHMM-<topic>.md に地層追記
   - 真実の源は raw/。state が消えても raw から復旧できる。
   - 既定はプレビュー (dry-run)。--write で初めてファイル書込 & チェックポイント前進。
 
@@ -34,8 +34,8 @@ from pathlib import Path
 # tools/ の親 = REX_Brain_Vault をベースにする
 BASE = Path(__file__).resolve().parent.parent
 SESSION_DIR = BASE / "raw" / "session"          # セッション原文ルート
-STATE_PATH = BASE / "personal" / ".wrapup_state.json"
-DIALOGUES_DIR = BASE / "personal" / "dialogues"
+STATE_PATH = BASE / "MINATO" / ".wrapup_state.json"
+DIALOGUES_DIR = BASE / "MINATO" / "dialogues"
 
 
 def load_env() -> None:
@@ -263,7 +263,7 @@ def main() -> None:
     if args.new or not entry.get("dialogue"):
         topic = slugify(args.new) if args.new else slugify(segments[0].get("title", "session"))
         hhmm = dt.datetime.now().strftime("%H%M")
-        dialogue_rel = f"personal/dialogues/{date}-{hhmm}-{topic}.md"
+        dialogue_rel = f"MINATO/dialogues/{date}-{hhmm}-{topic}.md"
     else:
         dialogue_rel = entry["dialogue"]
     dialogue_path = BASE / dialogue_rel
