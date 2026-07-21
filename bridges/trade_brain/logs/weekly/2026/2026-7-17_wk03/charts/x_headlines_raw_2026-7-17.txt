@@ -1,0 +1,10 @@
+# X headlines — 2026-7-17_wk03
+
+**status: FAILED / NOT USED**
+
+- 取得試行: hermes -z ... -t x_search（GPT-5.5 セッション）
+- 結果: 実投稿データなし（ツール制限の代替クエリ文のみ）
+- 扱い: 市況統合・review・distilled では **X市況は未取得** とし創作補完しない
+- 参照ソース: Boss wr-2026-7-17.md + main.py --news のみ
+
+（旧ファイルに含まれていた検索クエリ雛形は削除。再取得する場合は本ファイルを上書き）
